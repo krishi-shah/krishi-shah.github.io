@@ -1,0 +1,38 @@
+{
+  "name": "Krishi Shah",
+  "title": "Data Analyst & Software Developer",
+  "shortBio": "Turning data into decisions with dashboards, ML models, and scalable code. Software Developer Co-op at Government of Ontario with a passion for building data-driven solutions.",
+  "longBio": "As a Computer Science student at York University and Software Developer Co-op at Government of Ontario, I transform complex datasets into actionable insights and build scalable applications that solve real-world problems. I specialize in the intersection of data science, machine learning, and software engineering.",
+  "location": "Toronto, ON",
+  "email": "krishi12@my.yorku.ca",
+  "phone": "825-777-0303",
+  "timezone": "America/Toronto",
+  "heroTaglines": [
+    "Data Analyst",
+    "Software Developer",
+    "ML Engineer",
+    "Problem Solver"
+  ],
+  "badges": [
+    "Python",
+    "SQL",
+    "ML",
+    "Tableau"
+  ],
+  "social": {
+    "github": "https://github.com/krishi-shah",
+    "linkedin": "https://linkedin.com/in/krishi-shah312",
+    "twitter": "",
+    "medium": "https://medium.com/@krishishah2021"
+  },
+  "theme": {
+    "primaryColor": "#10b981",
+    "accentColor": "#06b6d4"
+  },
+  "stats": [
+    { "value": "5+", "label": "ML Projects" },
+    { "value": "100K+", "label": "Data Points Analyzed" },
+    { "value": "4+", "label": "Years Coding" },
+    { "value": "3", "label": "Internships" }
+  ]
+}

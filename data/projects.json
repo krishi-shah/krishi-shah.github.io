@@ -1,0 +1,96 @@
+[
+  {
+    "slug": "healthcare-analytics-dashboard",
+    "title": "Comprehensive Healthcare Analytics Dashboard",
+    "shortDescription": "Automated reporting and data visualization for healthcare operations with Power BI",
+    "longDescription": "Designed and developed a comprehensive healthcare analytics dashboard that replaced manual reporting processes, providing real-time insights into patient outcomes and operational efficiency.",
+    "challenge": "Healthcare facility needed automated reporting and data visualization to replace manual processes that took hours weekly and provided limited insights into patient outcomes and operational efficiency.",
+    "solution": "Designed data models, created interactive dashboards, implemented KPI tracking systems, and established automated reporting workflows using Power BI and SQL.",
+    "outcome": "Reduced reporting time by 35% and increased operational efficiency by 12% through automated KPI tracking and enhanced data transparency.",
+    "coverImage": "/placeholder.jpg",
+    "images": [],
+    "tags": ["Data Analytics", "Healthcare"],
+    "tech": ["Power BI", "DAX", "SQL"],
+    "role": "Data Analyst",
+    "timeline": "Feb 2024 - Mar 2024",
+    "metrics": [
+      { "value": "35%", "label": "Reporting Time Reduced" },
+      { "value": "12%", "label": "Efficiency Increase" },
+      { "value": "20%", "label": "Improved Tracking" },
+      { "value": "40%", "label": "Faster Insights" }
+    ],
+    "repo": "https://github.com/krishi-shah/healthcare-analytics",
+    "demo": "",
+    "featured": true
+  },
+  {
+    "slug": "sales-performance-dashboard",
+    "title": "Dynamic Sales Performance Dashboard",
+    "shortDescription": "Interactive Tableau dashboard for real-time sales metrics and customer segmentation",
+    "longDescription": "Built an interactive sales performance dashboard with customer segmentation algorithms and dynamic filtering systems for real-time business intelligence.",
+    "challenge": "Sales team lacked real-time visibility into performance metrics and customer segmentation data, leading to missed opportunities and inefficient targeting strategies.",
+    "solution": "Built interactive dashboards, implemented customer segmentation algorithms, and created dynamic filtering systems using Tableau, SQL, and Python.",
+    "outcome": "Boosted analytical efficiency by 25% and increased customer satisfaction by 15% through improved targeting and data accessibility.",
+    "coverImage": "/placeholder.jpg",
+    "images": [],
+    "tags": ["Data Analytics", "Web Development"],
+    "tech": ["Tableau", "SQL", "Python"],
+    "role": "Business Intelligence Developer",
+    "timeline": "Jan 2024 - Feb 2024",
+    "metrics": [
+      { "value": "25%", "label": "Efficiency Boost" },
+      { "value": "15%", "label": "Customer Satisfaction" },
+      { "value": "40%", "label": "Faster Data Access" },
+      { "value": "30%", "label": "UX Improvement" }
+    ],
+    "repo": "https://github.com/krishi-shah/sales-dashboard",
+    "demo": "https://sales-demo.example.com",
+    "featured": true
+  },
+  {
+    "slug": "iot-solar-tracking",
+    "title": "IoT-Based Solar Tracking System",
+    "shortDescription": "Arduino-powered automated solar panel tracking for 20% energy efficiency improvement",
+    "longDescription": "Programmed Arduino controllers with sensor integration systems and real-time tracking algorithms to maximize solar panel energy capture.",
+    "challenge": "Static solar panels lose significant energy efficiency due to suboptimal sun alignment throughout the day, resulting in 15-30% energy loss compared to tracking systems.",
+    "solution": "Programmed Arduino controllers, designed sensor integration systems, implemented real-time tracking algorithms, and optimized energy capture mechanisms.",
+    "outcome": "Increased solar panel energy output by 20% through automated sun tracking and reduced energy loss through precision angle adjustments.",
+    "coverImage": "/placeholder.jpg",
+    "images": [],
+    "tags": ["IoT", "AI/ML"],
+    "tech": ["Arduino", "C++", "Sensors", "IoT"],
+    "role": "IoT Developer",
+    "timeline": "Sep 2023 - Nov 2023",
+    "metrics": [
+      { "value": "20%", "label": "Energy Output Increase" },
+      { "value": "90°", "label": "Tracking Precision" },
+      { "value": "Real-time", "label": "Data Processing" }
+    ],
+    "repo": "https://github.com/krishi-shah/solar-tracking",
+    "demo": "",
+    "featured": true
+  },
+  {
+    "slug": "customer-churn-prediction",
+    "title": "Machine Learning Customer Churn Prediction",
+    "shortDescription": "Predictive ML model with NLP sentiment analysis for customer retention",
+    "longDescription": "Developed ML models with feature engineering, NLP sentiment analysis, and prediction pipelines for customer behavior analysis and churn prediction.",
+    "challenge": "Company experienced 15% annual customer churn without early warning systems, leading to reactive rather than proactive retention strategies and revenue loss.",
+    "solution": "Developed ML models, performed feature engineering, implemented NLP sentiment analysis, and created prediction pipelines for customer behavior analysis.",
+    "outcome": "Improved customer retention rates by 12% and enhanced customer satisfaction by 10% through predictive analytics and proactive intervention strategies.",
+    "coverImage": "/placeholder.jpg",
+    "images": [],
+    "tags": ["AI/ML", "Data Analytics"],
+    "tech": ["Python", "scikit-learn", "Pandas", "SQL", "NLP"],
+    "role": "Data Scientist",
+    "timeline": "Nov 2022 - Feb 2023",
+    "metrics": [
+      { "value": "12%", "label": "Churn Reduced" },
+      { "value": "10%", "label": "Satisfaction Improved" },
+      { "value": "Automated", "label": "Prediction Pipeline" }
+    ],
+    "repo": "https://github.com/krishi-shah/churn-prediction",
+    "demo": "",
+    "featured": true
+  }
+]
