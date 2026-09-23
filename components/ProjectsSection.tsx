@@ -7,7 +7,7 @@ import { getAllProjects, type Project } from '@/lib/content';
 
 const projects = getAllProjects();
 
-const categories = ['All', 'Data Analytics', 'Web Development', 'AI/ML', 'IoT'];
+const categories = ['All', 'Computer Vision', 'LLMs', 'ML Systems', 'Tools'];
 
 function ProjectCard({ project, index }: { project: Project; index: number }) {
   const [isExpanded, setIsExpanded] = useState(false);
@@ -184,7 +184,7 @@ export default function ProjectsSection() {
           className="text-center mb-12 sm:mb-16"
         >
           <span className="text-primary text-sm font-medium tracking-wider uppercase mb-4 block">
-            Real-World Impact & Results
+            Selected ML Work
           </span>
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight mb-4">
             Featured <span className="gradient-text">Projects</span>

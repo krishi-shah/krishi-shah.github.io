@@ -5,68 +5,93 @@ import { useInView } from 'react-intersection-observer';
 
 const experiences = [
   {
-    title: 'Software Developer Co-op',
-    company: 'Government of Ontario',
-    period: '2024 - Present',
+    title: 'AI Research Assistant',
+    company: 'York University, supervised by Prof. Mona Nasery',
+    period: 'May 2026 – Aug 2026',
     location: 'Toronto, ON',
     description: [
-      'Currently working as a Software Developer Co-op, applying programming and data analysis skills to government projects.',
-      'Collaborating with cross-functional teams to develop and maintain software solutions.',
-      'Contributing to data-driven decision-making processes through technical implementations.',
+      'Fine-tuned EfficientNet-B3 on 120,000 images to 96.96% test accuracy and 0.9971 AUC-ROC.',
+      'Temperature scaling at T = 1.2189 brought expected calibration error to 0.0026.',
+      'A resolution-matched control showed the earlier cross-generator scores were reading resampling artifacts. Matched-resolution detection fell to 35–62%.',
+      'Evaluated transfer across StyleGAN, Stable Diffusion 3, Flux, Midjourney v6, Janus-Pro, and GPT-4o.',
     ],
-    skills: ['Python', 'SQL', 'Data Analysis', 'Software Development'],
+    skills: ['PyTorch', 'EfficientNet', 'Calibration', 'Grad-CAM'],
     gradient: 'from-emerald-500 to-cyan-500',
   },
   {
-    title: 'Data Science Intern',
-    company: 'NFOX Pvt. Ltd',
-    period: 'Nov 2022 - Feb 2023',
-    location: 'Gujarat, India',
+    title: 'Software Developer Co-op · Co-op of the Year Nominee',
+    company: 'Ontario Government',
+    period: 'Jan 2025 – Dec 2025',
+    location: 'Toronto, ON',
     description: [
-      'Improved machine learning models to predict customer churn, improving retention rates by 12%.',
-      'Utilized NLP techniques to analyze customer feedback, leading to 10% improvement in satisfaction.',
-      'Built interactive Tableau dashboards to visualize KPIs and financial performance.',
+      'Rewrote the validation layer in Python and SQL across 10+ workflows and cut reported data errors by about 30%.',
+      'Refactored schemas, queries, and indexes behind 5+ applications, improving query performance 25%.',
+      'Built test suites and release automation in Azure DevOps, cutting deployment time 40% and moving the team to same-day releases.',
     ],
-    skills: ['Python', 'SQL', 'Machine Learning', 'NLP', 'Tableau'],
+    skills: ['Python', 'SQL', 'PostgreSQL', 'Azure DevOps'],
     gradient: 'from-cyan-500 to-violet-500',
   },
   {
-    title: 'Data Analyst Intern',
-    company: 'CODE CLAUSE Pvt. Ltd',
-    period: 'Mar 2022 - Jul 2022',
-    location: 'Pune, India',
+    title: 'Software Developer, Analytics',
+    company: 'All Good Accounting',
+    period: 'Feb 2025 – Apr 2025',
+    location: 'Toronto, ON',
     description: [
-      'Analyzed sales data to identify trends and optimize inventory, resulting in 15% reduction in excess stock.',
-      'Created ML models for sales forecasting using time series analysis, improving accuracy by 20%.',
-      'Designed and implemented business intelligence dashboards in Power BI.',
+      'Built a financial reporting application that replaced a manual Excel process, through the Level UP industry program.',
+      'Scoped requirements with the client and shipped views that non-technical staff could run without developer support.',
     ],
-    skills: ['SQL', 'Python', 'Data Analysis', 'Machine Learning', 'Power BI'],
+    skills: ['Python', 'SQL', 'Reporting'],
     gradient: 'from-violet-500 to-pink-500',
+  },
+  {
+    title: 'Data Science Intern',
+    company: 'NFOX Technologies',
+    period: 'Nov 2022 – Jan 2023',
+    location: 'Gujarat, India',
+    description: [
+      'Compared Random Forest, SVM, and Gradient Boosting on 10K+ churn records, moving accuracy from 73% to 85%. Feature engineering produced nearly all of the gain.',
+      'Benchmarked a BERT classifier against bag-of-words baselines until a 15% lift justified the extra training cost.',
+      'Built Tableau dashboards for KPI and financial metrics.',
+    ],
+    skills: ['Python', 'scikit-learn', 'BERT', 'Tableau'],
+    gradient: 'from-emerald-500 to-violet-500',
+  },
+  {
+    title: 'Data Analytics Intern',
+    company: 'Suven Consultants and Technology',
+    period: 'May 2022 – Jul 2022',
+    location: 'Gujarat, India',
+    description: [
+      'Built reusable Python and SQL pipelines across 5+ datasets that informed 3 product decisions.',
+      'Designed 3 Power BI dashboards and cut manual reporting effort by 50%.',
+    ],
+    skills: ['Python', 'SQL', 'Power BI'],
+    gradient: 'from-cyan-500 to-emerald-500',
   },
 ];
 
 const volunteerExperience = [
   {
-    title: 'Lassonde Student Ambassador',
-    company: 'York University',
-    period: 'Jun 2024 - Sep 2024',
+    title: 'Lead Developer and Executive',
+    company: 'York University Data Science Club',
+    period: 'Oct 2024 – Oct 2025',
     location: 'Toronto, ON',
     description: [
-      'Assisted first-year students with course enrollment and program information.',
-      'Organized workshops and events promoting data analytics and technology.',
+      'Set technical direction for a 12-person team across 5+ machine learning projects, including scoping, code review, and mentorship.',
+      'Published 8 technical articles in Level Up Coding and CodeX during the role.',
     ],
-    skills: ['Leadership', 'Communication', 'Event Planning', 'Mentoring'],
+    skills: ['Mentorship', 'Code review', 'Machine Learning'],
   },
   {
-    title: 'Week Zero Event Leader',
-    company: 'York University',
-    period: 'Jun 2024 - Sep 2024',
+    title: 'Student Ambassador and Week Zero Leader',
+    company: 'Lassonde School of Engineering, York University',
+    period: 'Summer 2024',
     location: 'Toronto, ON',
     description: [
-      'Led a team of volunteers for the Week Zero orientation program.',
-      'Coordinated activities and events to welcome new students.',
+      'Represented Lassonde to prospective and incoming students.',
+      'Led Week Zero orientation for first-year engineering and computer science cohorts.',
     ],
-    skills: ['Team Leadership', 'Event Management', 'Organization'],
+    skills: ['Leadership', 'Mentoring'],
   },
 ];
 
@@ -180,7 +205,7 @@ export default function ExperienceSection() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-10 text-center">Volunteer Experience</h3>
+          <h3 className="text-2xl sm:text-3xl font-bold mb-10 text-center">Leadership</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {volunteerExperience.map((exp, index) => (
               <motion.div

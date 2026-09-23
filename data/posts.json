@@ -2,7 +2,7 @@
   {
     "slug": "5-steps-to-become-data-scientist",
     "title": "5 Steps to become a data scientist",
-    "excerpt": "A comprehensive guide outlining the essential steps and skills needed to transition into a data science career, from foundational knowledge to practical experience.",
+    "excerpt": "A guide to the skills and practice that matter when moving into data science work.",
     "content": "",
     "coverImage": "/images/blog/data-science.png",
     "date": "2024-05-20",
@@ -14,7 +14,7 @@
   {
     "slug": "midjourney-ai-tools",
     "title": "Mid-journey is dead? How this tool will kill AI for better",
-    "excerpt": "Exploring the evolution of AI tools and how emerging technologies are reshaping the artificial intelligence landscape for more practical applications.",
+    "excerpt": "How newer generative tools change what is practical to build with image models.",
     "content": "",
     "coverImage": "/images/blog/ai-tools.png",
     "date": "2024-07-04",
@@ -26,49 +26,13 @@
   {
     "slug": "200-programming-terms",
     "title": "200 programming terms every programmer must know",
-    "excerpt": "An extensive compilation of essential programming terminology that every developer should understand, from beginner concepts to advanced technical jargon.",
+    "excerpt": "A reference list of programming terms, from core ideas through the jargon used in technical writing.",
     "content": "",
     "coverImage": "/images/blog/programming.png",
     "date": "2024-06-22",
     "readTime": "12 min read",
     "tags": ["Programming", "Terminology", "Learning", "Reference"],
     "featured": true,
-    "link": "https://medium.com/@krishishah2021"
-  },
-  {
-    "slug": "nft-nightmares-scams",
-    "title": "NFT Nightmares: Scams That destroyed the bubble",
-    "excerpt": "An in-depth analysis of the NFT market collapse, examining the scams and fraudulent practices that contributed to the bursting of the digital ownership bubble.",
-    "content": "",
-    "coverImage": "/images/blog/nft.png",
-    "date": "2024-05-27",
-    "readTime": "7 min read",
-    "tags": ["NFT", "Blockchain", "Scams", "Digital Assets"],
-    "featured": false,
-    "link": "https://medium.com/@krishishah2021"
-  },
-  {
-    "slug": "is-java-dead",
-    "title": "IS JAVA DEAD? (RIP 😢 JAVA) WILL JAVA BE REPLACED BY KOTLIN?",
-    "excerpt": "A thorough examination of Java's current state in modern development and whether Kotlin poses a real threat to Java's dominance in enterprise applications.",
-    "content": "",
-    "coverImage": "/images/blog/java.png",
-    "date": "2022-06-16",
-    "readTime": "8 min read",
-    "tags": ["Java", "Kotlin", "Programming Languages", "Enterprise Development"],
-    "featured": false,
-    "link": "https://medium.com/@krishishah2021"
-  },
-  {
-    "slug": "web-4-next-big-thing",
-    "title": "Will Web 4.0 be the Next Big Thing?",
-    "excerpt": "Exploring the potential of Web 4.0 and what this next evolution of the internet might look like, from decentralized systems to AI integration.",
-    "content": "",
-    "coverImage": "/images/blog/web4.png",
-    "date": "2022-07-10",
-    "readTime": "6 min read",
-    "tags": ["Web 4.0", "Future Web", "Technology Trends", "Internet Evolution"],
-    "featured": false,
     "link": "https://medium.com/@krishishah2021"
   }
 ]

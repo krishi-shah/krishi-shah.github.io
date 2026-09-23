@@ -10,6 +10,7 @@ export interface SiteConfig {
   longBio: string;
   location: string;
   email: string;
+  personalEmail?: string;
   phone?: string;
   timezone: string;
   heroTaglines: string[];

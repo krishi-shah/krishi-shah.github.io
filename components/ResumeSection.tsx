@@ -7,17 +7,24 @@ import { getSiteConfig } from '@/lib/content';
 const siteConfig = getSiteConfig();
 
 const certifications = [
-  'Microsoft Azure Fundamentals',
-  'Google Analytics Certified',
-  'Tableau Desktop Specialist',
-  'Dean\'s List - York University',
-  'Python Programming Certificate',
+  'Microsoft Azure AI Essentials',
+  'Career Essentials in Generative AI, Microsoft and LinkedIn',
+  'Machine Learning Foundations: Linear Algebra',
+  'Introduction to Artificial Intelligence',
+  'Ethics in the Age of Generative AI',
+];
+
+const honours = [
+  'Co-op of the Year Nominee, Ontario Government (2025)',
+  '5x University Gold Medalist, Parul University',
+  'Dean’s List, Parul University',
+  'Author of The Awakening Code',
 ];
 
 const features = [
   {
     title: 'ATS-Optimized',
-    description: 'Keyword-optimized for data science and software development roles',
+    description: 'Written for AI, machine learning, and data science internship roles',
     icon: (
       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -108,10 +115,7 @@ export default function ResumeSection() {
           className="liquid-glass-card p-8 text-center max-w-3xl mx-auto mb-12"
         >
           <p className="text-white/60 mb-6">
-            Download my resume showcasing
-            <span className="text-emerald-400 font-semibold"> 3 internships</span>,
-            <span className="text-emerald-400 font-semibold"> 5+ ML projects</span>, and
-            <span className="text-emerald-400 font-semibold"> quantified business impact</span>.
+            Download the resume covering the York research term, a year of production engineering at the Ontario Government, and the machine learning projects on this site.
           </p>
 
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
@@ -124,7 +128,7 @@ export default function ResumeSection() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
-              Download Resume
+              Download CV
             </a>
             <a
               href={siteConfig.social.linkedin}
@@ -147,8 +151,8 @@ export default function ResumeSection() {
           transition={{ duration: 0.6, delay: 0.5 }}
           className="text-center"
         >
-          <h3 className="text-xl font-bold mb-6 text-white">Certifications & Recognition</h3>
-          <div className="flex flex-wrap justify-center gap-3">
+          <h3 className="text-xl font-bold mb-6 text-white">Certifications</h3>
+          <div className="flex flex-wrap justify-center gap-3 mb-10">
             {certifications.map((cert, index) => (
               <motion.div
                 key={cert}
@@ -160,6 +164,22 @@ export default function ResumeSection() {
                          hover:border-emerald-500/30 hover:text-emerald-400 transition-all duration-300"
               >
                 {cert}
+              </motion.div>
+            ))}
+          </div>
+          <h3 className="text-xl font-bold mb-6 text-white">Honours</h3>
+          <div className="flex flex-wrap justify-center gap-3">
+            {honours.map((item, index) => (
+              <motion.div
+                key={item}
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={inView ? { opacity: 1, scale: 1 } : {}}
+                transition={{ duration: 0.3, delay: 0.7 + index * 0.05 }}
+                whileHover={{ scale: 1.05 }}
+                className="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-sm text-white/70 
+                         hover:border-emerald-500/30 hover:text-emerald-400 transition-all duration-300"
+              >
+                {item}
               </motion.div>
             ))}
           </div>

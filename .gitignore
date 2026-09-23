@@ -46,3 +46,7 @@ next-env.d.ts
 # OS
 Thumbs.db
 
+# Local CV build artifacts
+.cv-build/
+texput.log
+

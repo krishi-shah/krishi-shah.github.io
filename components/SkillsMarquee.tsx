@@ -3,9 +3,9 @@
 import { motion } from 'framer-motion';
 
 const skills = [
-  'Python', 'SQL', 'R', 'Tableau', 'Power BI', 'Machine Learning',
-  'NLP', 'scikit-learn', 'TensorFlow', 'Pandas', 'React', 'Next.js',
-  'Node.js', 'TypeScript', 'AWS', 'Azure', 'Docker', 'Git', 'Excel', 'Data Mining',
+  'Python', 'SQL', 'PyTorch', 'scikit-learn', 'XGBoost', 'LangChain',
+  'FAISS', 'Hugging Face', 'SHAP', 'MLflow', 'FastAPI', 'Docker',
+  'PostgreSQL', 'Git', 'Azure', 'Grad-CAM', 'Calibration',
 ];
 
 export default function SkillsMarquee() {

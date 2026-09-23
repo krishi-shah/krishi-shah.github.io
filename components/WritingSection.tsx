@@ -110,7 +110,7 @@ export default function WritingSection() {
             Technical <span className="gradient-text">Writing</span>
           </h2>
           <p className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto">
-            Sharing knowledge from real projects and technical challenges
+            Sole author of The Awakening Code, and technical writing across eight publications including Level Up Coding and CodeX.
           </p>
         </motion.div>
 
@@ -150,7 +150,7 @@ export default function WritingSection() {
             </a>
           </div>
           <p className="text-sm text-white/40">
-            113 followers · Published in Level Up Coding, CodeX
+            Eight publications, including Level Up Coding and CodeX
           </p>
         </motion.div>
       </div>

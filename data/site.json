@@ -1,27 +1,28 @@
 {
   "name": "Krishi Shah",
-  "title": "Data Analyst & Software Developer",
-  "shortBio": "Turning data into decisions with dashboards, ML models, and scalable code. Software Developer Co-op at Government of Ontario with a passion for building data-driven solutions.",
-  "longBio": "As a Computer Science student at York University and Software Developer Co-op at Government of Ontario, I transform complex datasets into actionable insights and build scalable applications that solve real-world problems. I specialize in the intersection of data science, machine learning, and software engineering.",
+  "title": "Applied Machine Learning",
+  "shortBio": "Final-year Honours Computer Science student at York University building machine learning and generative AI systems end to end. One year of production engineering with the Ontario Government, and a research term on AI-generated image detection.",
+  "longBio": "I build applied machine learning and generative AI systems from data validation through training, calibration, explainability, and deployment. That includes a year of production software engineering with the Ontario Government (Co-op of the Year nominee) and a research term on detecting AI-generated images.",
   "location": "Toronto, ON",
   "email": "krishi12@my.yorku.ca",
-  "phone": "825-777-0303",
+  "personalEmail": "krishishah2021@gmail.com",
+  "phone": "+1 825 777 0303",
   "timezone": "America/Toronto",
   "heroTaglines": [
-    "Data Analyst",
-    "Software Developer",
-    "ML Engineer",
-    "Problem Solver"
+    "Machine Learning",
+    "Data Science",
+    "Generative AI",
+    "Research"
   ],
   "badges": [
+    "PyTorch",
     "Python",
-    "SQL",
-    "ML",
-    "Tableau"
+    "RAG",
+    "Evaluation"
   ],
   "social": {
     "github": "https://github.com/krishi-shah",
-    "linkedin": "https://linkedin.com/in/krishi-shah312",
+    "linkedin": "https://www.linkedin.com/in/krishi-shah3/",
     "twitter": "",
     "medium": "https://medium.com/@krishishah2021"
   },
@@ -30,9 +31,9 @@
     "accentColor": "#06b6d4"
   },
   "stats": [
-    { "value": "5+", "label": "ML Projects" },
-    { "value": "100K+", "label": "Data Points Analyzed" },
-    { "value": "4+", "label": "Years Coding" },
-    { "value": "3", "label": "Internships" }
+    { "value": "0.997", "label": "AUC-ROC" },
+    { "value": "30%", "label": "Fewer data errors" },
+    { "value": "1 yr", "label": "Production engineering" },
+    { "value": "8", "label": "Technical publications" }
   ]
 }
