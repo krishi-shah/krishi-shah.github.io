@@ -52,6 +52,8 @@ export interface Project {
   repo: string;
   demo: string;
   featured: boolean;
+  headline?: string;
+  headlineLabel?: string;
 }
 
 export interface Post {

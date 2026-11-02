@@ -13,7 +13,7 @@ function Reliability({ calibrated }: { calibrated: boolean }) {
   const x = (v: number) => pad + v * (W - pad * 2);
   const y = (v: number) => H - pad - v * (H - pad * 2);
   return (
-    <svg viewBox={`0 0 ${W} ${H}`} className="h-full w-full" preserveAspectRatio="none" aria-hidden="true">
+    <svg viewBox={`0 0 ${W} ${H}`} className="block h-full w-full" aria-hidden="true">
       <rect width={W} height={H} fill={calibrated ? '#140507' : '#0f0f0f'} />
       {Array.from({ length: 11 }, (_, i) => (
         <g key={i} stroke="rgba(255,255,255,0.06)">
@@ -39,10 +39,10 @@ function Reliability({ calibrated }: { calibrated: boolean }) {
         stroke={calibrated ? '#ffffff' : '#8a8a8a'}
         strokeWidth="2"
       />
-      <text x={x(0)} y={H - 16} fill="#8a8a8a" fontSize="13" fontFamily="sans-serif">
+      <text x={x(0)} y={H - 16} fill="#8a8a8a" fontSize="15" fontFamily="var(--font-manrope), sans-serif" fontWeight="700" letterSpacing="1">
         CONFIDENCE
       </text>
-      <text x={x(1)} y={H - 16} fill="#8a8a8a" fontSize="13" fontFamily="sans-serif" textAnchor="end">
+      <text x={x(1)} y={H - 16} fill="#8a8a8a" fontSize="15" fontFamily="var(--font-manrope), sans-serif" fontWeight="700" letterSpacing="1" textAnchor="end">
         1.0
       </text>
     </svg>
@@ -84,7 +84,7 @@ export default function ProcessSection() {
         <div data-build>
           <div
             ref={box}
-            className="relative aspect-[16/9] cursor-ew-resize select-none overflow-hidden border border-line"
+            className="relative aspect-[800/420] cursor-ew-resize touch-pan-y select-none overflow-hidden border border-line"
             onPointerDown={(e) => {
               (e.target as HTMLElement).setPointerCapture?.(e.pointerId);
               setFromX(e.clientX);
@@ -121,7 +121,7 @@ export default function ProcessSection() {
               </span>
             </div>
           </div>
-          <div className="eyebrow mt-3 flex justify-between text-[10px] text-dim">
+          <div className="eyebrow mt-3 flex flex-wrap justify-between gap-2 text-[10px] text-dim">
             <span>Drag to compare</span>
             <span>Illustrative reliability diagram</span>
           </div>

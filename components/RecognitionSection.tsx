@@ -9,38 +9,6 @@ const ITEMS = [
   { title: 'Published Author', org: 'The Awakening Code', year: 'Book' },
 ];
 
-function Laurel({ flip = false }: { flip?: boolean }) {
-  // Leaves placed along a curved stem, each rotated to follow it.
-  const leaves = Array.from({ length: 7 }, (_, i) => {
-    const t = i / 6;
-    const a = Math.PI * (0.95 - t * 0.75);
-    const cx = 44 + Math.cos(a) * 34;
-    const cy = 50 - Math.sin(a) * 40 + t * 2;
-    const rot = (-a * 180) / Math.PI + 90 + (i % 2 ? 28 : -28);
-    return { cx, cy, rot, s: 1 - t * 0.35 };
-  });
-  return (
-    <svg
-      viewBox="0 0 50 100"
-      className={`h-24 w-12 text-red ${flip ? '-scale-x-100' : ''}`}
-      fill="currentColor"
-      aria-hidden="true"
-    >
-      <path d="M44 96 C 14 82, 6 52, 16 14" fill="none" stroke="currentColor" strokeWidth="1.5" />
-      {leaves.map((l, i) => (
-        <ellipse
-          key={i}
-          cx={l.cx - 20}
-          cy={l.cy + 30 - i * 2}
-          rx={3.4 * l.s}
-          ry={9 * l.s}
-          transform={`rotate(${l.rot} ${l.cx - 20} ${l.cy + 30 - i * 2})`}
-        />
-      ))}
-    </svg>
-  );
-}
-
 export default function RecognitionSection() {
   return (
     <section id="recognition" className="border-y border-line bg-gradient-to-b from-[#0d0d0d] to-ink">
@@ -54,15 +22,17 @@ export default function RecognitionSection() {
               <span className="text-red">The recognition.</span>
             </h2>
           </div>
-          <div data-build className="mt-10 flex items-center gap-2">
-            <Laurel />
-            <div className="text-center">
-              <div className="font-display text-7xl leading-none text-bone">
+          <div data-build className="mt-10 flex items-center gap-5">
+            <div className="relative flex h-28 w-28 shrink-0 items-center justify-center rounded-full border border-red/50">
+              <div className="absolute inset-2 rounded-full border border-dashed border-red/30" aria-hidden="true" />
+              <span className="font-display text-6xl leading-none text-bone">
                 5<span className="text-3xl text-red">x</span>
-              </div>
-              <div className="eyebrow mt-2 text-[10px] text-red">Gold medals</div>
+              </span>
             </div>
-            <Laurel flip />
+            <div>
+              <div className="eyebrow text-red">University gold medals</div>
+              <p className="mt-1 text-[13px] text-dim">Highest GPA overall, Parul University</p>
+            </div>
           </div>
           <p data-build className="mt-6 max-w-sm text-sm leading-7 text-bone/70">
             Work done carefully, and measured honestly.

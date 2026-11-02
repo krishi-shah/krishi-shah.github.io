@@ -9,14 +9,30 @@
     "outcome": "96.96% test accuracy and 0.9971 AUC-ROC. Temperature scaling brought expected calibration error to 0.0026. The control showed matched-resolution detection fell to 35–62%, so the earlier cross-generator scores were not a clean generator fingerprint.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["Computer Vision"],
-    "tech": ["PyTorch", "EfficientNet", "Grad-CAM", "Gradio"],
+    "tags": [
+      "Computer Vision"
+    ],
+    "tech": [
+      "PyTorch",
+      "EfficientNet",
+      "Grad-CAM",
+      "Gradio"
+    ],
     "role": "Research",
     "timeline": "2026",
     "metrics": [
-      { "value": "96.96%", "label": "Test accuracy" },
-      { "value": "0.9971", "label": "AUC-ROC" },
-      { "value": "0.0026", "label": "Calibration error" }
+      {
+        "value": "96.96%",
+        "label": "Test accuracy"
+      },
+      {
+        "value": "0.9971",
+        "label": "AUC-ROC"
+      },
+      {
+        "value": "0.0026",
+        "label": "Calibration error"
+      }
     ],
     "repo": "https://github.com/krishi-shah/ai-image-detection",
     "demo": "",
@@ -32,12 +48,22 @@
     "outcome": "Retuning chunk overlap and relevance scoring lifted context recall to 0.92 on the hybrid-plus-rerank configuration.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["LLMs"],
-    "tech": ["LangChain", "FAISS", "FinBERT", "BM25"],
+    "tags": [
+      "LLMs"
+    ],
+    "tech": [
+      "LangChain",
+      "FAISS",
+      "FinBERT",
+      "BM25"
+    ],
     "role": "ML Engineer",
     "timeline": "2025",
     "metrics": [
-      { "value": "0.92", "label": "Context recall" }
+      {
+        "value": "0.92",
+        "label": "Context recall"
+      }
     ],
     "repo": "https://github.com/krishi-shah/FinRAG-AI",
     "demo": "",
@@ -53,13 +79,27 @@
     "outcome": "0.87 ROC-AUC after cross-validated tuning, with the winning model registered in MLflow.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["ML Systems"],
-    "tech": ["XGBoost", "LightGBM", "SHAP", "MLflow", "FastAPI"],
+    "tags": [
+      "ML Systems"
+    ],
+    "tech": [
+      "XGBoost",
+      "LightGBM",
+      "SHAP",
+      "MLflow",
+      "FastAPI"
+    ],
     "role": "ML Engineer",
     "timeline": "2026",
     "metrics": [
-      { "value": "0.87", "label": "ROC-AUC" },
-      { "value": "100K+", "label": "Patient records" }
+      {
+        "value": "0.87",
+        "label": "ROC-AUC"
+      },
+      {
+        "value": "100K+",
+        "label": "Patient records"
+      }
     ],
     "repo": "https://github.com/krishi-shah/Medrisk-ML",
     "demo": "",
@@ -75,14 +115,22 @@
     "outcome": "A reusable review step for ML experiments, published as a public repository.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["ML Systems"],
-    "tech": ["Python", "mlcheck", "Claude Code"],
+    "tags": [
+      "ML Systems"
+    ],
+    "tech": [
+      "Python",
+      "mlcheck",
+      "Claude Code"
+    ],
     "role": "ML Engineer",
     "timeline": "2026",
     "metrics": [],
     "repo": "https://github.com/krishi-shah/ml-engineer-skills",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "headline": "4",
+    "headlineLabel": "ML mistakes it checks for"
   },
   {
     "slug": "permit-wait",
@@ -94,14 +142,20 @@
     "outcome": "A public estimator focused on calibrated wait times rather than an uncalibrated point forecast.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["ML Systems"],
-    "tech": ["Python"],
+    "tags": [
+      "ML Systems"
+    ],
+    "tech": [
+      "Python"
+    ],
     "role": "ML Engineer",
     "timeline": "2026",
     "metrics": [],
     "repo": "https://github.com/krishi-shah/permit-wait",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "headline": "Toronto",
+    "headlineLabel": "Building permit wait times"
   },
   {
     "slug": "toronto-ai-ml-internship-radar",
@@ -113,12 +167,20 @@
     "outcome": "A live Winter 2027 feed of AI/ML internships and co-ops in Canada.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["Tools"],
-    "tech": ["Python", "GitHub Actions"],
+    "tags": [
+      "Tools"
+    ],
+    "tech": [
+      "Python",
+      "GitHub Actions"
+    ],
     "role": "Builder",
     "timeline": "2026",
     "metrics": [
-      { "value": "~10 min", "label": "Refresh interval" }
+      {
+        "value": "~10 min",
+        "label": "Refresh interval"
+      }
     ],
     "repo": "https://github.com/krishi-shah/Toronto-AI-ML-internship-radar",
     "demo": "",
@@ -134,13 +196,21 @@
     "outcome": "A local real-time recognizer with a public Streamlit demo.",
     "coverImage": "/grid.svg",
     "images": [],
-    "tags": ["Computer Vision"],
-    "tech": ["Python", "OpenCV", "Streamlit"],
+    "tags": [
+      "Computer Vision"
+    ],
+    "tech": [
+      "Python",
+      "OpenCV",
+      "Streamlit"
+    ],
     "role": "Developer",
     "timeline": "2026",
     "metrics": [],
     "repo": "https://github.com/krishi-shah/Realtime_FaceRecognition",
     "demo": "https://realtime-face-recognition.streamlit.app/",
-    "featured": true
+    "featured": true,
+    "headline": "Live",
+    "headlineLabel": "Webcam face recognition"
   }
 ]

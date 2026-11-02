@@ -2,8 +2,8 @@ import { ArrowUpRight } from 'lucide-react';
 
 const experiences = [
   {
-    title: 'AI Research Assistant',
-    company: 'York University, supervised by Prof. Mona Nasery',
+    title: 'AI Research Assistant, supervised by Prof. Mona Nasery',
+    company: 'York University',
     period: 'May 2026 – Aug 2026',
     location: 'Toronto, ON',
     description: [

@@ -23,9 +23,11 @@ function categoryOf(p: (typeof projects)[number]) {
   return p.tags[0] || 'Tools';
 }
 
-/* A generated cover for each project: grid, scanlines, and the headline number. */
+/* A generated cover for each project: grid, bars, and the headline number. */
 function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
   const metric = p.metrics[0];
+  const headline = p.headline ?? metric?.value ?? p.tech[0];
+  const label = p.headlineLabel ?? metric?.label ?? 'Open source';
   const seed = index * 37;
   const bars = Array.from({ length: 22 }, (_, i) => 18 + ((Math.sin(seed + i * 1.7) + 1) / 2) * 62);
   return (
@@ -38,24 +40,24 @@ function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
           backgroundSize: '28px 28px',
         }}
       />
-      <div className="absolute inset-x-6 bottom-6 flex h-1/2 items-end gap-[3px] opacity-70 transition-opacity duration-500 group-hover:opacity-100">
+      <div className="absolute inset-x-5 bottom-5 flex h-[42%] items-end gap-[3px] opacity-60 transition-opacity duration-500 group-hover:opacity-100">
         {bars.map((h, i) => (
           <div
             key={i}
-            className="flex-1 bg-gradient-to-t from-red-deep to-red/70 transition-transform duration-700 ease-out-expo group-hover:scale-y-110"
-            style={{ height: `${h}%`, transformOrigin: 'bottom', transitionDelay: `${i * 12}ms` }}
+            className="flex-1 origin-bottom bg-gradient-to-t from-red-deep to-red/70 transition-transform duration-700 ease-out-expo group-hover:scale-y-110"
+            style={{ height: `${h}%`, transitionDelay: `${i * 12}ms` }}
           />
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/30 to-transparent" />
-      <span className="absolute left-4 top-4 bg-ink/80 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-bone/80">
-        {categoryOf(p)}
-      </span>
-      <div className="absolute left-5 top-12 font-display text-5xl leading-none text-bone transition-transform duration-500 ease-out-expo group-hover:translate-x-1 sm:text-6xl">
-        {metric ? metric.value : p.tech[0]}
-      </div>
-      <div className="absolute left-5 top-[6.6rem] text-[10px] font-bold uppercase tracking-wider text-dim sm:top-[7.6rem]">
-        {metric ? metric.label : 'Open source'}
+      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+      <div className="relative flex h-full flex-col items-start p-4 sm:p-5">
+        <span className="bg-ink/80 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-bone/80">
+          {categoryOf(p)}
+        </span>
+        <div className="mt-3 font-display text-5xl leading-none text-bone transition-transform duration-500 ease-out-expo group-hover:translate-x-1 sm:text-[3.4rem]">
+          {headline}
+        </div>
+        <div className="mt-2 text-[10px] font-bold uppercase tracking-wider text-dim">{label}</div>
       </div>
     </div>
   );
@@ -93,34 +95,34 @@ export default function WorkSection() {
         </a>
       </div>
 
-      <div data-build className="mt-10 flex flex-wrap items-center justify-between gap-4 border-b border-line pb-4">
-        <div className="flex flex-wrap gap-x-7 gap-y-2">
+      <div data-build className="mt-10 flex flex-col gap-4 border-b border-line sm:flex-row sm:items-end sm:justify-between">
+        <div className="-mx-5 flex gap-7 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
           {categories.map((c) => (
             <button
               key={c}
               type="button"
               onClick={() => setCat(c)}
-              className={`relative pb-1 text-[13px] transition-colors ${
+              className={`relative shrink-0 whitespace-nowrap pb-4 text-[13px] transition-colors ${
                 cat === c ? 'text-bone' : 'text-dim hover:text-bone'
               }`}
             >
               {c}
               <span
-                className={`absolute -bottom-[17px] left-0 h-[2px] w-full bg-red transition-opacity ${
+                className={`absolute -bottom-px left-0 h-[2px] w-full bg-red transition-opacity ${
                   cat === c ? 'opacity-100' : 'opacity-0'
                 }`}
               />
             </button>
           ))}
         </div>
-        <label className="flex items-center gap-2 text-[12px] text-dim">
+        <label className="flex items-center gap-2 pb-4 text-[12px] text-dim">
           <Search className="h-4 w-4" />
           <span className="sr-only">Search projects</span>
           <input
             value={q}
             onChange={(e) => setQ(e.target.value)}
             placeholder="Title or stack"
-            className="w-36 bg-transparent text-bone placeholder:text-dim focus:outline-none"
+            className="w-40 bg-transparent text-bone placeholder:text-dim focus:outline-none"
           />
         </label>
       </div>

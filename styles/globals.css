@@ -92,31 +92,26 @@ html.motion-off .pulse-dot {
 
 /* ===================== Cursor build effect ===================== */
 
-[data-build] {
-  transition: clip-path 0.75s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
-}
+/* Hidden until the cursors build it. The reveal itself is a Web Animation,
+   so built elements keep their own transitions and carry no clip path. */
 html.cb-armed [data-build]:not(.is-built) {
   opacity: 0;
-  clip-path: inset(0 100% 100% 0);
-}
-html.cb-armed [data-build].is-built {
-  opacity: 1;
-  clip-path: inset(-40px -40px -40px -40px);
-}
-html.cb-armed [data-build].is-settled {
-  clip-path: none;
-  transition: none;
 }
 
 .cb-layer {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 70;
+}
+.cb-stage {
   position: absolute;
   top: 0;
   left: 0;
   width: 0;
   height: 0;
-  overflow: visible;
-  pointer-events: none;
-  z-index: 70;
+  will-change: transform;
 }
 
 .cb-cursor {
