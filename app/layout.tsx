@@ -1,33 +1,14 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Space_Grotesk, Fira_Code } from 'next/font/google';
+import '@fontsource/anton/400.css';
+import '@fontsource-variable/manrope';
+import '@fontsource/caveat/600.css';
 import '@/styles/globals.css';
 import { getSiteConfig } from '@/lib/content';
 
 const siteConfig = getSiteConfig();
 
-const inter = Inter({
-  subsets: ['latin'],
-  variable: '--font-inter',
-  display: 'swap',
-});
-
-const spaceGrotesk = Space_Grotesk({
-  subsets: ['latin'],
-  variable: '--font-space-grotesk',
-  display: 'swap',
-});
-
-const firaCode = Fira_Code({
-  subsets: ['latin'],
-  variable: '--font-fira-code',
-  display: 'swap',
-});
-
 export const viewport: Viewport = {
-  themeColor: [
-    { media: '(prefers-color-scheme: light)', color: '#ffffff' },
-    { media: '(prefers-color-scheme: dark)', color: '#0a0a0f' },
-  ],
+  themeColor: '#090909',
   width: 'device-width',
   initialScale: 1,
 };
@@ -101,7 +82,6 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${firaCode.variable}`}
       suppressHydrationWarning
     >
       <head>
@@ -110,22 +90,22 @@ export default function RootLayout({
             __html: `
               (function() {
                 try {
-                  var theme = localStorage.getItem('theme');
-                  if (theme === 'dark' || (!theme && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                    document.documentElement.classList.add('dark');
-                  } else {
-                    document.documentElement.classList.remove('dark');
-                  }
+                  var d = document.documentElement;
+                  var off = localStorage.getItem('motion') === 'off';
+                  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+                  if (off || reduce) { d.classList.add('motion-off'); return; }
+                  d.classList.add('cb-armed');
+                  setTimeout(function () {
+                    if (!window.__cbReady) d.classList.remove('cb-armed');
+                  }, 6000);
                 } catch (e) {}
               })();
             `,
           }}
         />
       </head>
-      <body className="font-sans antialiased bg-[#0a0a0f] text-white overflow-x-hidden">
+      <body className="font-sans bg-ink text-bone overflow-x-hidden">
         {children}
-        {/* Noise overlay for texture */}
-        <div className="noise-overlay" aria-hidden="true" />
       </body>
     </html>
   );

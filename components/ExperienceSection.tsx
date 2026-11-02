@@ -1,7 +1,4 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import { ArrowUpRight } from 'lucide-react';
 
 const experiences = [
   {
@@ -95,160 +92,72 @@ const volunteerExperience = [
   },
 ];
 
-export default function ExperienceSection() {
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
+type Role = { title: string; company: string; period: string; location: string; description: string[]; skills: string[] };
 
+function Row({ r, i }: { r: Role; i: number }) {
   return (
-    <section id="experience" className="relative py-24 sm:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-cyan-500/30 to-transparent" />
-      
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <motion.span 
-            className="inline-block text-cyan-400 text-sm font-medium tracking-wider uppercase mb-4"
-          >
-            Career Journey
-          </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight">
-            Professional <span className="gradient-text">Experience</span>
-          </h2>
-        </motion.div>
+    <article data-build className="group grid gap-4 border-b border-line py-8 lg:grid-cols-[180px_1fr_1.4fr] lg:gap-10">
+      <div>
+        <p className="text-[11px] font-bold uppercase tracking-wider text-red">{r.period}</p>
+        <p className="mt-1 text-[11px] uppercase tracking-wider text-dim">{r.location}</p>
+      </div>
+      <div>
+        <h3 className="font-display text-2xl uppercase leading-tight text-bone sm:text-3xl">{r.company}</h3>
+        <p className="mt-2 text-sm font-semibold text-bone/70">{r.title}</p>
+      </div>
+      <div>
+        <ul className="space-y-2">
+          {r.description.map((d) => (
+            <li key={d} className="flex gap-3 text-[14px] leading-6 text-bone/70">
+              <span className="mt-[10px] h-[3px] w-3 shrink-0 bg-red" />
+              {d}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-4 flex flex-wrap gap-2">
+          {r.skills.map((s) => (
+            <span key={s} className="bg-panel2 px-2 py-1 text-[11px] text-dim">
+              {s}
+            </span>
+          ))}
+        </div>
+      </div>
+    </article>
+  );
+}
 
-        {/* Timeline */}
-        <div className="relative mb-20">
-          {/* Vertical Line */}
-          <div className="hidden lg:block absolute left-1/2 top-0 bottom-0 w-px">
-            <div className="h-full bg-gradient-to-b from-emerald-500/50 via-cyan-500/30 to-violet-500/20" />
+export default function ExperienceSection() {
+  return (
+    <section id="journey" className="border-t border-line bg-[#0c0c0c]">
+      <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div data-build>
+            <p className="eyebrow text-red">03 / The journey</p>
+            <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
+              Keep shipping<span className="text-red">.</span> Keep learning<span className="text-red">.</span>
+            </h2>
           </div>
+          <a
+            data-build
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="inline-flex items-center gap-3 border border-line px-5 py-3 text-[12px] font-bold uppercase tracking-wider text-bone transition-colors hover:border-red hover:text-red"
+          >
+            Resume <ArrowUpRight className="h-4 w-4" />
+          </a>
+        </div>
 
-          {experiences.map((exp, index) => (
-            <motion.div
-              key={exp.title + exp.company}
-              initial={{ opacity: 0, y: 40 }}
-              animate={inView ? { opacity: 1, y: 0 } : {}}
-              transition={{ duration: 0.6, delay: 0.2 + index * 0.15 }}
-              className={`relative mb-12 lg:mb-16 ${
-                index % 2 === 0 ? 'lg:pr-[52%]' : 'lg:pl-[52%]'
-              }`}
-            >
-              {/* Timeline Node */}
-              <div className="hidden lg:flex absolute left-1/2 top-8 w-4 h-4 -translate-x-1/2 items-center justify-center">
-                <div className={`w-4 h-4 rounded-full bg-gradient-to-br ${exp.gradient}`} />
-                <div className="absolute inset-0 rounded-full bg-emerald-500/20 animate-ping" />
-              </div>
-
-              {/* Card */}
-              <motion.div 
-                className="liquid-glass-card p-6 sm:p-8 relative group"
-                whileHover={{ y: -3 }}
-              >
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${exp.gradient} opacity-0 group-hover:opacity-5 transition-opacity duration-500`} />
-                
-                <div className="relative z-10">
-                  {/* Header */}
-                  <div className="flex flex-wrap items-start justify-between gap-3 mb-4">
-                    <div>
-                      <h3 className="font-bold text-white text-xl mb-1">{exp.title}</h3>
-                      <p className="text-emerald-400 font-medium">{exp.company}</p>
-                    </div>
-                    <div className="text-right">
-                      <span className="inline-block text-xs text-white/70 bg-white/10 backdrop-blur-xl px-3 py-1.5 rounded-full border border-white/10">
-                        {exp.period}
-                      </span>
-                      <p className="text-xs text-white/40 mt-1">{exp.location}</p>
-                    </div>
-                  </div>
-
-                  {/* Description */}
-                  <ul className="space-y-2 mb-5">
-                    {exp.description.map((desc, i) => (
-                      <li key={i} className="text-white/60 text-sm flex items-start gap-3">
-                        <span className="w-1.5 h-1.5 rounded-full bg-emerald-500/50 mt-2 flex-shrink-0" />
-                        <span>{desc}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* Skills */}
-                  <div className="flex flex-wrap gap-2">
-                    {exp.skills.map((skill) => (
-                      <span
-                        key={skill}
-                        className="px-3 py-1 text-xs rounded-lg 
-                                 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400"
-                      >
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </motion.div>
-            </motion.div>
+        <div className="mt-12 border-t border-line">
+          {experiences.map((r, i) => (
+            <Row key={r.company + r.period} r={r} i={i} />
           ))}
         </div>
 
-        {/* Volunteer Experience */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.6 }}
-        >
-          <h3 className="text-2xl sm:text-3xl font-bold mb-10 text-center">Leadership</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {volunteerExperience.map((exp, index) => (
-              <motion.div
-                key={exp.title}
-                initial={{ opacity: 0, y: 20 }}
-                animate={inView ? { opacity: 1, y: 0 } : {}}
-                transition={{ duration: 0.5, delay: 0.7 + index * 0.1 }}
-                whileHover={{ y: -3 }}
-                className="liquid-glass-card p-6 group"
-              >
-                <div className="flex flex-wrap items-start justify-between gap-2 mb-4">
-                  <div>
-                    <h4 className="font-bold text-white">{exp.title}</h4>
-                    <p className="text-emerald-400 text-sm">{exp.company}</p>
-                  </div>
-                  <span className="text-xs text-white/50 bg-white/5 px-2 py-1 rounded-lg">
-                    {exp.period}
-                  </span>
-                </div>
-
-                <ul className="space-y-1 mb-4">
-                  {exp.description.map((desc, i) => (
-                    <li key={i} className="text-white/50 text-sm flex items-start gap-2">
-                      <span className="w-1 h-1 rounded-full bg-white/30 mt-2" />
-                      {desc}
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-wrap gap-2">
-                  {exp.skills.map((skill) => (
-                    <span
-                      key={skill}
-                      className="px-2 py-1 text-xs rounded-md bg-white/5 border border-white/10 text-white/60"
-                    >
-                      {skill}
-                    </span>
-                  ))}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
+        <p data-build className="eyebrow mt-16 border-b border-line pb-3 text-dim">Leadership</p>
+        {volunteerExperience.map((r, i) => (
+          <Row key={r.company} r={r} i={i} />
+        ))}
       </div>
     </section>
   );

@@ -1,158 +1,73 @@
-'use client';
-
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
-import { getAllPosts, formatDate, type Post } from '@/lib/content';
+import { ArrowUpRight } from 'lucide-react';
+import { getAllPosts, formatDateShort } from '@/lib/content';
 
 const posts = getAllPosts();
 
-interface PostCardProps {
-  post: Post;
-  index: number;
-}
-
-function PostCard({ post, index }: PostCardProps) {
-  const categoryColors: { [key: string]: string } = {
-    'Data Science': 'from-emerald-500 to-cyan-500',
-    'Artificial Intelligence': 'from-violet-500 to-purple-500',
-    'Programming': 'from-orange-500 to-red-500',
-    'Blockchain & Web3': 'from-blue-500 to-indigo-500',
-    'Programming Languages': 'from-yellow-500 to-orange-500',
-    'Web Development': 'from-pink-500 to-rose-500',
-  };
-
-  const category = post.tags[0] || 'Technology';
-  const gradientColor = categoryColors[category] || 'from-emerald-500 to-cyan-500';
-
-  return (
-    <motion.article
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, delay: index * 0.1 }}
-      className="group relative"
-    >
-      <a
-        href={`https://medium.com/@krishishah2021`}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="block p-5 sm:p-6 transition-all duration-300 hover:-translate-y-2 liquid-glass-card h-full"
-      >
-        {/* Category Badge */}
-        <div className={`inline-flex items-center px-3 py-1 rounded-full text-xs font-medium mb-3 bg-gradient-to-r ${gradientColor} bg-opacity-20`}>
-          <span className="text-white/90">{category}</span>
-        </div>
-
-        {/* Date and Read Time */}
-        <div className="flex items-center gap-3 text-xs text-white/40 mb-3">
-          <time dateTime={post.date}>{formatDate(post.date)}</time>
-          <span className="w-1 h-1 rounded-full bg-white/30" />
-          <span>{post.readTime}</span>
-        </div>
-
-        {/* Title */}
-        <h3 className="text-lg font-bold mb-2 text-white group-hover:text-emerald-400 transition-colors line-clamp-2">
-          {post.title}
-        </h3>
-
-        {/* Excerpt */}
-        <p className="text-white/50 text-sm line-clamp-3 mb-4">
-          {post.excerpt}
-        </p>
-
-        {/* Tags */}
-        <div className="flex flex-wrap gap-1.5 mb-4">
-          {post.tags.slice(0, 3).map((tag) => (
-            <span key={tag} className="px-2 py-0.5 rounded text-xs bg-white/5 text-white/50 border border-white/10">
-              {tag}
-            </span>
-          ))}
-        </div>
-
-        {/* Read More */}
-        <div className="flex items-center gap-2 text-sm font-medium text-emerald-400">
-          <span>Read Article</span>
-          <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-          </svg>
-        </div>
-      </a>
-    </motion.article>
-  );
-}
-
 export default function WritingSection() {
-  const { ref, inView } = useInView({
-    threshold: 0.1,
-    triggerOnce: true,
-  });
-
   return (
-    <section id="writing" className="relative py-24 sm:py-32 overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/30 to-transparent" />
-      <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-violet-500/30 to-transparent" />
+    <section id="writing" className="border-t border-line">
+      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-20 sm:px-10 sm:py-28 lg:grid-cols-[1fr_1.5fr]">
+        <div>
+          <div data-build>
+            <p className="eyebrow text-red">04 / In writing</p>
+            <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
+              Words that
+              <br />
+              <span className="text-red">teach.</span>
+            </h2>
+            <p className="mt-6 max-w-sm text-sm leading-7 text-bone/70">
+              Sole author of The Awakening Code, and technical writing across eight publications including Level Up
+              Coding and CodeX.
+            </p>
+          </div>
 
-      <div className="relative z-10 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <motion.div
-          ref={ref}
-          initial={{ opacity: 0, y: 30 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8 }}
-          className="text-center mb-16"
-        >
-          <motion.span 
-            className="inline-block text-violet-400 text-sm font-medium tracking-wider uppercase mb-4"
-          >
-            Insights & Learning
-          </motion.span>
-          <h2 className="text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight mb-4">
-            Technical <span className="gradient-text">Writing</span>
-          </h2>
-          <p className="text-white/50 text-base sm:text-lg max-w-2xl mx-auto">
-            Sole author of The Awakening Code, and technical writing across eight publications including Level Up Coding and CodeX.
-          </p>
-        </motion.div>
-
-        {/* Posts Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
-          {posts.slice(0, 6).map((post, index) => (
-            <PostCard key={post.slug} post={post} index={index} />
-          ))}
+          <div data-build className="relative mt-10 max-w-[300px] overflow-hidden border border-line bg-panel p-6">
+            <div className="absolute -right-6 -top-6 h-24 w-24 rounded-full bg-red/20 blur-2xl" aria-hidden="true" />
+            <p className="eyebrow text-[10px] text-red">Book</p>
+            <p className="mt-3 font-display text-4xl uppercase leading-none text-bone">
+              The
+              <br />
+              Awakening
+              <br />
+              Code
+            </p>
+            <p className="mt-4 text-[12px] text-dim">by Krishi Shah</p>
+          </div>
         </div>
 
-        {/* View All Link */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={inView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-12"
-        >
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
+        <div className="border-t border-line">
+          {posts.map((p, i) => (
             <a
-              href="https://medium.com/@krishishah2021"
+              data-build
+              key={p.slug}
+              href={p.link || 'https://medium.com/@krishishah2021'}
               target="_blank"
-              rel="noopener noreferrer"
-              className="btn-primary"
+              rel="noreferrer"
+              className="group flex items-start gap-5 border-b border-line py-7"
             >
-              View All on Medium
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-              </svg>
+              <span className="font-display text-4xl leading-none text-red">{String(i + 1).padStart(2, '0')}</span>
+              <div className="flex-1">
+                <p className="text-[11px] uppercase tracking-wider text-dim">
+                  {formatDateShort(p.date)} · {p.readTime}
+                </p>
+                <h3 className="mt-2 text-xl font-bold leading-snug text-bone transition-colors group-hover:text-red sm:text-2xl">
+                  {p.title}
+                </h3>
+                <p className="mt-2 text-[14px] leading-6 text-bone/60">{p.excerpt}</p>
+              </div>
+              <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-dim transition-transform duration-300 group-hover:-translate-y-1 group-hover:translate-x-1 group-hover:text-red" />
             </a>
-            <a
-              href="https://medium.com/@krishishah2021"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn-secondary"
-            >
-              Follow on Medium
-            </a>
-          </div>
-          <p className="text-sm text-white/40">
-            Eight publications, including Level Up Coding and CodeX
-          </p>
-        </motion.div>
+          ))}
+          <a
+            data-build
+            href="https://medium.com/@krishishah2021"
+            target="_blank"
+            rel="noreferrer"
+            className="eyebrow mt-8 inline-flex items-center gap-3 text-bone hover:text-red"
+          >
+            All articles on Medium <ArrowUpRight className="h-4 w-4 text-red" />
+          </a>
+        </div>
       </div>
     </section>
   );

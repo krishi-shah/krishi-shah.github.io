@@ -1,231 +1,125 @@
-'use client';
+import { ArrowDown, ArrowUpRight, Download, MapPin } from 'lucide-react';
 
-import { useRef } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import { useTypewriter } from '@/lib/hooks/useTypewriter';
-import { getSiteConfig } from '@/lib/content';
-
-const siteConfig = getSiteConfig();
+const STATS = [
+  { value: '0.997', suffix: '', label: 'AUC ROC on AI image detection' },
+  { value: '1', suffix: 'yr', label: 'Production engineering, Ontario Government' },
+  { value: '8', suffix: '+', label: 'Technical articles published', link: 'https://medium.com/@krishishah2021' },
+];
 
 export default function Hero() {
-  const containerRef = useRef<HTMLElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ['start start', 'end start'],
-  });
-
-  const y = useTransform(scrollYProgress, [0, 1], ['0%', '30%']);
-  const opacity = useTransform(scrollYProgress, [0, 0.8], [1, 0]);
-
-  const { text, isTyping } = useTypewriter({
-    words: siteConfig.heroTaglines,
-    typeSpeed: 80,
-    deleteSpeed: 40,
-    delayBetweenWords: 2500,
-  });
-
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      const offset = 80;
-      const top = element.getBoundingClientRect().top + window.pageYOffset - offset;
-      window.scrollTo({ top, behavior: 'smooth' });
-    }
-  };
-
   return (
-    <section
-      id="home"
-      ref={containerRef}
-      className="relative min-h-screen flex items-center justify-center overflow-hidden"
-    >
-      {/* Subtle vignette - particles show through */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_40%,rgba(10,10,15,0.5)_100%)]" />
-
-      {/* Content */}
-      <motion.div
-        style={{ y, opacity }}
-        className="relative z-10 w-full px-4 sm:px-6 lg:px-8 text-center"
-      >
-        <div className="max-w-4xl mx-auto">
-          {/* Role Badge */}
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            transition={{ duration: 0.6 }}
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full mb-8
-                       bg-emerald-500/10 border border-emerald-500/30
-                       backdrop-blur-xl shadow-lg shadow-emerald-500/10"
-          >
-            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span className="text-sm font-medium text-emerald-400">{siteConfig.title}</span>
-          </motion.div>
-
-          {/* Name */}
-          <motion.h1
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.1 }}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6"
-          >
-            <span className="gradient-text">{siteConfig.name}</span>
-          </motion.h1>
-
-          {/* Typewriter Effect */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-            className="h-12 sm:h-14 md:h-16 flex items-center justify-center mb-8"
-          >
-            <span className="text-xl sm:text-2xl md:text-3xl font-medium text-white/80">
-              {text}
-              <motion.span
-                animate={{ opacity: isTyping ? 1 : [1, 0] }}
-                transition={{ duration: 0.5, repeat: Infinity, repeatType: 'reverse' }}
-                className="inline-block w-0.5 h-6 sm:h-7 md:h-8 bg-emerald-500 ml-1 align-middle"
-              />
-            </span>
-          </motion.div>
-
-          {/* Bio */}
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.3 }}
-            className="text-base sm:text-lg md:text-xl text-white/60 max-w-2xl mx-auto mb-10 px-4 leading-relaxed"
-          >
-            {siteConfig.shortBio}
-          </motion.p>
-
-          {/* Badges */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-wrap items-center justify-center gap-3 mb-12 px-4"
-          >
-            {siteConfig.badges.map((badge, index) => (
-              <motion.span
-                key={badge}
-                initial={{ opacity: 0, scale: 0.8 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.4, delay: 0.5 + index * 0.1 }}
-                whileHover={{ scale: 1.05, y: -2 }}
-                className="px-4 py-2 rounded-full text-sm font-medium
-                         bg-white/5 border border-white/10 text-white/70
-                         hover:bg-emerald-500/10 hover:border-emerald-500/30 hover:text-emerald-400
-                         transition-all duration-300"
-              >
-                {badge}
-              </motion.span>
-            ))}
-          </motion.div>
-
-          {/* Stats Cards */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="grid grid-cols-2 sm:grid-cols-4 gap-4 sm:gap-6 mb-12 px-4"
-          >
-            {siteConfig.stats.map((stat, index) => (
-              <motion.div
-                key={stat.label}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.6 + index * 0.1 }}
-                whileHover={{ scale: 1.03, y: -3 }}
-                className="liquid-glass-card p-5 text-center group"
-              >
-                <div className="text-3xl sm:text-4xl font-bold text-emerald-400 mb-1 
-                              group-hover:text-transparent group-hover:bg-clip-text 
-                              group-hover:bg-gradient-to-r group-hover:from-emerald-400 group-hover:to-cyan-400
-                              transition-all duration-300">
-                  {stat.value}
-                </div>
-                <div className="text-xs sm:text-sm text-white/50 group-hover:text-white/70 transition-colors">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-
-          {/* CTAs */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 px-4"
-          >
-            <motion.button
-              onClick={() => scrollToSection('projects')}
-              className="w-full sm:w-auto btn-primary group"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              View Projects
-              <svg
-                className="w-4 h-4 transition-transform group-hover:translate-x-1"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M17 8l4 4m0 0l-4 4m4-4H3"
-                />
-              </svg>
-            </motion.button>
-            
-            <motion.a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full sm:w-auto btn-secondary"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-              </svg>
-              Download CV
-            </motion.a>
-
-            <motion.button
-              onClick={() => scrollToSection('contact')}
-              className="w-full sm:w-auto btn-secondary"
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-            >
-              Contact Me
-            </motion.button>
-          </motion.div>
+    <section id="home" className="relative overflow-hidden pt-[66px]">
+      <div className="relative mx-auto min-h-[calc(100svh-66px)] max-w-[1400px] px-5 pb-10 sm:px-10">
+        {/* Top labels */}
+        <div className="relative z-20 flex items-start justify-between pt-7">
+          <div data-build className="eyebrow leading-5">
+            <div className="text-red">ML Engineer / Data Scientist</div>
+            <div className="text-bone/80">Research · York University</div>
+          </div>
+          <div data-build className="eyebrow flex items-center gap-2 text-bone/80">
+            <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-red" />
+            <span className="hidden sm:inline">Open to Winter 2027 roles</span>
+            <span className="sm:hidden">Open to work</span>
+          </div>
         </div>
-      </motion.div>
 
-      {/* Scroll Indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.5 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-10"
-      >
-        <motion.button
-          onClick={() => scrollToSection('about')}
-          className="flex flex-col items-center gap-2 text-white/40 hover:text-emerald-400 transition-colors"
-          animate={{ y: [0, 8, 0] }}
-          transition={{ duration: 2, repeat: Infinity }}
-          aria-label="Scroll to explore"
-        >
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-          </svg>
-        </motion.button>
-      </motion.div>
+        {/* Giant word and portrait. On phones they sit in their own stage at the top;
+            from lg up the wrapper is static so both pin to the full hero. */}
+        <div className="relative mt-2 h-[min(118vw,520px)] sm:h-[560px] lg:static lg:mt-0 lg:h-auto">
+          <div
+            data-build
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-[6%] z-0 select-none lg:top-[13%]"
+          >
+            <div className="hero-word text-center font-display text-[24vw] uppercase lg:text-[22vw] xl:text-[19.5rem]">
+              Portfolio
+            </div>
+          </div>
+
+          <div
+            data-build
+            className="absolute inset-x-0 bottom-0 z-10 mx-auto w-[86vw] max-w-[540px] sm:w-[60vw] lg:w-[36vw]"
+          >
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/portrait.webp"
+              alt="Krishi Shah"
+              width={628}
+              height={671}
+              className="portrait-tint block h-auto w-full"
+            />
+          </div>
+        </div>
+
+        {/* Left column */}
+        <div className="relative z-20 -mt-16 max-w-[420px] lg:mt-[9vh]">
+          <p data-build className="-rotate-6 font-script text-5xl text-bone sm:text-6xl">
+            Hello, I&apos;m
+          </p>
+          <h1 data-build className="mt-1 font-display text-[18vw] uppercase leading-[0.9] text-bone sm:text-[7.5rem]">
+            Krishi<span className="red-dot" />
+          </h1>
+          <p data-build className="mt-6 text-2xl font-extrabold uppercase leading-tight text-red sm:text-[28px]">
+            Applied ML &amp;
+            <br />
+            Data Science
+          </p>
+          <p data-build className="mt-5 max-w-[300px] text-[15px] leading-7 text-bone/75">
+            Models that hold up. Claims that are tested. I take machine learning from raw data to calibrated,
+            explainable systems in production.
+          </p>
+          <a
+            data-build
+            href="#work"
+            className="mt-8 inline-flex items-center gap-6 bg-red px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-red-bright"
+          >
+            See my work <ArrowDown className="h-4 w-4" />
+          </a>
+          <p data-build className="mt-7 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-dim">
+            <MapPin className="h-3.5 w-3.5 text-red" /> Toronto, Canada
+          </p>
+        </div>
+
+        {/* Right column */}
+        <div className="relative z-20 mt-16 w-full lg:absolute lg:right-10 lg:top-[38%] lg:mt-0 lg:w-[260px]">
+          <div data-build className="mb-6 flex items-center gap-4">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-red/40 text-xl text-red">
+              ✳
+            </span>
+            <p className="text-[13px] leading-5 text-bone/85">
+              Every model.
+              <br />A measured claim.
+            </p>
+          </div>
+          {STATS.map((s) => (
+            <div data-build key={s.label} className="flex items-center gap-6 border-b border-line py-3.5">
+              <div className="w-[88px] font-display text-[44px] leading-none text-red">
+                {s.value}
+                {s.suffix && <span className="ml-0.5 text-lg">{s.suffix}</span>}
+              </div>
+              <div className="eyebrow max-w-[140px] text-[10px] font-semibold leading-4 text-dim">
+                {s.link ? (
+                  <a href={s.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-bone">
+                    {s.label} <ArrowUpRight className="h-3 w-3 text-red" />
+                  </a>
+                ) : (
+                  s.label
+                )}
+              </div>
+            </div>
+          ))}
+          <a
+            data-build
+            href="/resume.pdf"
+            target="_blank"
+            rel="noreferrer"
+            className="eyebrow mt-5 inline-flex items-center gap-3 text-bone/85 hover:text-bone"
+          >
+            <Download className="h-4 w-4 text-red" /> Download CV
+          </a>
+        </div>
+      </div>
+      <div className="mx-auto h-px max-w-[1400px] bg-line" />
     </section>
   );
 }
