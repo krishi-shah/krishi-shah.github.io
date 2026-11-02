@@ -31,7 +31,7 @@ function Band({ reverse, tone }: { reverse?: boolean; tone: 'red' | 'dark' }) {
 /* Two bands crossing at slight angles, scrolling in opposite directions. */
 export default function Ribbons() {
   return (
-    <div data-anim className="relative h-[170px] overflow-hidden sm:h-[230px]" aria-label={WORDS.join(', ')}>
+    <div data-anim className="relative h-[170px] overflow-hidden sm:h-[230px]" aria-hidden="true">
       <Band tone="dark" reverse />
       <Band tone="red" />
     </div>

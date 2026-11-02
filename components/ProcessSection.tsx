@@ -3,6 +3,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { MoveHorizontal } from 'lucide-react';
 import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 /* Illustrative reliability diagram: predicted confidence vs observed accuracy. */
 function Reliability({ calibrated }: { calibrated: boolean }) {
@@ -61,19 +62,21 @@ export default function ProcessSection() {
   }, []);
 
   return (
-    <section className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-24">
+    <section id="method" className="relative overflow-clip border-t border-line">
+      <SectionNumber n="04" />
+      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-24">
       <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:items-end">
         <div data-build>
-          <p className="label">A look under the model</p>
+          <p className="label">04 / Under the model</p>
           <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-6xl">
-            <Lines lines={['From raw.', <span key="c" className="text-bone/45">To calibrated.</span>]} />
+            <Lines lines={['From raw.', <span key="c" className="text-bone/55">To calibrated.</span>]} />
           </h2>
           <p className="mt-6 text-lg font-semibold text-bone">One detector. Two very different promises.</p>
           <p className="mt-3 max-w-sm text-sm leading-7 text-bone/65">
             A model can be accurate and still overconfident. Temperature scaling brought the AI image detector&apos;s
             expected calibration error to 0.0026, so a 90% score actually means 90%.
           </p>
-          <p className="eyebrow mt-8 leading-[1.6] text-bone/45">
+          <p className="eyebrow mt-8 leading-[1.6] text-bone/55">
             AI image detection / 2026
             <br />
             <span className="text-bone/70">EfficientNet B3 · Temperature scaling · Grad CAM</span>
@@ -121,11 +124,12 @@ export default function ProcessSection() {
               </span>
             </div>
           </div>
-          <div className="eyebrow mt-3 flex flex-wrap justify-between gap-2 text-bone/45">
+          <div className="eyebrow mt-3 flex flex-wrap justify-between gap-2 text-bone/55">
             <span>Drag to compare</span>
             <span>Illustrative reliability diagram</span>
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

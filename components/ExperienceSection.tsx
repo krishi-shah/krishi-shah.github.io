@@ -119,7 +119,7 @@ function Row({ r }: { r: Role }) {
     <article data-build className="grid gap-4 border-b border-line py-8">
       <div>
         <p className="eyebrow text-bone/80">{r.period}</p>
-        <p className="eyebrow mt-1 text-bone/45">{r.location}</p>
+        <p className="eyebrow mt-1 text-bone/55">{r.location}</p>
       </div>
       <div>
         <h3 className="font-display text-3xl uppercase leading-tight text-bone">{r.company}</h3>
@@ -147,11 +147,11 @@ function Row({ r }: { r: Role }) {
 export default function ExperienceSection() {
   return (
     <section id="journey" className="relative overflow-clip border-t border-line bg-[#0c0c0c]">
-      <SectionNumber n="03" />
+      <SectionNumber n="06" />
       <div className="relative mx-auto max-w-[1400px] px-5 pt-20 sm:px-10 sm:pt-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div data-build>
-            <p className="label">03 / The journey</p>
+            <p className="label">06 / The journey</p>
             <h2 className="mt-4 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
               <Lines
                 lines={[
@@ -178,7 +178,7 @@ export default function ExperienceSection() {
       <div data-filmstrip className="relative hidden lg:block" style={{ height: 'calc(100svh + 2600px)' }}>
         <div data-build data-strip-stage className="sticky top-[66px] flex h-[calc(100svh-66px)] flex-col justify-center overflow-hidden">
           <div className="pointer-events-none absolute right-10 top-8 text-right">
-            <p className="eyebrow text-bone/40">Year</p>
+            <p className="eyebrow text-bone/55">Year</p>
             <p data-strip-year className="num text-6xl font-semibold leading-none text-bone">
               {startYear(FRAMES[0].period)}
             </p>
@@ -222,11 +222,11 @@ export default function ExperienceSection() {
 
           <div className="pointer-events-none absolute inset-x-0 bottom-0">
             <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-10 pb-6">
-              <span className="eyebrow text-bone/40">{startYear(FRAMES[0].period)}</span>
+              <span className="eyebrow text-bone/55">{startYear(FRAMES[0].period)}</span>
               <span className="relative h-px flex-1 bg-line">
                 <span data-strip-progress className="absolute inset-0 origin-left bg-red" style={{ transform: 'scaleX(0)' }} />
               </span>
-              <span className="eyebrow text-bone/40">{startYear(FRAMES[FRAMES.length - 1].period)}</span>
+              <span className="eyebrow text-bone/55">{startYear(FRAMES[FRAMES.length - 1].period)}</span>
             </div>
           </div>
         </div>

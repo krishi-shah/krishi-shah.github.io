@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const ITEMS = [
   { title: 'Co-op of the Year Nominee', org: 'Ontario Government', year: '2025' },
@@ -12,13 +13,14 @@ const ITEMS = [
 
 export default function RecognitionSection() {
   return (
-    <section id="recognition" className="border-y border-line bg-gradient-to-b from-[#0d0d0d] to-ink">
-      <div className="mx-auto grid max-w-[1400px] gap-14 px-5 py-20 sm:px-10 sm:py-24 lg:grid-cols-[1fr_1.3fr]">
+    <section id="recognition" className="relative overflow-clip border-y border-line bg-gradient-to-b from-[#0d0d0d] to-ink">
+      <SectionNumber n="03" />
+      <div className="relative mx-auto grid max-w-[1400px] gap-14 px-5 py-20 sm:px-10 sm:py-24 lg:grid-cols-[1fr_1.3fr]">
         <div>
           <div data-build>
-            <p className="label">Recognition &amp; milestones</p>
+            <p className="label">03 / Recognition</p>
             <h2 className="mt-4 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
-              <Lines lines={['The work.', <span key="r" className="text-bone/45">The recognition.</span>]} />
+              <Lines lines={['The work.', <span key="r" className="text-bone/55">The recognition.</span>]} />
             </h2>
           </div>
           <div data-build className="mt-10 flex items-center gap-5">
@@ -61,7 +63,7 @@ export default function RecognitionSection() {
                 aria-hidden="true"
                 className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-red/20 to-red/[0.03] transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
               />
-              <span className="num relative w-6 pl-1 text-[12px] text-bone/40">{String(i + 1).padStart(2, '0')}</span>
+              <span className="num relative w-6 pl-1 text-[12px] text-bone/55">{String(i + 1).padStart(2, '0')}</span>
               <div className="relative flex-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2">
                 <h3 className="text-lg font-semibold text-bone sm:text-xl">{it.title}</h3>
                 <p className="mt-0.5 text-[13px] text-bone/50">{it.org}</p>

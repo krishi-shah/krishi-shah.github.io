@@ -1,4 +1,5 @@
 import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const FIGURES = [
   { value: '120000', display: '120,000', unit: '', caption: 'Images fine tuned on', source: 'AI image detection research, York University' },
@@ -13,11 +14,12 @@ const FIGURES = [
 
 export default function NumbersWall() {
   return (
-    <section id="results" className="relative border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
+    <section id="results" className="relative overflow-clip border-t border-line">
+      <SectionNumber n="02" />
+      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
         <div data-build className="flex flex-wrap items-end justify-between gap-6">
           <div>
-            <p className="label">Results</p>
+            <p className="label">02 / Results</p>
             <h2 className="mt-4 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
               <Lines
                 lines={[
@@ -44,7 +46,7 @@ export default function NumbersWall() {
               </div>
               <div className="mt-8 sm:mt-12">
                 <p className="text-[14px] font-semibold leading-snug text-bone/90">{f.caption}</p>
-                <p className="figure-source eyebrow mt-2 leading-[1.5] text-bone/45">{f.source}</p>
+                <p className="figure-source eyebrow mt-2 leading-[1.5] text-bone/55">{f.source}</p>
               </div>
               <span className="figure-bar absolute bottom-0 left-0 h-[2px] w-full origin-left bg-red" aria-hidden="true" />
             </div>

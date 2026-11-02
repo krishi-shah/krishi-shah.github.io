@@ -66,6 +66,7 @@ export default function CursorBuild() {
     // so cursors are placed in page coordinates but never affect page size.
     const layer = document.createElement('div');
     layer.className = 'cb-layer';
+    layer.setAttribute('aria-hidden', 'true');
     const stage = document.createElement('div');
     stage.className = 'cb-stage';
     layer.appendChild(stage);

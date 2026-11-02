@@ -154,7 +154,7 @@ export default function CommandBar() {
                   if (e.key === 'Enter') run(shown[sel]);
                 }}
                 placeholder="Type a command or section"
-                className="h-14 flex-1 bg-transparent text-[15px] text-bone placeholder:text-bone/40 focus:outline-none"
+                className="h-14 flex-1 bg-transparent text-[15px] text-bone placeholder:text-bone/55 focus:outline-none"
                 aria-label="Search commands"
               />
               <kbd className="eyebrow border border-line px-1.5 py-0.5 text-bone/50">Esc</kbd>
@@ -179,13 +179,13 @@ export default function CommandBar() {
                     >
                       <Icon className="h-4 w-4 shrink-0 opacity-80" />
                       <span className="flex-1">{c.label}</span>
-                      <span className={`eyebrow ${i === sel ? 'text-white/80' : 'text-bone/40'}`}>{c.hint}</span>
+                      <span className={`eyebrow ${i === sel ? 'text-white/80' : 'text-bone/55'}`}>{c.hint}</span>
                     </button>
                   </li>
                 );
               })}
             </ul>
-            <div className="eyebrow flex items-center gap-4 border-t border-line px-4 py-2.5 text-bone/40">
+            <div className="eyebrow flex items-center gap-4 border-t border-line px-4 py-2.5 text-bone/55">
               <span>↑ ↓ to move</span>
               <span>Enter to run</span>
               <span className="ml-auto">K to toggle</span>

@@ -42,13 +42,13 @@ export default function Footer() {
       <div className="mx-auto max-w-[1400px] px-5 pt-14 sm:px-10">
         <div className="grid gap-8 sm:grid-cols-3">
           <div>
-            <p className="eyebrow text-bone/40">Local time</p>
+            <p className="eyebrow text-bone/55">Local time</p>
             <p className="num mt-2 text-2xl font-semibold text-bone">
               Toronto, <span suppressHydrationWarning>{time || '·'}</span>
             </p>
           </div>
           <div>
-            <p className="eyebrow text-bone/40">Status</p>
+            <p className="eyebrow text-bone/55">Status</p>
             <p className="mt-2 flex items-center gap-2.5 text-[15px] font-semibold text-bone">
               <span className="relative flex h-2.5 w-2.5">
                 <span className="footer-ping absolute inset-0 rounded-full bg-red" />
@@ -78,7 +78,8 @@ export default function Footer() {
         </div>
       </div>
 
-      <div ref={ref} className={`footer-name mt-10 overflow-hidden px-4 sm:mt-14 ${inView ? 'is-in' : ''}`} aria-label="Krishi Shah">
+      <div ref={ref} className={`footer-name mt-10 overflow-hidden px-4 sm:mt-14 ${inView ? 'is-in' : ''}`} data-name>
+        <span className="sr-only">Krishi Shah</span>
         <div className="flex justify-center font-display uppercase leading-[0.82] text-bone" aria-hidden="true">
           {NAME.join(' ')
             .split('')
@@ -98,7 +99,7 @@ export default function Footer() {
       </div>
 
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-6 sm:px-10">
-        <span className="eyebrow text-bone/40">© {new Date().getFullYear()} Krishi Shah</span>
+        <span className="eyebrow text-bone/55">© {new Date().getFullYear()} Krishi Shah</span>
         <button
           type="button"
           onClick={() => {

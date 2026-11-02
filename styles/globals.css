@@ -181,11 +181,11 @@ html.cb-armed [data-build]:not(.is-built) {
   left: 15px;
   top: 18px;
   white-space: nowrap;
-  font: 700 10px/1 var(--font-manrope), system-ui, sans-serif;
+  font: 700 11px/1 var(--font-manrope), system-ui, sans-serif;
   letter-spacing: 0.02em;
   padding: 4px 6px;
   border-radius: 2px;
-  background: var(--red);
+  background: #c81e33;
   color: #fff;
 }
 .cb-cursor.is-red .cb-tag {
@@ -599,7 +599,7 @@ html.motion-off .group:hover .bar {
   left: -1px;
   bottom: calc(100% + 6px);
   white-space: nowrap;
-  background: var(--red);
+  background: #c81e33;
   color: #fff;
   font: 600 11px/1 var(--font-mono), ui-monospace, monospace;
   letter-spacing: 0.04em;
@@ -612,9 +612,9 @@ html.motion-off .group:hover .bar {
   left: -1px;
   top: calc(100% + 6px);
   white-space: nowrap;
-  font: 500 10px/1 var(--font-mono), ui-monospace, monospace;
+  font: 500 11px/1 var(--font-mono), ui-monospace, monospace;
   letter-spacing: 0.04em;
-  color: rgba(237, 237, 237, 0.6);
+  color: rgba(237, 237, 237, 0.65);
 }
 [data-build].is-built .scan-sweep {
   animation: heroScan 1.5s cubic-bezier(0.65, 0, 0.35, 1) 0.35s both;
@@ -766,4 +766,25 @@ html.motion-off .footer-letter {
 }
 html.motion-off .radar-sweep-html > div {
   animation: none;
+}
+
+/* Static detector box used on the error page */
+.scan-box-static {
+  border: 1px solid rgba(227, 38, 59, 0.55);
+}
+.scan-box-static .c {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #fff;
+  border-style: solid;
+  border-width: 0;
+}
+.scan-box-static .tl { top: -2px; left: -2px; border-top-width: 2px; border-left-width: 2px; }
+.scan-box-static .tr { top: -2px; right: -2px; border-top-width: 2px; border-right-width: 2px; }
+.scan-box-static .bl { bottom: -2px; left: -2px; border-bottom-width: 2px; border-left-width: 2px; }
+.scan-box-static .br { bottom: -2px; right: -2px; border-bottom-width: 2px; border-right-width: 2px; }
+.scan-box-static .scan-tag {
+  left: -1px;
+  text-align: left;
 }

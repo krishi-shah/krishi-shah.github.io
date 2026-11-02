@@ -59,6 +59,9 @@ export default function Hero() {
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/portrait.webp"
+                  srcSet="/images/portrait-800.webp 800w, /images/portrait-1200.webp 1200w, /images/portrait.webp 1561w"
+                  sizes="(min-width: 1024px) 46vw, (min-width: 640px) 78vw, 140vw"
+                  fetchPriority="high"
                   alt="Krishi Shah"
                   width={1561}
                   height={1141}

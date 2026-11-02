@@ -45,15 +45,23 @@ function Details({ p }: { p: (typeof projects)[number] }) {
           </span>
         ))}
       </div>
-      <a
-        href={p.repo}
-        target="_blank"
-        rel="noreferrer"
-        data-magnetic
-        className="mt-7 inline-flex w-fit items-center gap-5 bg-red px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-red-bright"
-      >
-        View on GitHub <ArrowUpRight className="h-4 w-4" />
-      </a>
+      <div className="mt-7 flex flex-wrap items-center gap-3">
+        <a
+          href={`/projects/${p.slug}/`}
+          data-magnetic
+          className="inline-flex w-fit items-center gap-5 bg-red px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-red-bright"
+        >
+          Read the case study <ArrowRight className="h-4 w-4" />
+        </a>
+        <a
+          href={p.repo}
+          target="_blank"
+          rel="noreferrer"
+          className="inline-flex w-fit items-center gap-3 border border-line px-5 py-3.5 text-sm font-semibold text-bone transition-colors hover:border-red hover:text-red"
+        >
+          Code <ArrowUpRight className="h-4 w-4" />
+        </a>
+      </div>
     </>
   );
 }
@@ -105,15 +113,13 @@ export default function WorkSection() {
             >
               <div className="mx-auto grid h-full max-w-[1400px] grid-cols-12 gap-10 px-10 pb-16 pt-8">
                 <a
-                  href={p.repo}
-                  target="_blank"
-                  rel="noreferrer"
+                  href={`/projects/${p.slug}/`}
                   className="relative col-span-7 block h-full overflow-hidden"
-                  aria-label={`${p.title} on GitHub`}
+                  aria-label={`${p.title} case study`}
                   data-cursor="View"
                 >
                   <ProjectArt slug={p.slug} index={i} className="h-full w-full" />
-                  <span className="num absolute left-6 top-5 text-[8rem] font-semibold leading-none text-white/10">
+                  <span aria-hidden="true" className="num absolute left-6 top-5 text-[8rem] font-semibold leading-none text-white/10">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </a>
@@ -130,12 +136,12 @@ export default function WorkSection() {
             <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-10 pb-6">
               <span className="num text-sm text-bone">
                 <span data-slide-counter>01</span>
-                <span className="text-bone/40"> / {total}</span>
+                <span className="text-bone/55"> / {total}</span>
               </span>
               <span className="relative h-px flex-1 bg-line">
                 <span data-slide-progress className="absolute inset-0 origin-left bg-red" style={{ transform: 'scaleX(0)' }} />
               </span>
-              <span className="eyebrow text-bone/40">Scroll</span>
+              <span className="eyebrow text-bone/55">Scroll</span>
             </div>
           </div>
         </div>
@@ -147,17 +153,10 @@ export default function WorkSection() {
           {projects.map((p, i) => {
             const h = headlineOf(p);
             return (
-              <a
-                data-build
-                key={p.slug}
-                href={p.repo}
-                target="_blank"
-                rel="noreferrer"
-                className="group block"
-              >
+              <a data-build key={p.slug} href={`/projects/${p.slug}/`} className="group block">
                 <div className="relative">
                   <ProjectArt slug={p.slug} index={i} className="aspect-[16/10] w-full" />
-                  <span className="num absolute left-4 top-3 text-6xl font-semibold leading-none text-white/15">
+                  <span aria-hidden="true" className="num absolute left-4 top-3 text-6xl font-semibold leading-none text-white/15">
                     {String(i + 1).padStart(2, '0')}
                   </span>
                 </div>
@@ -166,7 +165,7 @@ export default function WorkSection() {
                 </p>
                 <div className="mt-2 flex items-start justify-between gap-4">
                   <h3 className="font-display text-4xl uppercase leading-[0.95] text-bone">{p.title}</h3>
-                  <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-bone/50" />
+                  <ArrowRight className="mt-1 h-5 w-5 shrink-0 text-bone/50 transition-transform group-hover:translate-x-1" />
                 </div>
                 <p className="mt-3 text-[15px] leading-7 text-bone/70">{p.shortDescription}</p>
                 <p className="mt-4 flex items-baseline gap-3">
