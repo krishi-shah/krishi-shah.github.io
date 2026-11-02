@@ -18,6 +18,18 @@ const experiences = [
     gradient: 'from-emerald-500 to-cyan-500',
   },
   {
+    title: 'Software Developer, Analytics',
+    company: 'All Good Accounting',
+    period: 'Feb 2026 – Apr 2026',
+    location: 'Toronto, ON',
+    description: [
+      'Built a financial reporting application that replaced a manual Excel process, through the Level UP industry program.',
+      'Scoped requirements with the client and shipped views that non-technical staff could run without developer support.',
+    ],
+    skills: ['Python', 'SQL', 'Reporting'],
+    gradient: 'from-violet-500 to-pink-500',
+  },
+  {
     title: 'Software Developer Co-op · Co-op of the Year Nominee',
     company: 'Ontario Government',
     period: 'Jan 2025 – Dec 2025',
@@ -29,18 +41,6 @@ const experiences = [
     ],
     skills: ['Python', 'SQL', 'PostgreSQL', 'Azure DevOps'],
     gradient: 'from-cyan-500 to-violet-500',
-  },
-  {
-    title: 'Software Developer, Analytics',
-    company: 'All Good Accounting',
-    period: 'Feb 2025 – Apr 2025',
-    location: 'Toronto, ON',
-    description: [
-      'Built a financial reporting application that replaced a manual Excel process, through the Level UP industry program.',
-      'Scoped requirements with the client and shipped views that non-technical staff could run without developer support.',
-    ],
-    skills: ['Python', 'SQL', 'Reporting'],
-    gradient: 'from-violet-500 to-pink-500',
   },
   {
     title: 'Data Science Intern',
