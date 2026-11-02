@@ -23,6 +23,7 @@ module.exports = {
         sans: ['var(--font-manrope)', 'system-ui', 'sans-serif'],
         display: ['var(--font-anton)', 'Impact', 'sans-serif'],
         script: ['var(--font-caveat)', 'cursive'],
+        mono: ['var(--font-mono)', 'ui-monospace', 'monospace'],
       },
       transitionTimingFunction: {
         'out-expo': 'cubic-bezier(0.16, 1, 0.3, 1)',

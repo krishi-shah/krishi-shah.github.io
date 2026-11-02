@@ -42,13 +42,69 @@ export default function Effects() {
     const lagEls = Array.from(document.querySelectorAll<HTMLElement>('[data-lag]'));
     const progressEls = Array.from(document.querySelectorAll<HTMLElement>('[data-progress]'));
 
+    // Pinned project showcase
+    const showcase = document.querySelector<HTMLElement>('[data-showcase]');
+    const slides = Array.from(document.querySelectorAll<HTMLElement>('[data-slide]'));
+    const slideDims = slides.map((el) => el.querySelector<HTMLElement>('[data-slide-dim]'));
+    const slideCounter = document.querySelector<HTMLElement>('[data-slide-counter]');
+    const slideProgress = document.querySelector<HTMLElement>('[data-slide-progress]');
+    const sc = { on: false, top: 0, range: 1, lastP: -1, lastIdx: -1 };
+    // Last written values per slide, so nothing is written twice.
+    const slideT: string[] = slides.map(() => '');
+    const slideV: string[] = slides.map(() => '');
+    const slideD: string[] = slides.map(() => '');
+    const setSlide = (i: number, t: string, v: string, d: string) => {
+      const el = slides[i];
+      if (slideT[i] !== t) {
+        slideT[i] = t;
+        el.style.transform = t;
+      }
+      if (slideV[i] !== v) {
+        slideV[i] = v;
+        el.style.visibility = v;
+      }
+      if (slideD[i] !== d && slideDims[i]) {
+        slideD[i] = d;
+        slideDims[i]!.style.opacity = d;
+      }
+    };
+
+    // Pinned journey film strip
+    const strip = document.querySelector<HTMLElement>('[data-filmstrip]');
+    const track = document.querySelector<HTMLElement>('[data-strip-track]');
+    const frames = Array.from(document.querySelectorAll<HTMLElement>('[data-strip-frame]'));
+    const yearEl = document.querySelector<HTMLElement>('[data-strip-year]');
+    const stripProgress = document.querySelector<HTMLElement>('[data-strip-progress]');
+    const st = { on: false, top: 0, dist: 1, vw: 1, lefts: [] as number[], lastX: 1, lastIdx: -1 };
+
     // ---------------- Cached geometry ----------------
     let vh = window.innerHeight;
     let parallax: Cached[] = [];
     let progress: (Cached & { fill: HTMLElement | null; dot: HTMLElement | null })[] = [];
     const measure = () => {
       vh = window.innerHeight;
+      const stageH = vh - 66;
+
+      st.on = !!strip && !!track && getComputedStyle(strip).display !== 'none';
+      if (st.on) {
+        st.vw = document.documentElement.clientWidth;
+        st.dist = Math.max(1, track!.scrollWidth - st.vw);
+        const want = Math.round(st.dist + stageH);
+        if (Math.abs(strip!.offsetHeight - want) > 2) strip!.style.height = `${want}px`;
+        st.lefts = frames.map((f) => f.offsetLeft);
+        st.lastX = 1;
+        st.lastIdx = -1;
+      }
+      sc.on = !!showcase && slides.length > 1 && getComputedStyle(showcase).display !== 'none';
+
       const sy = window.scrollY;
+      if (st.on) st.top = strip!.getBoundingClientRect().top + sy;
+      if (sc.on) {
+        const r = showcase!.getBoundingClientRect();
+        sc.top = r.top + sy;
+        sc.range = Math.max(1, r.height - stageH);
+        sc.lastP = -1;
+      }
       // Clear transforms we own so measurements are of the resting layout.
       parallax = parallaxEls.map((el) => {
         const host = el.parentElement!.getBoundingClientRect();
@@ -202,6 +258,56 @@ export default function Effects() {
             el.style.transform = still ? '' : `translate3d(0, ${(sy * Number(el.dataset.lag)).toFixed(1)}px, 0)`;
           }
         }
+        // Project showcase: each slide rises over the previous one.
+        if (sc.on) {
+          const n = slides.length;
+          const raw = (sy + 66 - sc.top) / sc.range;
+          const p = clamp(raw, 0, 1) * (n - 1);
+          if (Math.abs(p - sc.lastP) > 0.0005) {
+            sc.lastP = p;
+            for (let i = 0; i < n; i++) {
+              const local = p - i;
+              if (i > 0 && local < 0) {
+                const u = clamp(-local, 0, 1);
+                setSlide(i, `translate3d(0, ${(u * 100).toFixed(2)}%, 0)`, u >= 1 ? 'hidden' : 'visible', '0');
+              } else {
+                const t = i === n - 1 ? 0 : clamp(local, 0, 1);
+                setSlide(
+                  i,
+                  still || t === 0 ? 'translate3d(0, 0, 0)' : `translate3d(0, ${(-t * 5).toFixed(2)}%, 0) scale(${(1 - 0.06 * t).toFixed(4)})`,
+                  t >= 1 ? 'hidden' : 'visible',
+                  (t * 0.75).toFixed(2),
+                );
+              }
+            }
+            const idx = clamp(Math.round(p), 0, n - 1);
+            if (idx !== sc.lastIdx) {
+              sc.lastIdx = idx;
+              if (slideCounter) slideCounter.textContent = String(idx + 1).padStart(2, '0');
+              slides.forEach((el, i) => el.classList.toggle('is-current', i === idx));
+            }
+            if (slideProgress) slideProgress.style.transform = `scaleX(${(p / (n - 1)).toFixed(4)})`;
+          }
+        }
+
+        // Journey film strip: vertical scroll moves the roles sideways.
+        if (st.on && track) {
+          const p = clamp((sy + 66 - st.top) / st.dist, 0, 1);
+          const x = -p * st.dist;
+          if (Math.abs(x - st.lastX) > 0.3) {
+            st.lastX = x;
+            track.style.transform = `translate3d(${x.toFixed(1)}px, 0, 0)`;
+            if (stripProgress) stripProgress.style.transform = `scaleX(${p.toFixed(4)})`;
+            let idx = 0;
+            for (let i = 0; i < st.lefts.length; i++) if (st.lefts[i] + x < st.vw * 0.55) idx = i;
+            if (idx !== st.lastIdx) {
+              st.lastIdx = idx;
+              frames.forEach((f, i) => f.classList.toggle('is-current', i === idx));
+              if (yearEl) yearEl.textContent = frames[idx]?.dataset.year ?? '';
+            }
+          }
+        }
+
         // Timeline line draws itself.
         for (const p of progress) {
           const t = still ? 1 : clamp((sy + vh * 0.6 - p.top) / p.height, 0, 1);
@@ -253,6 +359,7 @@ export default function Effects() {
         smoothWheel: true,
         anchors: { offset: -66, duration: 1.1, easing: easeOutExpo },
       });
+      (window as any).__lenis = lenis;
       lenis.on('scroll', () => {
         scrollDirty = true;
         kick();
@@ -267,6 +374,7 @@ export default function Effects() {
       cancelAnimationFrame(lenisRaf);
       lenis?.destroy();
       lenis = null;
+      (window as any).__lenis = null;
     };
     startLenis();
     listen(window, 'scroll', () => {
@@ -292,18 +400,24 @@ export default function Effects() {
       if (counted.has(el)) return;
       counted.add(el);
       const target = el.dataset.count || el.textContent || '0';
+      const finalText = el.textContent || target;
       const value = parseFloat(target);
       const decimals = (target.split('.')[1] || '').length;
+      const sep = el.dataset.sep !== undefined;
+      const fmt = (v: number) => (sep ? Math.round(v).toLocaleString('en-US') : v.toFixed(decimals));
       if (motionOff() || Number.isNaN(value)) return;
-      const start = performance.now();
-      const step = (now: number) => {
-        const t = clamp((now - start) / 1200, 0, 1);
-        el.textContent = (value * (1 - Math.pow(1 - t, 3))).toFixed(decimals);
-        if (t < 1) requestAnimationFrame(step);
-        else el.textContent = target;
-      };
-      el.textContent = (0).toFixed(decimals);
-      requestAnimationFrame(step);
+      const delay = Number(el.dataset.countDelay || 0);
+      el.textContent = fmt(0);
+      window.setTimeout(() => {
+        const start = performance.now();
+        const step = (now: number) => {
+          const t = clamp((now - start) / 1200, 0, 1);
+          el.textContent = fmt(value * (1 - Math.pow(1 - t, 3)));
+          if (t < 1) requestAnimationFrame(step);
+          else el.textContent = finalText;
+        };
+        requestAnimationFrame(step);
+      }, delay);
     };
     const counterIO = new IntersectionObserver(
       (entries) =>
@@ -324,6 +438,14 @@ export default function Effects() {
     );
     document.querySelectorAll<HTMLElement>('[data-count]').forEach((el) => counterIO.observe(el));
 
+    // ---------------- Pause animations that are offscreen ----------------
+    const offIO = new IntersectionObserver(
+      (entries) => entries.forEach((e) => e.target.classList.toggle('is-offscreen', !e.isIntersecting)),
+      { rootMargin: '150px 0px' },
+    );
+    document.querySelectorAll('section, footer, [data-anim]').forEach((el) => offIO.observe(el));
+    slides.forEach((el) => offIO.observe(el));
+
     // ---------------- Motion toggle ----------------
     listen(window, 'motionchange', () => {
       if (motionOff()) {
@@ -341,6 +463,7 @@ export default function Effects() {
     return () => {
       cleanups.forEach((f) => f());
       counterIO.disconnect();
+      offIO.disconnect();
       ro.disconnect();
       cancelAnimationFrame(raf);
       stopLenis();

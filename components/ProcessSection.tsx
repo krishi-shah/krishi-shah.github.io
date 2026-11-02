@@ -64,16 +64,16 @@ export default function ProcessSection() {
     <section className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-24">
       <div className="grid gap-10 lg:grid-cols-[1fr_2fr] lg:items-end">
         <div data-build>
-          <p className="eyebrow text-red">A look under the model</p>
+          <p className="label">A look under the model</p>
           <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-6xl">
-            <Lines lines={['From raw.', <span key="c" className="text-red">To calibrated.</span>]} />
+            <Lines lines={['From raw.', <span key="c" className="text-bone/45">To calibrated.</span>]} />
           </h2>
           <p className="mt-6 text-lg font-semibold text-bone">One detector. Two very different promises.</p>
           <p className="mt-3 max-w-sm text-sm leading-7 text-bone/65">
             A model can be accurate and still overconfident. Temperature scaling brought the AI image detector&apos;s
             expected calibration error to 0.0026, so a 90% score actually means 90%.
           </p>
-          <p className="eyebrow mt-8 text-[10px] text-dim">
+          <p className="eyebrow mt-8 leading-[1.6] text-bone/45">
             AI image detection / 2026
             <br />
             <span className="text-bone/70">EfficientNet B3 · Temperature scaling · Grad CAM</span>
@@ -109,10 +109,10 @@ export default function ProcessSection() {
             <div className="absolute inset-0" style={{ clipPath: `inset(0 ${100 - pos}% 0 0)` }}>
               <Reliability calibrated={false} />
             </div>
-            <span className="absolute left-3 top-3 bg-ink/80 px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-dim">
+            <span className="eyebrow absolute left-3 top-3 bg-ink/80 px-2 py-1 text-bone/60">
               Uncalibrated
             </span>
-            <span className="absolute right-3 top-3 bg-red px-2 py-1 text-[10px] font-bold uppercase tracking-wider text-white">
+            <span className="eyebrow absolute right-3 top-3 bg-red px-2 py-1 text-white">
               Temperature scaled
             </span>
             <div className="absolute inset-y-0 w-px bg-white" style={{ left: `${pos}%` }}>
@@ -121,7 +121,7 @@ export default function ProcessSection() {
               </span>
             </div>
           </div>
-          <div className="eyebrow mt-3 flex flex-wrap justify-between gap-2 text-[10px] text-dim">
+          <div className="eyebrow mt-3 flex flex-wrap justify-between gap-2 text-bone/45">
             <span>Drag to compare</span>
             <span>Illustrative reliability diagram</span>
           </div>

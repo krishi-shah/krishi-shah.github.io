@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import '@fontsource/anton/400.css';
 import '@fontsource-variable/manrope';
 import '@fontsource/caveat/600.css';
+import '@fontsource-variable/jetbrains-mono';
 import '@/styles/globals.css';
 import { getSiteConfig } from '@/lib/content';
 

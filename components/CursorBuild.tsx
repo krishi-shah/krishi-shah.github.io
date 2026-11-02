@@ -450,6 +450,8 @@ export default function CursorBuild() {
       if (a) jumpUntil = performance.now() + 1600;
     };
     document.addEventListener('click', onNav, true);
+    const onJump = () => (jumpUntil = performance.now() + 1600);
+    window.addEventListener('navjump', onJump);
 
     introDone.then(() => {
       introFinished = true;
@@ -503,6 +505,7 @@ export default function CursorBuild() {
       window.removeEventListener('scroll', onScroll);
       window.removeEventListener('resize', onResize);
       document.removeEventListener('click', onNav, true);
+      window.removeEventListener('navjump', onJump);
       ro.disconnect();
       document.removeEventListener('focusin', onFocus);
       skipBtn.remove();

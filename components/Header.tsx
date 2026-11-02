@@ -1,10 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUpRight, Menu, X } from 'lucide-react';
+import { ArrowUpRight, Command, Menu, X } from 'lucide-react';
 
 const NAV = [
   { id: 'work', label: 'Work' },
+  { id: 'results', label: 'Results' },
   { id: 'recognition', label: 'Recognition' },
   { id: 'about', label: 'About' },
   { id: 'journey', label: 'Journey' },
@@ -71,15 +72,21 @@ export default function Header() {
   }, []);
 
   const toggleMotion = () => {
-    const next = !motionOn;
-    setMotionOn(next);
     const root = document.documentElement;
+    const next = root.classList.contains('motion-off');
+    setMotionOn(next);
     try {
       localStorage.setItem('motion', next ? 'on' : 'off');
     } catch {}
     root.classList.toggle('motion-off', !next);
     window.dispatchEvent(new Event('motionchange'));
   };
+
+  useEffect(() => {
+    const onToggle = () => toggleMotion();
+    window.addEventListener('togglemotion', onToggle);
+    return () => window.removeEventListener('togglemotion', onToggle);
+  }, []);
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink/95">
@@ -94,7 +101,7 @@ export default function Header() {
           KRISHI<sup className="ml-0.5 align-super text-[11px] text-red">®</sup>
         </a>
 
-        <nav data-build className="hidden items-center gap-8 lg:flex" aria-label="Primary">
+        <nav data-build className="hidden items-center gap-7 lg:flex" aria-label="Primary">
           {NAV.map((n) => (
             <a
               key={n.id}
@@ -124,6 +131,14 @@ export default function Header() {
             </span>
             Motion {motionOn ? 'on' : 'off'}
           </button>
+          <button
+            type="button"
+            onClick={() => window.dispatchEvent(new Event('opencommand'))}
+            className="eyebrow hidden items-center gap-2 border border-line px-2 py-1.5 text-bone/60 transition-colors hover:border-red hover:text-bone md:flex"
+            aria-label="Open command bar (press K)"
+          >
+            <Command className="h-3.5 w-3.5" /> K
+          </button>
           <a
             href="#contact"
             data-magnetic
@@ -131,6 +146,14 @@ export default function Header() {
           >
             Let&apos;s talk <ArrowUpRight className="h-4 w-4 text-red" />
           </a>
+          <button
+            type="button"
+            className="text-bone/80 md:hidden"
+            onClick={() => window.dispatchEvent(new Event('opencommand'))}
+            aria-label="Open command bar"
+          >
+            <Command className="h-5 w-5" />
+          </button>
           <button
             type="button"
             className="text-bone lg:hidden"

@@ -14,14 +14,14 @@ const CHANNELS = [
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="relative overflow-x-clip border-t border-line">
+    <section id="contact" className="relative overflow-clip border-t border-line">
       <SectionNumber n="05" />
       <div className="relative mx-auto grid max-w-[1400px] gap-12 px-5 py-20 sm:px-10 sm:py-28 lg:grid-cols-[1.5fr_1fr]">
         <div>
           <div data-build>
-            <p className="eyebrow text-red">05 / Your next model</p>
+            <p className="label">05 / Your next model</p>
             <h2 className="mt-3 font-display text-6xl uppercase leading-[0.9] sm:text-8xl">
-              <Lines lines={['Let\u2019s build', <span key="t" className="text-red">together.</span>]} />
+              <Lines lines={['Let\u2019s build', <span key="t" className="text-bone/45">together.</span>]} />
             </h2>
             <p className="mt-6 max-w-md text-[15px] leading-7 text-bone/70">
               Have a problem worth modelling? Let&apos;s make something that works outside the notebook too.
@@ -40,7 +40,7 @@ export default function ContactSection() {
             {CHANNELS.map((c) => {
               const inner = (
                 <>
-                  <p className="text-[10px] font-bold uppercase tracking-wider text-dim">{c.label}</p>
+                  <p className="eyebrow text-bone/45">{c.label}</p>
                   <p className="mt-2 flex items-center gap-2 text-[15px] font-semibold text-bone">
                     {c.value}
                     {c.href && <ArrowUpRight className="h-4 w-4 text-red opacity-0 transition-opacity group-hover:opacity-100" />}
@@ -81,7 +81,7 @@ export default function ContactSection() {
             <span className="font-display text-3xl text-white">
               KRISHI<sup className="text-xs">®</sup>
             </span>
-            <span className="text-right text-[10px] font-bold uppercase tracking-wider text-white/80">
+            <span className="eyebrow text-right text-white/85">
               ML / Research
               <br />
               Data / Systems

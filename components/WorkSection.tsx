@@ -1,12 +1,11 @@
-'use client';
-
-import { useMemo, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
+import { ArrowRight, ArrowUpRight } from 'lucide-react';
 import { getAllProjects } from '@/lib/content';
 import Lines from '@/components/Lines';
 import SectionNumber from '@/components/SectionNumber';
+import ProjectArt from '@/components/ProjectArt';
 
 const projects = getAllProjects();
+const total = String(projects.length).padStart(2, '0');
 
 const ORGS = [
   'Ontario Government',
@@ -21,173 +20,182 @@ const ORGS = [
   'York Data Science Club',
 ];
 
-function categoryOf(p: (typeof projects)[number]) {
-  return p.tags[0] || 'Tools';
+function headlineOf(p: (typeof projects)[number]) {
+  const m = p.metrics[0];
+  return { value: p.headline ?? m?.value ?? p.tech[0], label: p.headlineLabel ?? m?.label ?? 'Open source' };
 }
 
-/* A generated cover for each project: grid, bars, and the headline number. */
-function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
-  const metric = p.metrics[0];
-  const headline = p.headline ?? metric?.value ?? p.tech[0];
-  const label = p.headlineLabel ?? metric?.label ?? 'Open source';
-  const seed = index * 37;
-  const bars = Array.from({ length: 22 }, (_, i) => 18 + ((Math.sin(seed + i * 1.7) + 1) / 2) * 62);
+function Details({ p }: { p: (typeof projects)[number] }) {
+  const h = headlineOf(p);
   return (
-    <div data-tilt="9" className="relative aspect-[16/10] overflow-hidden bg-panel">
-      <div
-        className="absolute inset-0 opacity-60"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(255,255,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.05) 1px, transparent 1px)',
-          backgroundSize: '28px 28px',
-        }}
-      />
-      <div className="absolute inset-x-5 bottom-5 flex h-[42%] items-end gap-[3px] opacity-60 transition-opacity duration-500 group-hover:opacity-100">
-        {bars.map((h, i) => (
-          <div
-            key={i}
-            className="bar flex-1 bg-gradient-to-t from-red-deep to-red/70"
-            style={{ height: `${h}%`, ['--d' as string]: `${i * 22}ms` }}
-          />
+    <>
+      <p className="eyebrow text-bone/55">
+        {p.tags[0] ?? 'Tools'} · {p.timeline || 'Ongoing'}
+      </p>
+      <h3 className="mt-3 font-display text-[clamp(2.4rem,4.4vw,4.2rem)] uppercase leading-[0.92] text-bone">{p.title}</h3>
+      <p className="mt-4 line-clamp-3 max-w-md text-[15px] leading-7 text-bone/70">{p.longDescription || p.shortDescription}</p>
+      <div className="mt-6 flex items-end gap-4 border-t border-line pt-5">
+        <span className="num text-5xl font-semibold leading-none text-red">{h.value}</span>
+        <span className="eyebrow pb-1 text-bone/55">{h.label}</span>
+      </div>
+      <div className="mt-5 flex flex-wrap gap-2">
+        {p.tech.map((t) => (
+          <span key={t} className="eyebrow border border-line px-2.5 py-1.5 text-bone/70">
+            {t}
+          </span>
         ))}
       </div>
-      <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
-      <div className="scan" aria-hidden="true" />
-      <div className="card-glare" aria-hidden="true" />
-      <div className="relative flex h-full flex-col items-start p-4 sm:p-5">
-        <span className="bg-ink/80 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-bone/80">
-          {categoryOf(p)}
-        </span>
-        <div className="mt-3 font-display text-5xl leading-none text-bone transition-transform duration-500 ease-out-expo group-hover:translate-x-1 sm:text-[3.4rem]">
-          {headline}
-        </div>
-        <div className="mt-2 text-[10px] font-bold uppercase tracking-wider text-dim">{label}</div>
-      </div>
-    </div>
+      <a
+        href={p.repo}
+        target="_blank"
+        rel="noreferrer"
+        data-magnetic
+        className="mt-7 inline-flex w-fit items-center gap-5 bg-red px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-red-bright"
+      >
+        View on GitHub <ArrowUpRight className="h-4 w-4" />
+      </a>
+    </>
   );
 }
 
 export default function WorkSection() {
-  const categories = useMemo(() => ['All', ...Array.from(new Set(projects.map(categoryOf)))], []);
-  const [cat, setCat] = useState('All');
-  const [q, setQ] = useState('');
-
-  const shown = projects.filter((p) => {
-    if (cat !== 'All' && categoryOf(p) !== cat) return false;
-    if (!q.trim()) return true;
-    const hay = `${p.title} ${p.tech.join(' ')} ${p.shortDescription}`.toLowerCase();
-    return hay.includes(q.toLowerCase());
-  });
-
   return (
-    <section id="work" className="relative overflow-x-clip">
+    <section id="work" className="relative overflow-clip border-t border-line">
       <SectionNumber n="01" />
-      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
-      <div className="flex flex-wrap items-end justify-between gap-6">
-        <div data-build>
-          <p className="eyebrow text-red">01 / Selected work</p>
-          <h2 className="mt-2 font-display text-5xl uppercase leading-none sm:text-6xl">
-            <Lines lines={[<>Work that ships<span className="text-red">.</span></>]} />
-          </h2>
-        </div>
-        <a
-          data-build
-          data-magnetic
-          href="https://github.com/krishi-shah"
-          target="_blank"
-          rel="noreferrer"
-          className="eyebrow flex items-center gap-3 text-bone hover:text-red"
-        >
-          All on GitHub <ArrowRight className="h-4 w-4" />
-        </a>
-      </div>
-
-      <div data-build className="mt-10 flex flex-col gap-4 border-b border-line sm:flex-row sm:items-end sm:justify-between">
-        <div className="-mx-5 flex gap-7 overflow-x-auto px-5 [scrollbar-width:none] sm:mx-0 sm:px-0 [&::-webkit-scrollbar]:hidden">
-          {categories.map((c) => (
-            <button
-              key={c}
-              type="button"
-              onClick={() => setCat(c)}
-              className={`relative shrink-0 whitespace-nowrap pb-4 text-[13px] transition-colors ${
-                cat === c ? 'text-bone' : 'text-dim hover:text-bone'
-              }`}
-            >
-              {c}
-              <span
-                className={`absolute -bottom-px left-0 h-[2px] w-full bg-red transition-opacity ${
-                  cat === c ? 'opacity-100' : 'opacity-0'
-                }`}
+      <div className="relative mx-auto max-w-[1400px] px-5 pt-20 sm:px-10 sm:pt-28">
+        <div className="flex flex-wrap items-end justify-between gap-6">
+          <div data-build>
+            <p className="label">01 / Selected work</p>
+            <h2 className="mt-4 font-display text-5xl uppercase leading-none sm:text-7xl">
+              <Lines
+                lines={[
+                  <>
+                    Work that ships<span className="text-red">.</span>
+                  </>,
+                ]}
               />
-            </button>
-          ))}
+            </h2>
+          </div>
+          <a
+            data-build
+            data-magnetic
+            href="https://github.com/krishi-shah"
+            target="_blank"
+            rel="noreferrer"
+            className="eyebrow flex items-center gap-3 text-bone transition-colors hover:text-red"
+          >
+            All on GitHub <ArrowRight className="h-4 w-4" />
+          </a>
         </div>
-        <label className="flex items-center gap-2 pb-4 text-[12px] text-dim">
-          <Search className="h-4 w-4" />
-          <span className="sr-only">Search projects</span>
-          <input
-            value={q}
-            onChange={(e) => setQ(e.target.value)}
-            placeholder="Title or stack"
-            className="w-40 bg-transparent text-bone placeholder:text-dim focus:outline-none"
-          />
-        </label>
       </div>
 
-      <div className="mt-8 grid grid-cols-1 gap-x-4 gap-y-10 sm:grid-cols-2 lg:grid-cols-3">
-        {shown.map((p) => {
-          const index = projects.indexOf(p);
-          return (
-            <a
-              data-build
+      {/* Desktop: one project fills the screen at a time while the section is pinned */}
+      <div
+        data-showcase
+        className="relative hidden lg:block"
+        style={{ height: `calc(${projects.length - 1} * 80svh + 100svh)` }}
+      >
+        <div data-build className="sticky top-[66px] h-[calc(100svh-66px)] overflow-hidden">
+          {projects.map((p, i) => (
+            <article
               key={p.slug}
-              href={p.repo || `/projects/${p.slug}/`}
-              target="_blank"
-              rel="noreferrer"
-              data-cursor="View"
-              className="group block"
+              data-slide
+              className="absolute inset-0 bg-ink"
+              style={{ zIndex: i + 1, transform: i === 0 ? 'none' : 'translate3d(0,100%,0)' }}
             >
-              <Cover p={p} index={index} />
-              <div className="mt-4 flex items-start gap-4">
-                <span className="font-display text-4xl leading-none text-red">
-                  {String(index + 1).padStart(2, '0')}
-                </span>
-                <div className="min-w-0 flex-1">
-                  <h3 className="text-[15px] font-extrabold uppercase leading-tight text-bone">{p.title}</h3>
-                  <p className="mt-1 text-[11px] uppercase tracking-wider text-dim">
-                    {p.tech.slice(0, 2).join(' · ')} / {p.timeline || 'Ongoing'}
-                  </p>
-                  <p className="mt-3 text-[13px] leading-6 text-bone/65">{p.shortDescription}</p>
+              <div className="mx-auto grid h-full max-w-[1400px] grid-cols-12 gap-10 px-10 pb-16 pt-8">
+                <a
+                  href={p.repo}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="relative col-span-7 block h-full overflow-hidden"
+                  aria-label={`${p.title} on GitHub`}
+                  data-cursor="View"
+                >
+                  <ProjectArt slug={p.slug} index={i} className="h-full w-full" />
+                  <span className="num absolute left-6 top-5 text-[8rem] font-semibold leading-none text-white/10">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </a>
+                <div className="col-span-5 flex flex-col justify-center">
+                  <Details p={p} />
                 </div>
-                <ArrowUpRight className="h-4 w-4 shrink-0 text-dim transition-colors group-hover:text-red" />
               </div>
-            </a>
-          );
-        })}
-        {shown.length === 0 && (
-          <p className="col-span-full py-16 text-center text-sm text-dim">Nothing matches that search.</p>
-        )}
-      </div>
+              <div data-slide-dim className="pointer-events-none absolute inset-0 bg-black opacity-0" />
+            </article>
+          ))}
 
-      {/* Organisations marquee */}
-      <div className="mt-24 border-t border-line pt-8">
-        <div data-build className="flex items-end justify-between">
-          <p className="eyebrow leading-5 text-dim">
-            Been part of
-            <br />
-            <span className="text-bone">the bigger picture.</span>
-          </p>
-        </div>
-        <div data-build className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]">
-          <div className="marquee-track flex w-max gap-14">
-            {[...ORGS, ...ORGS].map((o, i) => (
-              <span key={i} className="font-display text-3xl uppercase text-bone/25 transition-colors hover:text-bone sm:text-4xl">
-                {o}
+          {/* Counter and progress stay put while slides move */}
+          <div className="pointer-events-none absolute inset-x-0 bottom-0 z-[60]">
+            <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-10 pb-6">
+              <span className="num text-sm text-bone">
+                <span data-slide-counter>01</span>
+                <span className="text-bone/40"> / {total}</span>
               </span>
-            ))}
+              <span className="relative h-px flex-1 bg-line">
+                <span data-slide-progress className="absolute inset-0 origin-left bg-red" style={{ transform: 'scaleX(0)' }} />
+              </span>
+              <span className="eyebrow text-bone/40">Scroll</span>
+            </div>
           </div>
         </div>
       </div>
+
+      {/* Phones and tablets: large stacked cards */}
+      <div className="mx-auto max-w-[1400px] px-5 pt-12 sm:px-10 lg:hidden">
+        <div className="space-y-14">
+          {projects.map((p, i) => {
+            const h = headlineOf(p);
+            return (
+              <a
+                data-build
+                key={p.slug}
+                href={p.repo}
+                target="_blank"
+                rel="noreferrer"
+                className="group block"
+              >
+                <div className="relative">
+                  <ProjectArt slug={p.slug} index={i} className="aspect-[16/10] w-full" />
+                  <span className="num absolute left-4 top-3 text-6xl font-semibold leading-none text-white/15">
+                    {String(i + 1).padStart(2, '0')}
+                  </span>
+                </div>
+                <p className="eyebrow mt-5 text-bone/55">
+                  {p.tags[0] ?? 'Tools'} · {p.timeline || 'Ongoing'}
+                </p>
+                <div className="mt-2 flex items-start justify-between gap-4">
+                  <h3 className="font-display text-4xl uppercase leading-[0.95] text-bone">{p.title}</h3>
+                  <ArrowUpRight className="mt-1 h-5 w-5 shrink-0 text-bone/50" />
+                </div>
+                <p className="mt-3 text-[15px] leading-7 text-bone/70">{p.shortDescription}</p>
+                <p className="mt-4 flex items-baseline gap-3">
+                  <span className="num text-3xl font-semibold text-red">{h.value}</span>
+                  <span className="eyebrow text-bone/55">{h.label}</span>
+                </p>
+              </a>
+            );
+          })}
+        </div>
+      </div>
+
+      {/* Organisations */}
+      <div className="mx-auto max-w-[1400px] px-5 pb-20 pt-20 sm:px-10 sm:pb-28">
+        <div className="border-t border-line pt-8">
+          <p data-build className="label">Been part of the bigger picture</p>
+          <div
+            data-build
+            className="relative mt-8 overflow-hidden [mask-image:linear-gradient(90deg,transparent,#000_10%,#000_90%,transparent)]"
+          >
+            <div className="marquee-track flex w-max gap-14">
+              {[...ORGS, ...ORGS].map((o, i) => (
+                <span key={i} className="font-display text-3xl uppercase text-bone/25 transition-colors hover:text-bone sm:text-4xl">
+                  {o}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </section>
   );

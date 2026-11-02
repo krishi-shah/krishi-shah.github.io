@@ -16,8 +16,8 @@ export default function Hero() {
         {/* Top labels */}
         <div className="relative z-20 flex items-start justify-between pt-7">
           <div data-build className="eyebrow leading-5">
-            <div className="text-red">ML Engineer / Data Scientist</div>
-            <div className="text-bone/80">Research · York University</div>
+            <div className="text-bone/90">ML Engineer / Data Scientist</div>
+            <div className="text-bone/50">Research · York University</div>
           </div>
           <div data-build className="eyebrow flex items-center gap-2 text-bone/80">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-red" />
@@ -64,6 +64,26 @@ export default function Hero() {
                   height={1141}
                   className="portrait-tint relative block h-auto w-full"
                 />
+                {/* The portrait gets scanned by an AI image detector */}
+                <div className="scan-wrap pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
+                  <div className="scan-heat" style={{ left: '30%', top: '4%', width: '38%', height: '56%' }} />
+                  <div className="scan-sweep" />
+                </div>
+                <div
+                  className="scan-box pointer-events-none absolute"
+                  style={{ left: '35%', top: '10%', width: '28%', height: '44%' }}
+                  aria-hidden="true"
+                >
+                  <span className="c tl" />
+                  <span className="c tr" />
+                  <span className="c bl" />
+                  <span className="c br" />
+                  <span className="scan-tag">
+                    Real image <span className="opacity-60">·</span>{' '}
+                    <span data-count="0.997" data-count-delay="1550">0.997</span>
+                  </span>
+                  <span className="scan-sub">class: human · model: effnet b3</span>
+                </div>
               </div>
             </div>
           </div>
@@ -77,7 +97,7 @@ export default function Hero() {
           <h1 data-build data-type className="mt-1 w-fit font-display text-[18vw] uppercase leading-[0.9] text-bone sm:text-[7.5rem]">
             Krishi<span className="red-dot" />
           </h1>
-          <p data-build className="mt-6 text-2xl font-extrabold uppercase leading-tight text-red sm:text-[28px]">
+          <p data-build className="mt-6 text-2xl font-extrabold uppercase leading-tight text-bone sm:text-[28px]">
             Applied ML &amp;
             <br />
             Data Science
@@ -95,29 +115,29 @@ export default function Hero() {
           >
             See my work <ArrowDown className="h-4 w-4" />
           </a>
-          <p data-build className="mt-7 flex items-center gap-2 text-[11px] font-semibold uppercase tracking-wider text-dim">
-            <MapPin className="h-3.5 w-3.5 text-red" /> Toronto, Canada
+          <p data-build className="eyebrow mt-7 flex items-center gap-2 text-bone/55">
+            <MapPin className="h-3.5 w-3.5" /> Toronto, Canada
           </p>
         </div>
 
         {/* Right column */}
         <div className="relative z-20 mt-16 w-full lg:absolute lg:right-10 lg:top-[38%] lg:mt-0 lg:w-[260px]">
           <div data-build className="mb-6 flex items-center gap-4">
-            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-red/40 text-xl text-red">
+            <span className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-xl text-bone/70">
               ✳
             </span>
-            <p className="text-[13px] leading-5 text-bone/85">
+            <p className="text-[14px] leading-5 text-bone/85">
               Every model.
               <br />A measured claim.
             </p>
           </div>
           {STATS.map((s) => (
             <div data-build key={s.label} className="flex items-center gap-6 border-b border-line py-3.5">
-              <div className="w-[88px] font-display text-[44px] leading-none text-red">
+              <div className="num w-[96px] text-[34px] font-semibold leading-none text-red">
                 <span data-count={s.value}>{s.value}</span>
-                {s.suffix && <span className="ml-0.5 text-lg">{s.suffix}</span>}
+                {s.suffix && <span className="ml-0.5 text-base text-red/80">{s.suffix}</span>}
               </div>
-              <div className="eyebrow max-w-[140px] text-[10px] font-semibold leading-4 text-dim">
+              <div className="eyebrow max-w-[150px] leading-[1.45] text-bone/55">
                 {s.link ? (
                   <a href={s.link} target="_blank" rel="noreferrer" className="inline-flex items-center gap-1 hover:text-bone">
                     {s.label} <ArrowUpRight className="h-3 w-3 text-red" />
@@ -133,9 +153,9 @@ export default function Hero() {
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
-            className="eyebrow mt-5 inline-flex items-center gap-3 text-bone/85 hover:text-bone"
+            className="eyebrow mt-5 inline-flex items-center gap-3 text-bone/85 transition-colors hover:text-red"
           >
-            <Download className="h-4 w-4 text-red" /> Download CV
+            <Download className="h-4 w-4" /> Download CV
           </a>
         </div>
       </div>
