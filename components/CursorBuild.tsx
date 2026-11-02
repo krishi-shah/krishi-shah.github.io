@@ -333,43 +333,97 @@ export default function CursorBuild() {
     });
 
     // ---------- Scroll batches ----------
+    // Positions of unbuilt elements are measured once (and on resize), so
+    // scrolling only compares numbers. Fast scrolls and nav jumps reveal
+    // content immediately instead of sending cursors.
     const queued = new WeakSet<HTMLElement>();
     let introFinished = false;
     let pending: HTMLElement[] = [];
     let flushTimer: number | undefined;
     let ticking = false;
+    let positions: { el: HTMLElement; top: number; bottom: number }[] = [];
+    let lastY = window.scrollY;
+    let jumpUntil = 0;
+    let activeBatches = 0;
+
+    const measure = () => {
+      const sy = window.scrollY;
+      positions = Array.from(document.querySelectorAll<HTMLElement>('[data-build]'))
+        .filter((el) => !built.has(el))
+        .map((el) => {
+          const r = el.getBoundingClientRect();
+          return { el, top: r.top + sy, bottom: r.bottom + sy };
+        });
+    };
+
+    const quickReveal = (el: HTMLElement) => {
+      if (built.has(el)) return;
+      built.add(el);
+      el.classList.add('is-built');
+      if (!root.classList.contains('motion-off')) {
+        el.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], {
+          duration: 420,
+          easing: 'cubic-bezier(0.16, 1, 0.3, 1)',
+        });
+      }
+    };
 
     const flush = () => {
       const batch = pending.filter((el) => !built.has(el));
       pending = [];
       if (!batch.length || killed) return;
-      const count = Math.min(isMobile ? 5 : 9, Math.max(3, Math.ceil(batch.length / 1.3)));
-      runBatch(batch, count, isMobile ? 0.5 : 0.55);
-      // Never leave content waiting on cursors for long.
-      window.setTimeout(() => batch.forEach((el) => reveal(el)), 1600);
+      // Keep the number of cursors on screen modest.
+      if (activeBatches >= 2) return batch.forEach(quickReveal);
+      activeBatches++;
+      const count = Math.min(isMobile ? 5 : 8, Math.max(3, Math.ceil(batch.length / 1.2)));
+      runBatch(batch, count, isMobile ? 0.38 : 0.42).then(() => activeBatches--);
+      // Content never waits on cursors for more than a moment.
+      window.setTimeout(() => batch.forEach((el) => reveal(el)), 650);
+    };
+
+    let finished = false;
+    const finish = () => {
+      if (finished) return;
+      finished = true;
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', onResize);
+      ro.disconnect();
+      // Let any last cursors leave, then remove the layer completely.
+      window.setTimeout(() => {
+        if (!stage.childElementCount) layer.remove();
+      }, 2500);
     };
 
     const scan = () => {
-      if (killed) return;
+      if (killed || !introFinished) return;
+      const sy = window.scrollY;
       const vhNow = window.innerHeight;
-      document.querySelectorAll<HTMLElement>('[data-build]:not(.is-built)').forEach((el) => {
-        const r = el.getBoundingClientRect();
-        if (r.bottom <= 0) {
-          reveal(el, false); // scrolled past already
-        } else if (introFinished && r.top < vhNow * 1.08 && !queued.has(el)) {
-          // Start slightly before it enters, so cursors arrive as it does.
-          queued.add(el);
-          pending.push(el);
+      const speed = Math.abs(sy - lastY);
+      lastY = sy;
+      const fast = speed > vhNow * 0.12 || performance.now() < jumpUntil;
+      let remaining = 0;
+      for (const p of positions) {
+        if (built.has(p.el)) continue;
+        remaining++;
+        const top = p.top - sy;
+        const bottom = p.bottom - sy;
+        if (bottom <= 0) {
+          reveal(p.el, false);
+        } else if (top < vhNow * 1.05 && !queued.has(p.el)) {
+          queued.add(p.el);
+          if (fast) quickReveal(p.el);
+          else pending.push(p.el);
         }
-      });
+      }
       if (pending.length) {
         window.clearTimeout(flushTimer);
         flushTimer = window.setTimeout(flush, 40);
       }
+      if (remaining === 0) finish();
     };
 
     const onScroll = () => {
-      syncStage();
+      if (stage.childElementCount) syncStage();
       if (ticking) return;
       ticking = true;
       requestAnimationFrame(() => {
@@ -377,11 +431,30 @@ export default function CursorBuild() {
         scan();
       });
     };
+    let resizeTimer: number | undefined;
+    const onResize = () => {
+      window.clearTimeout(resizeTimer);
+      resizeTimer = window.setTimeout(() => {
+        measure();
+        scan();
+      }, 150);
+    };
     window.addEventListener('scroll', onScroll, { passive: true });
-    window.addEventListener('resize', onScroll);
+    window.addEventListener('resize', onResize);
+    const ro = new ResizeObserver(onResize);
+    ro.observe(document.body);
+
+    // Clicking a nav link jumps straight there with no cursor detours.
+    const onNav = (e: MouseEvent) => {
+      const a = (e.target as HTMLElement)?.closest?.('a[href^="#"]');
+      if (a) jumpUntil = performance.now() + 1600;
+    };
+    document.addEventListener('click', onNav, true);
 
     introDone.then(() => {
       introFinished = true;
+      measure();
+      lastY = window.scrollY;
       scan();
     });
 
@@ -400,8 +473,16 @@ export default function CursorBuild() {
         ),
       );
       if (!added) return;
-      if (root.classList.contains('motion-off')) revealAll();
-      else onScroll();
+      if (root.classList.contains('motion-off') || !introFinished) {
+        if (root.classList.contains('motion-off')) revealAll();
+        return;
+      }
+      // Cards shown by a filter appear straight away.
+      document.querySelectorAll<HTMLElement>('[data-build]:not(.is-built)').forEach((el) => {
+        const r = el.getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) quickReveal(el);
+      });
+      measure();
     });
     mo.observe(document.body, { childList: true, subtree: true });
 
@@ -420,7 +501,9 @@ export default function CursorBuild() {
       mo.disconnect();
       window.removeEventListener('motionchange', onMotion);
       window.removeEventListener('scroll', onScroll);
-      window.removeEventListener('resize', onScroll);
+      window.removeEventListener('resize', onResize);
+      document.removeEventListener('click', onNav, true);
+      ro.disconnect();
       document.removeEventListener('focusin', onFocus);
       skipBtn.remove();
       layer.remove();

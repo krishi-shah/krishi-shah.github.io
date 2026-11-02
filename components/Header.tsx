@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 
 const NAV = [
@@ -16,24 +16,58 @@ export default function Header() {
   const [active, setActive] = useState('');
   const [motionOn, setMotionOn] = useState(true);
   const [open, setOpen] = useState(false);
-  const [progress, setProgress] = useState(0);
+  const bar = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     setMotionOn(!document.documentElement.classList.contains('motion-off'));
 
-    const onScroll = () => {
-      const max = document.documentElement.scrollHeight - window.innerHeight;
-      setProgress(max > 0 ? window.scrollY / max : 0);
-      let current = '';
-      for (const n of NAV) {
+    // Section positions are measured once (and on resize), never while scrolling.
+    let tops: { id: string; top: number }[] = [];
+    let max = 1;
+    const measure = () => {
+      const sy = window.scrollY;
+      tops = NAV.map((n) => {
         const el = document.getElementById(n.id);
-        if (el && el.getBoundingClientRect().top < window.innerHeight * 0.4) current = n.id;
-      }
-      setActive(current);
+        return { id: n.id, top: el ? el.getBoundingClientRect().top + sy : Infinity };
+      });
+      max = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+      update();
     };
-    onScroll();
+
+    let current = '';
+    let raf = 0;
+    const update = () => {
+      raf = 0;
+      const sy = window.scrollY;
+      if (bar.current) bar.current.style.transform = `scaleX(${Math.min(1, sy / max).toFixed(4)})`;
+      const line = sy + window.innerHeight * 0.4;
+      let next = '';
+      for (const t of tops) if (t.top < line) next = t.id;
+      if (next !== current) {
+        current = next;
+        setActive(next); // re-render only when the active section changes
+      }
+    };
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update);
+    };
+
+    let timer: number | undefined;
+    const schedule = () => {
+      window.clearTimeout(timer);
+      timer = window.setTimeout(measure, 150);
+    };
+    const ro = new ResizeObserver(schedule);
+    ro.observe(document.body);
     window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    window.addEventListener('resize', schedule);
+    measure();
+    return () => {
+      ro.disconnect();
+      cancelAnimationFrame(raf);
+      window.removeEventListener('scroll', onScroll);
+      window.removeEventListener('resize', schedule);
+    };
   }, []);
 
   const toggleMotion = () => {
@@ -48,10 +82,11 @@ export default function Header() {
   };
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink/85 backdrop-blur-md">
+    <header className="fixed inset-x-0 top-0 z-50 border-b border-line bg-ink/95">
       <div
-        className="absolute left-0 top-0 h-[2px] bg-red transition-[width] duration-150"
-        style={{ width: `${progress * 100}%` }}
+        ref={bar}
+        className="absolute inset-x-0 top-0 h-[2px] origin-left bg-red will-change-transform"
+        style={{ transform: 'scaleX(0)' }}
         aria-hidden="true"
       />
       <div className="mx-auto flex h-[66px] max-w-[1400px] items-center justify-between px-5 sm:px-10">

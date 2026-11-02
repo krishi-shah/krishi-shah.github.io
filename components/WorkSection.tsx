@@ -53,7 +53,7 @@ function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
       <div className="scan" aria-hidden="true" />
-      <div className="card-glare absolute inset-0" aria-hidden="true" />
+      <div className="card-glare" aria-hidden="true" />
       <div className="relative flex h-full flex-col items-start p-4 sm:p-5">
         <span className="bg-ink/80 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-bone/80">
           {categoryOf(p)}

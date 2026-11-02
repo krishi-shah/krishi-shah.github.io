@@ -9,7 +9,9 @@ const STATS = [
 export default function Hero() {
   return (
     <section id="home" className="relative overflow-hidden pt-[66px]">
-      <div className="hero-spot pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
+      <div className="pointer-events-none absolute inset-0 z-0 overflow-hidden" aria-hidden="true">
+        <div data-hero-spot className="hero-spot" />
+      </div>
       <div className="relative mx-auto min-h-[calc(100svh-66px)] max-w-[1400px] px-5 pb-10 sm:px-10">
         {/* Top labels */}
         <div className="relative z-20 flex items-start justify-between pt-7">
@@ -48,7 +50,11 @@ export default function Hero() {
                 {/* Soft red light behind the subject so the photo sits in the scene */}
                 <div
                   aria-hidden="true"
-                  className="absolute inset-x-[18%] bottom-[8%] top-[6%] rounded-full bg-red/25 blur-[70px]"
+                  className="absolute inset-x-[4%] bottom-0 top-[-6%]"
+                  style={{
+                    background:
+                      'radial-gradient(50% 55% at 50% 48%, rgba(227,38,59,0.30), rgba(227,38,59,0.10) 55%, transparent 75%)',
+                  }}
                 />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
