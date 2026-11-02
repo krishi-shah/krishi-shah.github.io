@@ -47,10 +47,8 @@ body {
 
 .portrait-tint {
   filter: grayscale(0.25) contrast(1.08) brightness(0.92);
-  -webkit-mask-image: linear-gradient(180deg, #000 70%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 14%);
-  -webkit-mask-composite: source-in;
-  mask-image: linear-gradient(180deg, #000 70%, transparent 100%), linear-gradient(90deg, transparent 0%, #000 14%);
-  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 82%, transparent 100%);
 }
 
 .red-dot {

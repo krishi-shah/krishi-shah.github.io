@@ -38,14 +38,14 @@ export default function Hero() {
 
           <div
             data-build
-            className="absolute inset-x-0 bottom-0 z-10 mx-auto w-[86vw] max-w-[540px] sm:w-[60vw] lg:w-[36vw]"
+            className="absolute -left-[20vw] -right-[20vw] bottom-0 z-10 mx-auto sm:inset-x-0 sm:w-[78vw] sm:max-w-[680px] lg:w-[46vw]"
           >
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
               src="/images/portrait.webp"
               alt="Krishi Shah"
-              width={628}
-              height={671}
+              width={796}
+              height={577}
               className="portrait-tint block h-auto w-full"
             />
           </div>
