@@ -44,14 +44,19 @@ export default function Hero() {
             className="absolute -left-[20vw] -right-[20vw] bottom-0 z-10 mx-auto sm:inset-x-0 sm:w-[78vw] sm:max-w-[680px] lg:w-[46vw]"
           >
             <div data-lag="0.08">
-              <div data-hero-tilt>
+              <div data-hero-tilt className="relative">
+                {/* Soft red light behind the subject so the photo sits in the scene */}
+                <div
+                  aria-hidden="true"
+                  className="absolute inset-x-[18%] bottom-[8%] top-[6%] rounded-full bg-red/25 blur-[70px]"
+                />
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="/images/portrait.webp"
                   alt="Krishi Shah"
-                  width={796}
-                  height={577}
-                  className="portrait-tint block h-auto w-full"
+                  width={1561}
+                  height={1141}
+                  className="portrait-tint relative block h-auto w-full"
                 />
               </div>
             </div>
