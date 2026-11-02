@@ -2,6 +2,7 @@
 
 import { useCallback, useRef, useState } from 'react';
 import { MoveHorizontal } from 'lucide-react';
+import Lines from '@/components/Lines';
 
 /* Illustrative reliability diagram: predicted confidence vs observed accuracy. */
 function Reliability({ calibrated }: { calibrated: boolean }) {
@@ -65,9 +66,7 @@ export default function ProcessSection() {
         <div data-build>
           <p className="eyebrow text-red">A look under the model</p>
           <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-6xl">
-            From raw.
-            <br />
-            <span className="text-red">To calibrated.</span>
+            <Lines lines={['From raw.', <span key="c" className="text-red">To calibrated.</span>]} />
           </h2>
           <p className="mt-6 text-lg font-semibold text-bone">One detector. Two very different promises.</p>
           <p className="mt-3 max-w-sm text-sm leading-7 text-bone/65">
@@ -93,6 +92,7 @@ export default function ProcessSection() {
               if (e.buttons) setFromX(e.clientX);
             }}
             role="slider"
+            data-cursor="Drag"
             aria-label="Compare uncalibrated and calibrated model"
             aria-valuemin={0}
             aria-valuemax={100}

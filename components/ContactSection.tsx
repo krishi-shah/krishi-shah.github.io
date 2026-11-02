@@ -1,5 +1,7 @@
 import { ArrowUpRight, Mail } from 'lucide-react';
 import { getSiteConfig } from '@/lib/content';
+import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const site = getSiteConfig();
 
@@ -12,15 +14,14 @@ const CHANNELS = [
 
 export default function ContactSection() {
   return (
-    <section id="contact" className="border-t border-line">
-      <div className="mx-auto grid max-w-[1400px] gap-12 px-5 py-20 sm:px-10 sm:py-28 lg:grid-cols-[1.5fr_1fr]">
+    <section id="contact" className="relative overflow-x-clip border-t border-line">
+      <SectionNumber n="05" />
+      <div className="relative mx-auto grid max-w-[1400px] gap-12 px-5 py-20 sm:px-10 sm:py-28 lg:grid-cols-[1.5fr_1fr]">
         <div>
           <div data-build>
             <p className="eyebrow text-red">05 / Your next model</p>
             <h2 className="mt-3 font-display text-6xl uppercase leading-[0.9] sm:text-8xl">
-              Let&apos;s build
-              <br />
-              <span className="text-red">together.</span>
+              <Lines lines={['Let\u2019s build', <span key="t" className="text-red">together.</span>]} />
             </h2>
             <p className="mt-6 max-w-md text-[15px] leading-7 text-bone/70">
               Have a problem worth modelling? Let&apos;s make something that works outside the notebook too.
@@ -28,6 +29,7 @@ export default function ContactSection() {
           </div>
           <a
             data-build
+            data-magnetic
             href={`mailto:${site.email}`}
             className="mt-8 inline-flex items-center gap-6 bg-red px-6 py-4 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:bg-red-bright"
           >
@@ -65,7 +67,7 @@ export default function ContactSection() {
           </div>
         </div>
 
-        <div data-build className="relative flex min-h-[380px] flex-col justify-between overflow-hidden bg-red p-8">
+        <div data-build data-tilt="7" className="relative flex min-h-[380px] flex-col justify-between overflow-hidden bg-red p-8">
           <div
             className="absolute inset-0 opacity-20"
             style={{
@@ -85,11 +87,22 @@ export default function ContactSection() {
               Data / Systems
             </span>
           </div>
-          <p className="relative font-display text-6xl uppercase leading-[0.9] text-white sm:text-7xl">
-            Make it
-            <br />
-            measurable.
-          </p>
+          <div className="relative -mx-8 overflow-hidden" aria-label="Make it measurable.">
+            {[0, 1].map((row) => (
+              <div
+                key={row}
+                aria-hidden="true"
+                className={`marquee-track flex w-max gap-6 whitespace-nowrap font-display text-6xl uppercase leading-[0.95] sm:text-7xl ${
+                  row ? 'text-ink/80 [animation-direction:reverse]' : 'text-white'
+                }`}
+                style={{ animationDuration: '22s' }}
+              >
+                {Array.from({ length: 6 }, (_, i) => (
+                  <span key={i}>{row ? 'Make it measurable ·' : 'Make it measurable ·'}</span>
+                ))}
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </section>

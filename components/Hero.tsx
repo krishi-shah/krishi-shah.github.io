@@ -9,6 +9,7 @@ const STATS = [
 export default function Hero() {
   return (
     <section id="home" className="relative overflow-hidden pt-[66px]">
+      <div className="hero-spot pointer-events-none absolute inset-0 z-0" aria-hidden="true" />
       <div className="relative mx-auto min-h-[calc(100svh-66px)] max-w-[1400px] px-5 pb-10 sm:px-10">
         {/* Top labels */}
         <div className="relative z-20 flex items-start justify-between pt-7">
@@ -31,8 +32,10 @@ export default function Hero() {
             aria-hidden="true"
             className="pointer-events-none absolute inset-x-0 top-[6%] z-0 select-none lg:top-[13%]"
           >
-            <div className="hero-word text-center font-display text-[24vw] uppercase lg:text-[22vw] xl:text-[19.5rem]">
-              Portfolio
+            <div data-lag="0.28">
+              <div className="hero-word text-center font-display text-[24vw] uppercase lg:text-[22vw] xl:text-[19.5rem]">
+                Portfolio
+              </div>
             </div>
           </div>
 
@@ -40,14 +43,18 @@ export default function Hero() {
             data-build
             className="absolute -left-[20vw] -right-[20vw] bottom-0 z-10 mx-auto sm:inset-x-0 sm:w-[78vw] sm:max-w-[680px] lg:w-[46vw]"
           >
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
-              src="/images/portrait.webp"
-              alt="Krishi Shah"
-              width={796}
-              height={577}
-              className="portrait-tint block h-auto w-full"
-            />
+            <div data-lag="0.08">
+              <div data-hero-tilt>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  src="/images/portrait.webp"
+                  alt="Krishi Shah"
+                  width={796}
+                  height={577}
+                  className="portrait-tint block h-auto w-full"
+                />
+              </div>
+            </div>
           </div>
         </div>
 
@@ -56,7 +63,7 @@ export default function Hero() {
           <p data-build className="-rotate-6 font-script text-5xl text-bone sm:text-6xl">
             Hello, I&apos;m
           </p>
-          <h1 data-build className="mt-1 font-display text-[18vw] uppercase leading-[0.9] text-bone sm:text-[7.5rem]">
+          <h1 data-build data-type className="mt-1 w-fit font-display text-[18vw] uppercase leading-[0.9] text-bone sm:text-[7.5rem]">
             Krishi<span className="red-dot" />
           </h1>
           <p data-build className="mt-6 text-2xl font-extrabold uppercase leading-tight text-red sm:text-[28px]">
@@ -70,6 +77,8 @@ export default function Hero() {
           </p>
           <a
             data-build
+            data-magnetic
+            data-finale
             href="#work"
             className="mt-8 inline-flex items-center gap-6 bg-red px-5 py-3.5 text-sm font-semibold text-white transition-colors hover:bg-red-bright"
           >
@@ -94,7 +103,7 @@ export default function Hero() {
           {STATS.map((s) => (
             <div data-build key={s.label} className="flex items-center gap-6 border-b border-line py-3.5">
               <div className="w-[88px] font-display text-[44px] leading-none text-red">
-                {s.value}
+                <span data-count={s.value}>{s.value}</span>
                 {s.suffix && <span className="ml-0.5 text-lg">{s.suffix}</span>}
               </div>
               <div className="eyebrow max-w-[140px] text-[10px] font-semibold leading-4 text-dim">

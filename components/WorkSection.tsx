@@ -3,6 +3,8 @@
 import { useMemo, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Search } from 'lucide-react';
 import { getAllProjects } from '@/lib/content';
+import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const projects = getAllProjects();
 
@@ -31,7 +33,7 @@ function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
   const seed = index * 37;
   const bars = Array.from({ length: 22 }, (_, i) => 18 + ((Math.sin(seed + i * 1.7) + 1) / 2) * 62);
   return (
-    <div className="relative aspect-[16/10] overflow-hidden bg-panel">
+    <div data-tilt="9" className="relative aspect-[16/10] overflow-hidden bg-panel">
       <div
         className="absolute inset-0 opacity-60"
         style={{
@@ -44,12 +46,14 @@ function Cover({ p, index }: { p: (typeof projects)[number]; index: number }) {
         {bars.map((h, i) => (
           <div
             key={i}
-            className="flex-1 origin-bottom bg-gradient-to-t from-red-deep to-red/70 transition-transform duration-700 ease-out-expo group-hover:scale-y-110"
-            style={{ height: `${h}%`, transitionDelay: `${i * 12}ms` }}
+            className="bar flex-1 bg-gradient-to-t from-red-deep to-red/70"
+            style={{ height: `${h}%`, ['--d' as string]: `${i * 22}ms` }}
           />
         ))}
       </div>
       <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-ink/20 to-transparent" />
+      <div className="scan" aria-hidden="true" />
+      <div className="card-glare absolute inset-0" aria-hidden="true" />
       <div className="relative flex h-full flex-col items-start p-4 sm:p-5">
         <span className="bg-ink/80 px-2 py-1 text-[9px] font-bold uppercase tracking-wider text-bone/80">
           {categoryOf(p)}
@@ -76,16 +80,19 @@ export default function WorkSection() {
   });
 
   return (
-    <section id="work" className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
+    <section id="work" className="relative overflow-x-clip">
+      <SectionNumber n="01" />
+      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
       <div className="flex flex-wrap items-end justify-between gap-6">
         <div data-build>
           <p className="eyebrow text-red">01 / Selected work</p>
           <h2 className="mt-2 font-display text-5xl uppercase leading-none sm:text-6xl">
-            Work that ships<span className="text-red">.</span>
+            <Lines lines={[<>Work that ships<span className="text-red">.</span></>]} />
           </h2>
         </div>
         <a
           data-build
+          data-magnetic
           href="https://github.com/krishi-shah"
           target="_blank"
           rel="noreferrer"
@@ -137,6 +144,7 @@ export default function WorkSection() {
               href={p.repo || `/projects/${p.slug}/`}
               target="_blank"
               rel="noreferrer"
+              data-cursor="View"
               className="group block"
             >
               <Cover p={p} index={index} />
@@ -179,6 +187,7 @@ export default function WorkSection() {
             ))}
           </div>
         </div>
+      </div>
       </div>
     </section>
   );

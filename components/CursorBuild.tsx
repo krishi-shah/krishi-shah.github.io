@@ -111,6 +111,35 @@ export default function CursorBuild() {
       }).finished.then(() => p.remove(), () => p.remove());
     };
 
+    // A cursor types the element in, letter by letter, behind a caret.
+    const typeIn = async (el: HTMLElement, c: Cursor, x0: number, y0: number, w: number, h: number, speed: number) => {
+      await moveTo(c, x0, y0 + h * 0.5, rand(320, 440) * speed);
+      if (built.has(el)) return;
+      if (skipping || killed) return reveal(el, false);
+      const letters = Math.max(1, (el.textContent || '').trim().length);
+      const dur = letters * 120 * speed + 120;
+      built.add(el);
+      el.classList.add('is-built');
+      el.animate(
+        [{ clipPath: 'inset(-30px 100% -30px -30px)' }, { clipPath: 'inset(-30px -30px -30px -30px)' }],
+        { duration: dur, easing: `steps(${letters}, end)` },
+      );
+      const caret = document.createElement('div');
+      caret.className = 'cb-caret';
+      caret.style.height = `${h * 0.8}px`;
+      stage.appendChild(caret);
+      caret.animate(
+        [
+          { transform: `translate(${x0}px, ${y0 + h * 0.1}px)` },
+          { transform: `translate(${x0 + w}px, ${y0 + h * 0.1}px)` },
+        ],
+        { duration: dur, easing: `steps(${letters}, end)`, fill: 'forwards' },
+      );
+      await moveTo(c, x0 + w, y0 + h * 0.5, dur);
+      caret.animate([{ opacity: 1 }, { opacity: 0 }, { opacity: 1 }, { opacity: 0 }], { duration: 700, fill: 'forwards' })
+        .finished.then(() => caret.remove(), () => caret.remove());
+    };
+
     const build = async (el: HTMLElement, c: Cursor, speed: number) => {
       if (built.has(el)) return;
       if (skipping || killed) return reveal(el, false);
@@ -120,6 +149,8 @@ export default function CursorBuild() {
       const y0 = r.top + window.scrollY;
       const w = Math.max(r.width, 8);
       const h = Math.max(r.height, 8);
+
+      if (el.hasAttribute('data-type')) return typeIn(el, c, x0, y0, w, h, speed);
 
       await moveTo(c, x0, y0, rand(300, 460) * speed);
       if (built.has(el)) return;
@@ -169,7 +200,9 @@ export default function CursorBuild() {
       }
     };
 
-    const runBatch = async (targets: HTMLElement[], count: number, speed: number) => {
+    let onExit: (() => void) | null = null;
+
+    const runBatch = async (targets: HTMLElement[], count: number, speed: number, finale?: HTMLElement | null) => {
       // Reading order: top to bottom, then left to right.
       const pos = new Map(targets.map((el) => [el, el.getBoundingClientRect()]));
       targets.sort((a, b) => {
@@ -179,16 +212,90 @@ export default function CursorBuild() {
       });
       const cursors = Array.from({ length: count }, (_, i) => spawn(...entryPoint(), i));
       let next = 0;
-      await Promise.all(
-        cursors.map(async (c, i) => {
-          await sleep(i * 45 * speed);
-          while (next < targets.length && !killed) {
-            await build(targets[next++], c, speed);
-            await sleep(rand(15, 60) * speed);
-          }
-          await exit(c);
-        }),
-      );
+      const work = async (c: Cursor, i: number) => {
+        await sleep(i * 45 * speed);
+        while (next < targets.length && !killed) {
+          await build(targets[next++], c, speed);
+          await sleep(rand(15, 60) * speed);
+        }
+      };
+      const leave = async (c: Cursor) => {
+        await exit(c);
+        onExit?.();
+      };
+
+      if (!finale) {
+        await Promise.all(cursors.map(async (c, i) => {
+          await work(c, i);
+          await leave(c);
+        }));
+        return;
+      }
+
+      // Finale: everyone finishes, then swoops onto the button and clicks it together.
+      await Promise.all(cursors.map((c, i) => work(c, i)));
+      if (!skipping && !killed && finale.isConnected) {
+        const r = finale.getBoundingClientRect();
+        const cx = r.left + window.scrollX + r.width / 2;
+        const cy = r.top + window.scrollY + r.height / 2;
+        await Promise.all(
+          cursors.map((c, i) => {
+            const a = (i / cursors.length) * Math.PI * 2;
+            const d = rand(8, 26);
+            return moveTo(c, cx + Math.cos(a) * d, cy + Math.sin(a) * d * 0.6, rand(480, 640));
+          }),
+        );
+        await sleep(80);
+        const ripple = document.createElement('div');
+        ripple.className = 'cb-ripple';
+        ripple.style.transform = `translate(${cx}px, ${cy}px)`;
+        stage.appendChild(ripple);
+        ripple.animate(
+          [
+            { transform: `translate(${cx}px, ${cy}px) scale(1)`, opacity: 1 },
+            { transform: `translate(${cx}px, ${cy}px) scale(9)`, opacity: 0 },
+          ],
+          { duration: 650, easing: 'ease-out', fill: 'forwards' },
+        ).finished.then(() => ripple.remove(), () => ripple.remove());
+        cursors.forEach((c) =>
+          c.el.animate([{ scale: '1' }, { scale: '0.8' }, { scale: '1' }], { duration: 220 }),
+        );
+        finale.classList.remove('cb-clicked');
+        void finale.offsetWidth;
+        finale.classList.add('cb-clicked');
+        window.setTimeout(() => finale.classList.remove('cb-clicked'), 900);
+        await sleep(260);
+      }
+      await Promise.all(cursors.map((c, i) => sleep(i * 25).then(() => leave(c))));
+    };
+
+    // Live collaborators badge shown during the intro.
+    const makeBadge = (n: number) => {
+      const badge = document.createElement('div');
+      badge.className = 'cb-badge';
+      const colors = ['#e3263b', '#ffffff', '#ff8a96', '#2a2a2a'];
+      const initials = ['', '', '', ''];
+      badge.innerHTML =
+        '<span class="live"></span><span class="avatars">' +
+        initials.map((t, i) => `<span style="background:${colors[i]};color:${i === 1 ? '#090909' : '#fff'}">${t}</span>`).join('') +
+        `</span><span class="count">${n} building live</span>`;
+      layer.appendChild(badge);
+      badge.animate([{ opacity: 0, transform: 'translateY(-6px)' }, { opacity: 1, transform: 'none' }], {
+        duration: 400,
+        fill: 'both',
+      });
+      let left = n;
+      return {
+        dec() {
+          left = Math.max(0, left - 1);
+          const el = badge.querySelector('.count');
+          if (el) el.textContent = left ? `${left} building live` : 'Built live';
+        },
+        done() {
+          badge.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 500, delay: 700, fill: 'forwards' })
+            .finished.then(() => badge.remove(), () => badge.remove());
+        },
+      };
     };
 
     // ---------- Intro ----------
@@ -208,17 +315,22 @@ export default function CursorBuild() {
     skipBtn.textContent = 'Skip intro';
     skipBtn.onclick = () => {
       skipping = true;
+      stage.querySelectorAll('.cb-cursor').forEach((c) => c.remove());
       introTargets.forEach((el) => reveal(el, false));
       skipBtn.remove();
     };
     document.body.appendChild(skipBtn);
 
-    const introDone = runBatch(introTargets, Math.min(isMobile ? 8 : 16, introTargets.length), isMobile ? 0.75 : 0.9).then(
-      () => {
-        skipBtn.remove();
-        skipping = false;
-      },
-    );
+    const introCount = Math.min(isMobile ? 8 : 16, introTargets.length);
+    const badge = makeBadge(introCount);
+    onExit = () => badge.dec();
+    const finale = document.querySelector<HTMLElement>('[data-finale]');
+    const introDone = runBatch(introTargets, introCount, isMobile ? 0.75 : 0.9, finale).then(() => {
+      onExit = null;
+      badge.done();
+      skipBtn.remove();
+      skipping = false;
+    });
 
     // ---------- Scroll batches ----------
     const queued = new WeakSet<HTMLElement>();

@@ -91,6 +91,7 @@ export default function Header() {
           </button>
           <a
             href="#contact"
+            data-magnetic
             className="hidden items-center gap-2 text-[14px] font-semibold text-bone sm:flex"
           >
             Let&apos;s talk <ArrowUpRight className="h-4 w-4 text-red" />

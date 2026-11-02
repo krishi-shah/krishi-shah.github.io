@@ -1,4 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
+import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const experiences = [
   {
@@ -128,17 +130,24 @@ function Row({ r, i }: { r: Role; i: number }) {
 
 export default function ExperienceSection() {
   return (
-    <section id="journey" className="border-t border-line bg-[#0c0c0c]">
-      <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
+    <section id="journey" className="relative overflow-x-clip border-t border-line bg-[#0c0c0c]">
+      <SectionNumber n="03" />
+      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
         <div className="flex flex-wrap items-end justify-between gap-6">
           <div data-build>
             <p className="eyebrow text-red">03 / The journey</p>
             <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
-              Keep shipping<span className="text-red">.</span> Keep learning<span className="text-red">.</span>
+              <Lines
+                lines={[
+                  <>Keep shipping<span className="text-red">.</span></>,
+                  <>Keep learning<span className="text-red">.</span></>,
+                ]}
+              />
             </h2>
           </div>
           <a
             data-build
+            data-magnetic
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
@@ -148,7 +157,11 @@ export default function ExperienceSection() {
           </a>
         </div>
 
-        <div className="mt-12 border-t border-line">
+        <div data-progress className="relative mt-12 border-t border-line pl-6 sm:pl-10">
+          <div className="absolute bottom-0 left-0 top-0 w-px bg-line" aria-hidden="true">
+            <div className="progress-fill absolute inset-0 bg-red" />
+            <div className="progress-dot absolute -left-[5px] -mt-[5px] h-[11px] w-[11px] rounded-full bg-red shadow-[0_0_14px_3px_rgba(227,38,59,0.65)]" />
+          </div>
           {experiences.map((r, i) => (
             <Row key={r.company + r.period} r={r} i={i} />
           ))}

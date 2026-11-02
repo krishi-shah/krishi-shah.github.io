@@ -1,4 +1,6 @@
 import { getSiteConfig } from '@/lib/content';
+import Lines from '@/components/Lines';
+import SectionNumber from '@/components/SectionNumber';
 
 const site = getSiteConfig();
 
@@ -27,15 +29,14 @@ const SKILLS = [
 
 export default function AboutSection() {
   return (
-    <section id="about" className="border-t border-line">
-      <div className="mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
+    <section id="about" className="relative overflow-x-clip border-t border-line">
+      <SectionNumber n="02" />
+      <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
         <div className="grid gap-12 lg:grid-cols-[1.1fr_1fr]">
           <div data-build>
             <p className="eyebrow text-red">02 / Behind the models</p>
             <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
-              Not just accuracy.
-              <br />
-              <span className="text-red">Claims that hold up.</span>
+              <Lines lines={['Not just accuracy.', <span key="c" className="text-red">Claims that hold up.</span>]} />
             </h2>
           </div>
           <p data-build className="self-end text-[15px] leading-8 text-bone/75">

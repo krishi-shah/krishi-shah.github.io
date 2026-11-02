@@ -9,6 +9,7 @@ import WritingSection from '@/components/WritingSection';
 import ContactSection from '@/components/ContactSection';
 import Footer from '@/components/Footer';
 import CursorBuild from '@/components/CursorBuild';
+import Effects from '@/components/Effects';
 
 export default function Home() {
   return (
@@ -26,6 +27,7 @@ export default function Home() {
       </main>
       <Footer />
       <CursorBuild />
+      <Effects />
     </>
   );
 }

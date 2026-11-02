@@ -1,4 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
+import Lines from '@/components/Lines';
 
 const ITEMS = [
   { title: 'Co-op of the Year Nominee', org: 'Ontario Government', year: '2025' },
@@ -17,9 +18,7 @@ export default function RecognitionSection() {
           <div data-build>
             <p className="eyebrow text-red">Recognition &amp; milestones</p>
             <h2 className="mt-3 font-display text-5xl uppercase leading-[0.95] sm:text-7xl">
-              The work.
-              <br />
-              <span className="text-red">The recognition.</span>
+              <Lines lines={['The work.', <span key="r" className="text-red">The recognition.</span>]} />
             </h2>
           </div>
           <div data-build className="mt-10 flex items-center gap-5">
@@ -41,6 +40,7 @@ export default function RecognitionSection() {
           </p>
           <a
             data-build
+            data-magnetic
             href="/resume.pdf"
             target="_blank"
             rel="noreferrer"
@@ -55,14 +55,18 @@ export default function RecognitionSection() {
             <li
               data-build
               key={it.title}
-              className="group flex items-center gap-5 border-b border-line py-5 transition-colors hover:bg-white/[0.02]"
+              className="group relative flex items-center gap-5 overflow-hidden border-b border-line py-5"
             >
-              <span className="w-6 text-[11px] font-bold text-red">{String(i + 1).padStart(2, '0')}</span>
-              <div className="flex-1">
+              <span
+                aria-hidden="true"
+                className="absolute inset-0 origin-left scale-x-0 bg-gradient-to-r from-red/20 to-red/[0.03] transition-transform duration-700 ease-out-expo group-hover:scale-x-100"
+              />
+              <span className="relative w-6 pl-1 text-[11px] font-bold text-red">{String(i + 1).padStart(2, '0')}</span>
+              <div className="relative flex-1 transition-transform duration-500 ease-out-expo group-hover:translate-x-2">
                 <h3 className="text-lg font-semibold text-bone sm:text-xl">{it.title}</h3>
                 <p className="mt-0.5 text-[12px] text-dim">{it.org}</p>
               </div>
-              <span className="font-display text-3xl text-red transition-transform duration-500 ease-out-expo group-hover:-translate-x-2 sm:text-4xl">
+              <span className="relative pr-1 font-display text-3xl text-red transition-all duration-500 ease-out-expo group-hover:-translate-x-3 group-hover:text-bone sm:text-4xl">
                 {it.year}
               </span>
             </li>
