@@ -1,7 +1,6 @@
 'use client';
 
 import { useEffect } from 'react';
-import Lenis from 'lenis';
 
 /*
   Page wide visual effects, run from a single animation frame loop.
@@ -138,20 +137,18 @@ export default function Effects() {
     const magnetOn = new Set<HTMLElement>();
 
     // ---------------- Custom cursor elements ----------------
-    let dot: HTMLDivElement | null = null;
+    // The real mouse pointer stays visible (no input lag). A ring follows it only
+    // over links and shows labels such as View and Drag.
     let ring: HTMLDivElement | null = null;
     let ringLabel: HTMLSpanElement | null = null;
     if (fine) {
-      root.classList.add('has-cursor');
-      dot = document.createElement('div');
-      dot.className = 'cc-dot';
       ring = document.createElement('div');
       ring.className = 'cc-ring';
       const ringInner = document.createElement('div');
       ringInner.className = 'cc-ring-inner';
       ringLabel = document.createElement('span');
       ring.append(ringInner, ringLabel);
-      document.body.append(ring, dot);
+      document.body.append(ring);
     }
 
     // ---------------- The frame loop ----------------
@@ -175,13 +172,12 @@ export default function Effects() {
       const tiltRect = mouseDirty && tiltTarget && !still ? tiltTarget.getBoundingClientRect() : null;
 
       // ---- WRITES ----
-      if (fine && dot && ring) {
-        dot.style.transform = `translate3d(${mouseX}px, ${mouseY}px, 0)`;
+      if (fine && ring) {
         const dx = mouseX - ringX;
         const dy = mouseY - ringY;
         if (Math.abs(dx) > 0.15 || Math.abs(dy) > 0.15) {
-          ringX += dx * 0.22;
-          ringY += dy * 0.22;
+          ringX += dx * 0.38;
+          ringY += dy * 0.38;
           keepGoing = true;
         } else {
           ringX = mouseX;
@@ -350,33 +346,6 @@ export default function Effects() {
     }
 
     // ---------------- Smooth scroll ----------------
-    let lenis: Lenis | null = null;
-    let lenisRaf = 0;
-    const startLenis = () => {
-      if (lenis || motionOff() || !fine) return;
-      lenis = new Lenis({
-        lerp: 0.14,
-        smoothWheel: true,
-        anchors: { offset: -66, duration: 1.1, easing: easeOutExpo },
-      });
-      (window as any).__lenis = lenis;
-      lenis.on('scroll', () => {
-        scrollDirty = true;
-        kick();
-      });
-      const loop = (t: number) => {
-        lenis?.raf(t);
-        lenisRaf = requestAnimationFrame(loop);
-      };
-      lenisRaf = requestAnimationFrame(loop);
-    };
-    const stopLenis = () => {
-      cancelAnimationFrame(lenisRaf);
-      lenis?.destroy();
-      lenis = null;
-      (window as any).__lenis = null;
-    };
-    startLenis();
     listen(window, 'scroll', () => {
       scrollDirty = true;
       kick();
@@ -449,12 +418,9 @@ export default function Effects() {
     // ---------------- Motion toggle ----------------
     listen(window, 'motionchange', () => {
       if (motionOff()) {
-        stopLenis();
         magnets.forEach((el) => (el.style.transform = ''));
         if (heroTilt) heroTilt.style.transform = '';
         document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((el) => (el.style.transform = ''));
-      } else {
-        startLenis();
       }
       scrollDirty = true;
       kick();
@@ -466,10 +432,7 @@ export default function Effects() {
       offIO.disconnect();
       ro.disconnect();
       cancelAnimationFrame(raf);
-      stopLenis();
-      dot?.remove();
       ring?.remove();
-      root.classList.remove('has-cursor');
     };
   }, []);
 

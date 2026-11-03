@@ -1,12 +1,38 @@
+/* Fonts are served from this site and preloaded, so headings never flash in a fallback font */
+@font-face {
+  font-family: 'Anton';
+  src: url('/fonts/anton.woff2') format('woff2');
+  font-weight: 400;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Manrope';
+  src: url('/fonts/manrope.woff2') format('woff2');
+  font-weight: 200 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'JetBrains Mono';
+  src: url('/fonts/jetbrains-mono.woff2') format('woff2');
+  font-weight: 100 800;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Caveat';
+  src: url('/fonts/caveat.woff2') format('woff2');
+  font-weight: 600;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 :root {
   --font-anton: 'Anton';
-  --font-manrope: 'Manrope Variable';
+  --font-manrope: 'Manrope';
   --font-caveat: 'Caveat';
-  --font-mono: 'JetBrains Mono Variable';
+  --font-mono: 'JetBrains Mono';
   --ink: #090909;
   --red: #e3263b;
   --red-deep: #8f0f1d;
@@ -273,47 +299,27 @@ html.cb-armed [data-build]:not(.is-built) {
 section[id] {
   scroll-margin-top: 66px;
 }
-html.lenis,
-html.lenis body {
-  height: auto;
-}
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
-}
 
-/* Custom cursor */
-html.has-cursor,
-html.has-cursor a,
-html.has-cursor button,
-html.has-cursor [role='slider'] {
-  cursor: none;
-}
-.cc-dot,
+/* Hover ring: follows the real pointer, visible only over links and labelled items */
 .cc-ring {
   position: fixed;
   top: 0;
   left: 0;
   pointer-events: none;
   z-index: 95;
-  border-radius: 9999px;
-}
-.cc-dot {
-  width: 6px;
-  height: 6px;
-  margin: -3px 0 0 -3px;
-  background: var(--red);
-}
-.cc-ring {
   width: 76px;
   height: 76px;
   margin: -38px 0 0 -38px;
   display: flex;
   align-items: center;
   justify-content: center;
-  will-change: transform;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  will-change: transform, opacity;
 }
-.cc-dot {
-  will-change: transform;
+.cc-ring.is-hover,
+.cc-ring.has-label {
+  opacity: 1;
 }
 .cc-ring-inner {
   position: absolute;
@@ -348,7 +354,6 @@ html.has-cursor [role='slider'] {
 .cc-ring.is-down .cc-ring-inner {
   transform: scale(0.34);
 }
-html.cc-hidden .cc-dot,
 html.cc-hidden .cc-ring {
   opacity: 0;
 }
@@ -787,4 +792,18 @@ html.motion-off .radar-sweep-html > div {
 .scan-box-static .scan-tag {
   left: -1px;
   text-align: left;
+}
+
+/* Compact hero for shorter laptop screens (for example 1366x657, 1536x730) */
+@media (min-width: 1024px) and (max-height: 860px) {
+  #home .hero-top { padding-top: 14px; }
+  #home .hero-left { margin-top: 9vh; }
+  #home .hero-hello { font-size: 2.7rem; }
+  #home h1 { font-size: min(7.5rem, 14.5vh); }
+  #home .hero-role { margin-top: 12px; font-size: 22px; }
+  #home .hero-copy { margin-top: 10px; max-width: 300px; font-size: 14px; line-height: 1.65; }
+  #home [data-finale] { margin-top: 18px; }
+  #home .hero-loc { margin-top: 14px; }
+  #home .hero-right { top: 31%; }
+  #home .hero-word { font-size: min(19.5rem, 20vw, 40vh); }
 }

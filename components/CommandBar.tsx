@@ -12,9 +12,8 @@ function scrollToId(id: string) {
   const el = document.getElementById(id);
   if (!el) return;
   window.dispatchEvent(new Event('navjump'));
-  const lenis = (window as any).__lenis;
-  if (lenis) lenis.scrollTo(el, { offset: -66, duration: 1.1 });
-  else el.scrollIntoView({ behavior: 'smooth' });
+  const still = document.documentElement.classList.contains('motion-off');
+  el.scrollIntoView({ behavior: still ? 'auto' : 'smooth' });
 }
 
 const ICONS = { go: ArrowRight, copy: Copy, cv: Download, link: ExternalLink, motion: Gauge };
@@ -84,7 +83,6 @@ export default function CommandBar() {
 
   const close = useCallback(() => {
     setOpen(false);
-    (window as any).__lenis?.start();
     lastFocus.current?.focus?.();
   }, []);
 
@@ -93,7 +91,6 @@ export default function CommandBar() {
     setQ('');
     setSel(0);
     setOpen(true);
-    (window as any).__lenis?.stop();
   }, []);
 
   useEffect(() => {

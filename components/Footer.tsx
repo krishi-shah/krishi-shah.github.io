@@ -103,10 +103,8 @@ export default function Footer() {
         <button
           type="button"
           onClick={() => {
-            const lenis = (window as any).__lenis;
             window.dispatchEvent(new Event('navjump'));
-            if (lenis) lenis.scrollTo(0, { duration: 1.4 });
-            else window.scrollTo({ top: 0, behavior: 'smooth' });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
           }}
           className="eyebrow flex items-center gap-2 text-bone/60 transition-colors hover:text-red"
         >

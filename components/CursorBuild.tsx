@@ -345,7 +345,6 @@ export default function CursorBuild() {
     let positions: { el: HTMLElement; top: number; bottom: number }[] = [];
     let lastY = window.scrollY;
     let jumpUntil = 0;
-    let activeBatches = 0;
 
     const measure = () => {
       const sy = window.scrollY;
@@ -369,17 +368,16 @@ export default function CursorBuild() {
       }
     };
 
+    // After the intro, sections simply fade up as they enter. No cursors while
+    // scrolling: it keeps scrolling smooth and content never waits.
     const flush = () => {
       const batch = pending.filter((el) => !built.has(el));
       pending = [];
       if (!batch.length || killed) return;
-      // Keep the number of cursors on screen modest.
-      if (activeBatches >= 2) return batch.forEach(quickReveal);
-      activeBatches++;
-      const count = Math.min(isMobile ? 5 : 8, Math.max(3, Math.ceil(batch.length / 1.2)));
-      runBatch(batch, count, isMobile ? 0.38 : 0.42).then(() => activeBatches--);
-      // Content never waits on cursors for more than a moment.
-      window.setTimeout(() => batch.forEach((el) => reveal(el)), 650);
+      batch.forEach((el, i) => {
+        if (i === 0) quickReveal(el);
+        else window.setTimeout(() => quickReveal(el), Math.min(i, 6) * 45);
+      });
     };
 
     let finished = false;

@@ -1,8 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import '@fontsource/anton/400.css';
-import '@fontsource-variable/manrope';
-import '@fontsource/caveat/600.css';
-import '@fontsource-variable/jetbrains-mono';
 import '@/styles/globals.css';
 import { getSiteConfig } from '@/lib/content';
 
@@ -89,6 +85,10 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <head>
+        <link rel="preload" href="/fonts/anton.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/manrope.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/jetbrains-mono.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
+        <link rel="preload" href="/fonts/caveat.woff2" as="font" type="font/woff2" crossOrigin="anonymous" />
         <script
           dangerouslySetInnerHTML={{
             __html: `
@@ -98,10 +98,17 @@ export default function RootLayout({
                   var off = localStorage.getItem('motion') === 'off';
                   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
                   if (off || reduce) { d.classList.add('motion-off'); return; }
+                  // The cursor intro plays once per visit, only when the page opens at the top.
+                  // Refreshes, back and forward, links to a section and later page loads render instantly.
+                  var nav = performance.getEntriesByType ? performance.getEntriesByType('navigation')[0] : null;
+                  var type = nav && nav.type;
+                  var seen = sessionStorage.getItem('introSeen') === '1';
+                  if (seen || type === 'reload' || type === 'back_forward' || location.hash) return;
+                  sessionStorage.setItem('introSeen', '1');
                   d.classList.add('cb-armed');
                   setTimeout(function () {
                     if (!window.__cbReady) d.classList.remove('cb-armed');
-                  }, 6000);
+                  }, 3500);
                 } catch (e) {}
               })();
             `,

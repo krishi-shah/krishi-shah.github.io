@@ -14,7 +14,7 @@ export default function Hero() {
       </div>
       <div className="relative mx-auto min-h-[calc(100svh-66px)] max-w-[1400px] px-5 pb-10 sm:px-10">
         {/* Top labels */}
-        <div className="relative z-20 flex items-start justify-between pt-7">
+        <div className="hero-top relative z-20 flex items-start justify-between pt-7">
           <div data-build className="eyebrow leading-5">
             <div className="text-bone/90">ML Engineer / Data Scientist</div>
             <div className="text-bone/50">Research · York University</div>
@@ -93,19 +93,19 @@ export default function Hero() {
         </div>
 
         {/* Left column */}
-        <div className="relative z-20 -mt-16 max-w-[420px] lg:mt-[9vh]">
-          <p data-build className="-rotate-6 font-script text-5xl text-bone sm:text-6xl">
+        <div className="hero-left relative z-20 -mt-16 max-w-[420px] lg:mt-[9vh]">
+          <p data-build className="hero-hello -rotate-6 font-script text-5xl text-bone sm:text-6xl">
             Hello, I&apos;m
           </p>
           <h1 data-build data-type className="mt-1 w-fit font-display text-[18vw] uppercase leading-[0.9] text-bone sm:text-[7.5rem]">
             Krishi<span className="red-dot" />
           </h1>
-          <p data-build className="mt-6 text-2xl font-extrabold uppercase leading-tight text-bone sm:text-[28px]">
+          <p data-build className="hero-role mt-6 text-2xl font-extrabold uppercase leading-tight text-bone sm:text-[28px]">
             Applied ML &amp;
             <br />
             Data Science
           </p>
-          <p data-build className="mt-5 max-w-[300px] text-[15px] leading-7 text-bone/75">
+          <p data-build className="hero-copy mt-5 max-w-[300px] text-[15px] leading-7 text-bone/75">
             Models that hold up. Claims that are tested. I take machine learning from raw data to calibrated,
             explainable systems in production.
           </p>
@@ -118,13 +118,13 @@ export default function Hero() {
           >
             See my work <ArrowDown className="h-4 w-4" />
           </a>
-          <p data-build className="eyebrow mt-7 flex items-center gap-2 text-bone/55">
+          <p data-build className="hero-loc eyebrow mt-7 flex items-center gap-2 text-bone/55">
             <MapPin className="h-3.5 w-3.5" /> Toronto, Canada
           </p>
         </div>
 
         {/* Right column */}
-        <div className="relative z-20 mt-16 w-full lg:absolute lg:right-10 lg:top-[38%] lg:mt-0 lg:w-[260px]">
+        <div className="hero-right relative z-20 mt-16 w-full lg:absolute lg:right-10 lg:top-[38%] lg:mt-0 lg:w-[260px]">
           <div data-build className="mb-6 flex items-center gap-4">
             <span className="flex h-11 w-11 items-center justify-center rounded-full border border-line text-xl text-bone/70">
               ✳
