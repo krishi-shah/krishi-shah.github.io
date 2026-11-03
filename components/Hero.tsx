@@ -135,7 +135,7 @@ export default function Hero() {
             </p>
           </div>
           {STATS.map((s) => (
-            <div data-build key={s.label} className="flex items-center gap-6 border-b border-line py-3.5">
+            <div data-build data-dup="stat" key={s.label} className="flex items-center gap-6 border-b border-line py-3.5">
               <div className="num w-[96px] text-[34px] font-semibold leading-none text-red">
                 <span data-count={s.value}>{s.value}</span>
                 {s.suffix && <span className="ml-0.5 text-base text-red/80">{s.suffix}</span>}

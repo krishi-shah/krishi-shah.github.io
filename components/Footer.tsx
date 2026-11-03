@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import { ArrowUp } from 'lucide-react';
+import { ArrowUp, MousePointer2 } from 'lucide-react';
 import { getSiteConfig } from '@/lib/content';
 
 const site = getSiteConfig();
@@ -100,6 +100,16 @@ export default function Footer() {
 
       <div className="mx-auto flex max-w-[1400px] items-center justify-between px-5 py-6 sm:px-10">
         <span className="eyebrow text-bone/55">© {new Date().getFullYear()} Krishi Shah</span>
+        <button
+          type="button"
+          onClick={() => {
+            window.scrollTo({ top: 0, behavior: 'auto' });
+            window.setTimeout(() => window.dispatchEvent(new Event('swarmreplay')), 80);
+          }}
+          className="eyebrow hidden items-center gap-2 text-bone/60 transition-colors hover:text-red sm:flex"
+        >
+          <MousePointer2 className="h-3.5 w-3.5" /> Watch the swarm rebuild it
+        </button>
         <button
           type="button"
           onClick={() => {

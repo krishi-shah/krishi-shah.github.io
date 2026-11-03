@@ -807,3 +807,236 @@ html.motion-off .radar-sweep-html > div {
   #home .hero-right { top: 31%; }
   #home .hero-word { font-size: min(19.5rem, 20vw, 40vh); }
 }
+
+/* ===================== Swarm build pieces ===================== */
+.cb-icon {
+  display: block;
+  line-height: 0;
+}
+.cb-box {
+  border: 1px solid rgba(227, 38, 59, 0.95);
+  background: rgba(237, 237, 237, 0.05);
+}
+.cb-box.is-text {
+  border: 1px dashed rgba(237, 237, 237, 0.55);
+  background: transparent;
+}
+.cb-box.is-text::before,
+.cb-box.is-text::after {
+  display: none;
+}
+.cb-size {
+  position: absolute;
+  right: -1px;
+  top: calc(100% + 6px);
+  white-space: nowrap;
+  background: #c81e33;
+  color: #fff;
+  font: 600 11px/1 var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.02em;
+  padding: 3px 5px;
+  font-variant-numeric: tabular-nums;
+}
+.cb-box.is-text .cb-size {
+  background: #ededed;
+  color: #090909;
+}
+
+/* Design tool rulers along the top and left edges */
+.cb-ruler {
+  position: absolute;
+  z-index: 2;
+  color: rgba(237, 237, 237, 0.6);
+  font: 500 10px/1 var(--font-mono), ui-monospace, monospace;
+  background-color: #101010;
+  will-change: transform;
+}
+.cb-ruler-top {
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  background-image: repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.35) 0 1px, transparent 1px 100px),
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 10px);
+  background-size: 100% 9px, 100% 4px;
+  background-position: bottom, bottom;
+  background-repeat: no-repeat;
+}
+.cb-ruler-top span {
+  position: absolute;
+  top: 3px;
+  margin-left: 3px;
+}
+.cb-ruler-left {
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 20px;
+  border-right: 1px solid rgba(255, 255, 255, 0.14);
+  background-image: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.35) 0 1px, transparent 1px 100px),
+    repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0 1px, transparent 1px 10px);
+  background-size: 9px 100%, 4px 100%;
+  background-position: right, right;
+  background-repeat: no-repeat;
+}
+.cb-ruler-left span {
+  position: absolute;
+  left: 3px;
+  margin-top: 3px;
+  writing-mode: vertical-rl;
+  transform: rotate(180deg);
+}
+.cb-guide {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  width: 1px;
+  background: var(--red);
+  z-index: 1;
+  will-change: transform;
+}
+.cb-guide-tag {
+  position: absolute;
+  top: 26px;
+  left: 5px;
+  white-space: nowrap;
+  background: #c81e33;
+  color: #fff;
+  font: 600 10px/1 var(--font-mono), ui-monospace, monospace;
+  padding: 3px 5px;
+}
+
+/* The mark the swarm orbits before it fans out */
+.cb-mark {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 46px;
+  height: 46px;
+  margin: -23px 0 0 -23px;
+  border-radius: 11px;
+  background: #090909;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 40px rgba(227, 38, 59, 0.35);
+}
+.cb-mark span {
+  font: 400 28px/1 var(--font-anton), Impact, sans-serif;
+  color: #ededed;
+}
+.cb-mark i {
+  position: absolute;
+  right: 8px;
+  bottom: 9px;
+  width: 6px;
+  height: 6px;
+  background: var(--red);
+}
+
+/* Option drag duplicates */
+.cb-ghost {
+  position: absolute !important;
+  top: 0;
+  left: 0;
+  margin: 0 !important;
+  opacity: 0.85;
+  outline: 1px solid var(--red);
+  background: rgba(9, 9, 9, 0.7);
+  pointer-events: none;
+  will-change: transform;
+}
+.cb-measure {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  background: var(--red);
+}
+.cb-measure::before,
+.cb-measure::after {
+  content: '';
+  position: absolute;
+  left: -4px;
+  width: 9px;
+  height: 1px;
+  background: var(--red);
+}
+.cb-measure::before { top: 0; }
+.cb-measure::after { bottom: 0; }
+.cb-measure span {
+  position: absolute;
+  top: 50%;
+  right: 6px;
+  transform: translateY(-50%);
+  background: #c81e33;
+  color: #fff;
+  font: 600 10px/1 var(--font-mono), ui-monospace, monospace;
+  padding: 3px 5px;
+}
+
+/* Agents toolbar */
+.cb-toolbar {
+  position: fixed;
+  left: 50%;
+  bottom: 20px;
+  transform: translateX(-50%);
+  z-index: 80;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 7px 7px 7px 12px;
+  border-radius: 9999px;
+  background: rgba(17, 17, 17, 0.95);
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.5);
+  color: rgba(237, 237, 237, 0.75);
+  font: 500 12px/1 var(--font-mono), ui-monospace, monospace;
+  white-space: nowrap;
+}
+.cb-toolbar .live {
+  width: 7px;
+  height: 7px;
+  border-radius: 9999px;
+  background: #3ddc84;
+  box-shadow: 0 0 8px #3ddc84;
+}
+.cb-toolbar .avatars {
+  display: flex;
+}
+.cb-toolbar .avatars span {
+  width: 16px;
+  height: 16px;
+  margin-left: -5px;
+  border-radius: 9999px;
+  border: 2px solid #111;
+}
+.cb-toolbar .avatars span:first-child { margin-left: 0; background: #e3263b; }
+.cb-toolbar .avatars span:nth-child(2) { background: #ededed; }
+.cb-toolbar .avatars span:nth-child(3) { background: #ff8a96; }
+.cb-toolbar .avatars span:nth-child(4) { background: #3a3a3a; }
+.cb-toolbar b {
+  color: #fff;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+}
+.cb-toolbar button {
+  font: 600 11px/1 var(--font-mono), ui-monospace, monospace;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #ededed;
+  background: #2a2a2a;
+  border-radius: 9999px;
+  padding: 7px 12px;
+  transition: background-color 0.2s;
+}
+.cb-toolbar button:hover {
+  background: var(--red);
+}
+@media (max-width: 639px) {
+  .cb-toolbar { gap: 8px; font-size: 11px; bottom: 14px; }
+  .cb-toolbar .avatars { display: none; }
+}

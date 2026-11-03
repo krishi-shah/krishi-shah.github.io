@@ -1,12 +1,12 @@
 'use client';
 
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { ArrowRight, Copy, Download, ExternalLink, Gauge, Search } from 'lucide-react';
+import { ArrowRight, Copy, Download, ExternalLink, Gauge, MousePointer2, Search } from 'lucide-react';
 import { getSiteConfig } from '@/lib/content';
 
 const site = getSiteConfig();
 
-type Cmd = { id: string; label: string; hint: string; group: string; icon: 'go' | 'copy' | 'cv' | 'link' | 'motion'; run: () => void };
+type Cmd = { id: string; label: string; hint: string; group: string; icon: 'go' | 'copy' | 'cv' | 'link' | 'motion' | 'swarm'; run: () => void };
 
 function scrollToId(id: string) {
   const el = document.getElementById(id);
@@ -16,7 +16,7 @@ function scrollToId(id: string) {
   el.scrollIntoView({ behavior: still ? 'auto' : 'smooth' });
 }
 
-const ICONS = { go: ArrowRight, copy: Copy, cv: Download, link: ExternalLink, motion: Gauge };
+const ICONS = { go: ArrowRight, copy: Copy, cv: Download, link: ExternalLink, motion: Gauge, swarm: MousePointer2 };
 
 export default function CommandBar() {
   const [open, setOpen] = useState(false);
@@ -62,6 +62,14 @@ export default function CommandBar() {
             () => say(site.email),
           );
         },
+      },
+      {
+        id: 'swarm',
+        label: 'Rebuild this page with the swarm',
+        hint: 'Replay',
+        group: 'Actions',
+        icon: 'swarm',
+        run: () => window.dispatchEvent(new Event('swarmreplay')),
       },
       { id: 'cv', label: 'Download CV', hint: 'PDF', group: 'Actions', icon: 'cv', run: () => window.open('/resume.pdf', '_blank') },
       { id: 'gh', label: 'Open GitHub', hint: '@krishi-shah', group: 'Links', icon: 'link', run: () => window.open(site.social.github, '_blank') },
