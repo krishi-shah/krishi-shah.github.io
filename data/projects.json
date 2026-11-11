@@ -160,11 +160,11 @@
   {
     "slug": "toronto-ai-ml-internship-radar",
     "title": "Toronto AI/ML Internship Radar",
-    "shortDescription": "Live feed of Winter 2027 AI/ML internships and co-ops in Canada, refreshed by GitHub Actions.",
-    "longDescription": "A public feed of Canadian AI and ML internships and co-ops, rescraped on a schedule with no paid APIs.",
+    "shortDescription": "Live feed of Summer 2027 AI/ML internships and co-ops in and around Toronto, refreshed by GitHub Actions.",
+    "longDescription": "A public feed of AI and ML internships and co-ops in and around Toronto, read straight from 170+ employer job boards and trackers on a schedule, with no paid APIs.",
     "challenge": "Internship boards go stale, and a filter that is too strict drops postings a student would still want to see.",
-    "solution": "GitHub Actions refreshes the feed about every 10 minutes. Classification rules filter by region, recency, and hiring cycle, and keep ambiguous postings rather than dropping them.",
-    "outcome": "A live Winter 2027 feed of AI/ML internships and co-ops in Canada.",
+    "solution": "GitHub Actions refreshes the feed six times a day. Classification rules filter by region, recency, and hiring cycle, read job descriptions to catch AI focused roles, and keep ambiguous postings rather than dropping them.",
+    "outcome": "A live Summer 2027 feed of AI/ML internships and co-ops in the Toronto area, with RSS and JSON feeds.",
     "coverImage": "/grid.svg",
     "images": [],
     "tags": [
@@ -178,8 +178,8 @@
     "timeline": "2026",
     "metrics": [
       {
-        "value": "~10 min",
-        "label": "Refresh interval"
+        "value": "6× a day",
+        "label": "Refresh rate"
       }
     ],
     "repo": "https://github.com/krishi-shah/Toronto-AI-ML-internship-radar",
