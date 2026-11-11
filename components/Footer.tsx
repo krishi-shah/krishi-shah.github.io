@@ -54,7 +54,7 @@ export default function Footer() {
                 <span className="footer-ping absolute inset-0 rounded-full bg-red" />
                 <span className="relative h-2.5 w-2.5 rounded-full bg-red" />
               </span>
-              Open to Winter 2027
+              Open to Summer 2027
             </p>
           </div>
           <div className="flex flex-wrap items-start gap-x-6 gap-y-2 sm:justify-end">
