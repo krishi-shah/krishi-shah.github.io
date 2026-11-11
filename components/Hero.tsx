@@ -21,7 +21,7 @@ export default function Hero() {
           </div>
           <div data-build className="eyebrow flex items-center gap-2 text-bone/80">
             <span className="pulse-dot h-1.5 w-1.5 rounded-full bg-red" />
-            <span className="hidden sm:inline">Open to Winter 2027 roles</span>
+            <span className="hidden sm:inline">Open to Summer 2027 roles</span>
             <span className="sm:hidden">Open to work</span>
           </div>
         </div>
