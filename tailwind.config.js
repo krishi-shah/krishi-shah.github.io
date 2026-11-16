@@ -8,6 +8,7 @@ module.exports = {
     extend: {
       colors: {
         ink: '#090909',
+        paper: '#efede8',
         panel: '#111111',
         panel2: '#161616',
         line: 'rgba(255,255,255,0.08)',

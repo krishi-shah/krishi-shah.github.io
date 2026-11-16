@@ -84,7 +84,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </section>
 
         <section className="mx-auto mt-10 max-w-[1400px] px-5 sm:px-10">
-          <ProjectArt slug={project.slug} index={index} className="aspect-[16/9] w-full" />
+          <ProjectArt slug={project.slug} index={index} auto className="art-hero aspect-[16/9] w-full" />
         </section>
 
         {project.metrics.length > 0 && (

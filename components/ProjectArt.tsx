@@ -5,6 +5,11 @@
   deterministic per project so the art never changes between visits.
 */
 
+import type { CSSProperties } from 'react';
+
+// Stagger delay for the build animation of one element.
+const d = (ms: number) => ({ ['--d' as string]: `${Math.round(ms)}ms` }) as CSSProperties;
+
 function rng(seed: number) {
   let t = seed >>> 0;
   return () => {
@@ -35,6 +40,8 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
     case 'ai-image-detection':
       return (
         <g>
+          <rect className="a-sweep" x="300" y="110" width="200" height="3" fill="#ff5a6b" />
+          <g className="a-snap" style={d(650)}>
           <rect x="300" y="110" width="200" height="230" fill="none" stroke="rgba(227,38,59,0.8)" strokeWidth="1.5" />
           {[
             [300, 110, 1, 1],
@@ -44,10 +51,13 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
           ].map(([x, y, dx, dy], i) => (
             <path key={i} d={`M${x} ${y + 22 * dy} V${y} H${x + 22 * dx}`} fill="none" stroke="#fff" strokeWidth="3" />
           ))}
-          <rect x="300" y="84" width="170" height="22" fill="#e3263b" />
-          <text x="308" y="99" fill="#fff" fontSize="12" fontFamily="var(--font-mono)" fontWeight="600" letterSpacing="1">
-            SYNTHETIC · 0.97
-          </text>
+          </g>
+          <g className="a-fade" style={d(1000)}>
+            <rect x="300" y="84" width="170" height="22" fill="#e3263b" />
+            <text x="308" y="99" fill="#fff" fontSize="12" fontFamily="var(--font-mono)" fontWeight="600" letterSpacing="1">
+              SYNTHETIC · 0.97
+            </text>
+          </g>
         </g>
       );
     case 'finrag-ai': {
@@ -61,16 +71,19 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
       return (
         <g>
           {edges.map(([a, b], i) => (
-            <line key={i} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]} stroke="rgba(255,255,255,0.22)" />
+            <line key={i} className="a-fade" style={d(200 + i * 55)} x1={nodes[a][0]} y1={nodes[a][1]} x2={nodes[b][0]} y2={nodes[b][1]} stroke="rgba(255,255,255,0.22)" />
           ))}
           <polyline
+            className="a-draw"
+            pathLength={1}
+            style={d(750)}
             points={path.map((i) => nodes[i].join(',')).join(' ')}
             fill="none"
             stroke="#e3263b"
             strokeWidth="2.5"
           />
           {nodes.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r={path.includes(i) ? 7 : 4} fill={path.includes(i) ? '#fff' : 'rgba(255,255,255,0.6)'} />
+            <circle key={i} className="a-pop" style={d(i * 45)} cx={x} cy={y} r={path.includes(i) ? 7 : 4} fill={path.includes(i) ? '#fff' : 'rgba(255,255,255,0.6)'} />
           ))}
         </g>
       );
@@ -87,9 +100,9 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
           <text x="64" y="180" fill="rgba(255,255,255,0.6)" fontSize="11" fontFamily="var(--font-mono)">
             RISK THRESHOLD
           </text>
-          <polyline points={pts.map((p) => p.join(',')).join(' ')} fill="none" stroke="#fff" strokeWidth="2.5" />
+          <polyline className="a-draw" pathLength={1} style={d(150)} points={pts.map((p) => p.join(',')).join(' ')} fill="none" stroke="#fff" strokeWidth="2.5" />
           {pts.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="4" fill={y < 190 ? '#e3263b' : '#fff'} />
+            <circle key={i} className="a-pop" style={d(200 + i * 80)} cx={x} cy={y} r="4" fill={y < 190 ? '#e3263b' : '#fff'} />
           ))}
         </g>
       );
@@ -101,11 +114,11 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
           <circle cx="112" cy="110" r="5" fill="#e3263b" />
           <circle cx="130" cy="110" r="5" fill="rgba(255,255,255,0.3)" />
           <circle cx="148" cy="110" r="5" fill="rgba(255,255,255,0.3)" />
-          <text x="112" y="160" fill="rgba(255,255,255,0.9)">$ mlcheck run ./project</text>
-          <text x="112" y="196" fill="rgba(255,255,255,0.65)">  ok    train and test splits</text>
-          <text x="112" y="226" fill="#ff5a6b">  fail  target leaks into features</text>
-          <text x="112" y="256" fill="rgba(255,255,255,0.65)">  ok    baseline beaten by 11.4%</text>
-          <text x="112" y="286" fill="#ff5a6b">  warn  accuracy on imbalanced data</text>
+          <text className="a-type" style={d(150)} x="112" y="160" fill="rgba(255,255,255,0.9)">$ mlcheck run ./project</text>
+          <text className="a-type" style={d(410)} x="112" y="196" fill="rgba(255,255,255,0.65)">  ok    train and test splits</text>
+          <text className="a-type" style={d(670)} x="112" y="226" fill="#ff5a6b">  fail  target leaks into features</text>
+          <text className="a-type" style={d(930)} x="112" y="256" fill="rgba(255,255,255,0.65)">  ok    baseline beaten by 11.4%</text>
+          <text className="a-type" style={d(1190)} x="112" y="286" fill="#ff5a6b">  warn  accuracy on imbalanced data</text>
           <rect className="caret" x="112" y="306" width="10" height="18" fill="#fff" />
         </g>
       );
@@ -117,12 +130,12 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
       });
       return (
         <g>
-          <path d="M40 380 C 220 340, 380 400, 560 360 S 760 350, 780 360" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+          <path className="a-draw" pathLength={1} d="M40 380 C 220 340, 380 400, 560 360 S 760 350, 780 360" fill="none" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
           <text x="560" y="404" fill="rgba(255,255,255,0.55)" fontSize="11" fontFamily="var(--font-mono)">
             LAKE ONTARIO
           </text>
           {dots.map(([x, y], i) => (
-            <circle key={i} cx={x} cy={Math.min(y, 340)} r={i % 9 === 0 ? 5 : 2.5} fill={i % 9 === 0 ? '#fff' : 'rgba(255,255,255,0.55)'} />
+            <circle key={i} className="a-pop" style={d(150 + i * 13)} cx={x} cy={Math.min(y, 340)} r={i % 9 === 0 ? 5 : 2.5} fill={i % 9 === 0 ? '#fff' : 'rgba(255,255,255,0.55)'} />
           ))}
         </g>
       );
@@ -141,7 +154,7 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
             [520, 270],
             [300, 160],
           ].map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="6" fill="#fff" />
+            <circle key={i} className="a-pop" style={d(350 + i * 280)} cx={x} cy={y} r="6" fill="#fff" />
           ))}
         </g>
       );
@@ -158,13 +171,15 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
       return (
         <g>
           {pts.concat(inner).map(([x, y], i) => (
-            <circle key={i} cx={x} cy={y} r="3.2" fill="rgba(255,255,255,0.85)" />
+            <circle key={i} className="a-pop" style={d(i * 20)} cx={x} cy={y} r="3.2" fill="rgba(255,255,255,0.85)" />
           ))}
-          <rect x="270" y="60" width="260" height="320" fill="none" stroke="#e3263b" strokeWidth="1.5" />
-          <rect x="270" y="36" width="138" height="22" fill="#e3263b" />
-          <text x="278" y="51" fill="#fff" fontSize="12" fontFamily="var(--font-mono)" fontWeight="600" letterSpacing="1">
-            MATCH · 0.94
-          </text>
+          <rect className="a-snap" style={d(800)} x="270" y="60" width="260" height="320" fill="none" stroke="#e3263b" strokeWidth="1.5" />
+          <g className="a-fade" style={d(1100)}>
+            <rect x="270" y="36" width="138" height="22" fill="#e3263b" />
+            <text x="278" y="51" fill="#fff" fontSize="12" fontFamily="var(--font-mono)" fontWeight="600" letterSpacing="1">
+              MATCH · 0.94
+            </text>
+          </g>
         </g>
       );
     }
@@ -173,11 +188,26 @@ function Motif({ slug, seed }: { slug: string; seed: number }) {
   }
 }
 
-export default function ProjectArt({ slug, index, className = '' }: { slug: string; index: number; className?: string }) {
+export default function ProjectArt({
+  slug,
+  index,
+  className = '',
+  auto = false,
+}: {
+  slug: string;
+  index: number;
+  className?: string;
+  /** Play the build animation on load (pages without the effects engine). */
+  auto?: boolean;
+}) {
   const blobs = BLOBS[slug] ?? [[50, 50, 0.8]];
   return (
-    <div className={`relative overflow-hidden bg-[#0b0b0b] ${className}`}>
-      <div className="absolute inset-0" style={{ background: blobs.map(([x, y, s]) => HEAT(x, y, s)).join(',') }} />
+    <div
+      data-art
+      className={`art relative overflow-hidden bg-[#0b0b0b] ${auto ? 'art-auto' : ''} ${className}`}
+      style={{ ['--vt' as string]: `art-${slug}` }}
+    >
+      <div className="art-heat absolute inset-0" style={{ background: blobs.map(([x, y, s]) => HEAT(x, y, s)).join(',') }} />
       <div
         className="absolute inset-0 opacity-40"
         style={{

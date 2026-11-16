@@ -36,6 +36,9 @@ export default function Effects() {
     const hero = document.getElementById('home');
     const heroSpot = document.querySelector<HTMLElement>('[data-hero-spot]');
     const heroTilt = document.querySelector<HTMLElement>('[data-hero-tilt]');
+    const faceHeat = document.querySelector<HTMLElement>('[data-face-heat]');
+    const faceBlob = faceHeat?.firstElementChild as HTMLElement | null;
+    let faceOn = false;
     const magnets = Array.from(document.querySelectorAll<HTMLElement>('[data-magnetic]'));
     const parallaxEls = Array.from(document.querySelectorAll<HTMLElement>('[data-parallax]'));
     const lagEls = Array.from(document.querySelectorAll<HTMLElement>('[data-lag]'));
@@ -47,7 +50,8 @@ export default function Effects() {
     const slideDims = slides.map((el) => el.querySelector<HTMLElement>('[data-slide-dim]'));
     const slideCounter = document.querySelector<HTMLElement>('[data-slide-counter]');
     const slideProgress = document.querySelector<HTMLElement>('[data-slide-progress]');
-    const sc = { on: false, top: 0, range: 1, lastP: -1, lastIdx: -1 };
+    const sc = { on: false, top: 0, range: 1, lastP: -1, lastIdx: -1, live: -1 };
+    const slideArts = slides.map((el) => el.querySelector<HTMLElement>('[data-art]'));
     // Last written values per slide, so nothing is written twice.
     const slideT: string[] = slides.map(() => '');
     const slideV: string[] = slides.map(() => '');
@@ -170,6 +174,7 @@ export default function Effects() {
       const magnetRects = mouseDirty && fine && !still ? magnets.map((m) => m.getBoundingClientRect()) : null;
       const heroRect = mouseDirty && heroActive && hero ? hero.getBoundingClientRect() : null;
       const tiltRect = mouseDirty && tiltTarget && !still ? tiltTarget.getBoundingClientRect() : null;
+      const faceRect = mouseDirty && heroActive && faceHeat && !still ? faceHeat.getBoundingClientRect() : null;
 
       // ---- WRITES ----
       if (fine && ring) {
@@ -213,6 +218,21 @@ export default function Effects() {
         if (heroTilt && !still) {
           heroTilt.style.transform = `perspective(1400px) rotateY(${(px - 0.5) * 6}deg) rotateX(${(0.5 - py) * 3}deg)`;
         }
+      }
+
+      // Saliency glow on the portrait follows the mouse.
+      if (faceRect && faceBlob) {
+        const fx = mouseX - faceRect.left;
+        const fy = mouseY - faceRect.top;
+        const inside = fx > 0 && fy > 0 && fx < faceRect.width && fy < faceRect.height;
+        if (inside) faceBlob.style.transform = `translate3d(${fx.toFixed(1)}px, ${fy.toFixed(1)}px, 0)`;
+        if (inside !== faceOn) {
+          faceOn = inside;
+          faceHeat!.classList.toggle('is-on', inside);
+        }
+      } else if (faceOn && !heroActive) {
+        faceOn = false;
+        faceHeat?.classList.remove('is-on');
       }
 
       if (tiltPrev && tiltPrev !== tiltTarget) {
@@ -284,6 +304,14 @@ export default function Effects() {
             }
             if (slideProgress) slideProgress.style.transform = `scaleX(${(p / (n - 1)).toFixed(4)})`;
           }
+          // The current slide's artwork builds itself once the stage is in view.
+          const stageTop = sc.top - sy;
+          const inView = stageTop < vh * 0.45 && stageTop + sc.range > -vh * 0.6;
+          const live = inView ? sc.lastIdx : -1;
+          if (live !== sc.live) {
+            sc.live = live;
+            slideArts.forEach((a, i) => a?.classList.toggle('art-live', i === live));
+          }
         }
 
         // Journey film strip: vertical scroll moves the roles sideways.
@@ -342,6 +370,10 @@ export default function Effects() {
         heroActive = !!hero && hero.contains(t);
         hero?.classList.toggle('spot-on', heroActive);
         if (!heroActive && heroTilt) heroTilt.style.transform = '';
+        if (!heroActive) {
+          mouseDirty = true;
+          kick();
+        }
       });
     }
 
@@ -415,6 +447,56 @@ export default function Effects() {
     document.querySelectorAll('section, footer, [data-anim]').forEach((el) => offIO.observe(el));
     slides.forEach((el) => offIO.observe(el));
 
+    // ---------------- Artwork outside the showcase builds when scrolled into view ----------------
+    const artIO = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          e.target.classList.add('art-live');
+          artIO.unobserve(e.target);
+        }),
+      { threshold: 0.35 },
+    );
+    document.querySelectorAll<HTMLElement>('[data-art]').forEach((el) => {
+      if (!el.closest('[data-slide]')) artIO.observe(el);
+    });
+
+    // ---------------- Section labels decode into place ----------------
+    const GLYPHS = 'ABCDEF0123456789#/<>';
+    const decode = (el: HTMLElement) => {
+      const node = Array.from(el.childNodes).find((n) => n.nodeType === 3 && n.textContent?.trim());
+      if (!node || motionOff()) return;
+      const final = node.textContent || '';
+      const start = performance.now();
+      const dur = 520;
+      let last = 0;
+      const step = (now: number) => {
+        const t = Math.min(1, (now - start) / dur);
+        if (now - last > 38 || t === 1) {
+          last = now;
+          const settled = Math.floor(final.length * t);
+          let out = final.slice(0, settled);
+          for (let i = settled; i < final.length; i++) {
+            const ch = final[i];
+            out += ch === ' ' || ch === '/' ? ch : GLYPHS[(Math.random() * GLYPHS.length) | 0];
+          }
+          node.textContent = t === 1 ? final : out;
+        }
+        if (t < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const labelIO = new IntersectionObserver(
+      (entries) =>
+        entries.forEach((e) => {
+          if (!e.isIntersecting) return;
+          labelIO.unobserve(e.target);
+          window.setTimeout(() => decode(e.target as HTMLElement), 120);
+        }),
+      { threshold: 0.6 },
+    );
+    document.querySelectorAll<HTMLElement>('.label').forEach((el) => labelIO.observe(el));
+
     // ---------------- Motion toggle ----------------
     listen(window, 'motionchange', () => {
       if (motionOff()) {
@@ -430,6 +512,8 @@ export default function Effects() {
       cleanups.forEach((f) => f());
       counterIO.disconnect();
       offIO.disconnect();
+      artIO.disconnect();
+      labelIO.disconnect();
       ro.disconnect();
       cancelAnimationFrame(raf);
       ring?.remove();

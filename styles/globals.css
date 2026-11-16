@@ -1040,3 +1040,183 @@ html.motion-off .radar-sweep-html > div {
   .cb-toolbar { gap: 8px; font-size: 11px; bottom: 14px; }
   .cb-toolbar .avatars { display: none; }
 }
+
+/* ===================== Living project art ===================== */
+/* Elements sit in their final state by default. The build animation plays
+   when the art becomes live: the current showcase slide, a card scrolled
+   into view, or a case study page on load. */
+.art .a-pop,
+.art .a-snap {
+  transform-box: fill-box;
+  transform-origin: center;
+}
+.art .a-draw {
+  stroke-dasharray: 1;
+}
+/* The drawing sits on its own layer, so animating it never repaints the heatmap under it */
+.art > svg {
+  will-change: transform;
+}
+.art .a-sweep {
+  opacity: 0;
+}
+:is(.art-live, .art-auto) .a-fade { animation: artFade 0.5s ease both; animation-delay: var(--d, 0ms); }
+:is(.art-live, .art-auto) .a-type { animation: artFade 0.12s steps(1) both; animation-delay: var(--d, 0ms); }
+:is(.art-live, .art-auto) .a-pop { animation: artPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) both; animation-delay: var(--d, 0ms); }
+:is(.art-live, .art-auto) .a-snap { animation: artSnap 0.45s cubic-bezier(0.2, 1.3, 0.4, 1) both; animation-delay: var(--d, 0ms); }
+:is(.art-live, .art-auto) .a-draw { animation: artDraw 1.1s cubic-bezier(0.65, 0, 0.35, 1) both; animation-delay: var(--d, 0ms); }
+:is(.art-live, .art-auto) .a-sweep { animation: artSweep 0.9s cubic-bezier(0.65, 0, 0.35, 1) both; }
+@keyframes artFade { from { opacity: 0; } }
+@keyframes artPop { from { opacity: 0; transform: scale(0); } }
+@keyframes artSnap { from { opacity: 0; transform: scale(1.14); } }
+@keyframes artDraw { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes artSweep {
+  0% { opacity: 1; transform: translateY(0); }
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateY(230px); }
+}
+html.motion-off .art * {
+  animation: none !important;
+}
+
+/* The artwork morphs into the case study header when a project is opened */
+@view-transition {
+  navigation: auto;
+}
+/* Named once and never toggled, so scrolling does no extra layer work */
+[data-art] {
+  view-transition-name: var(--vt);
+}
+::view-transition-group(*) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.16, 1, 0.3, 1);
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.3s;
+}
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+}
+
+/* ===================== Portrait saliency glow ===================== */
+.face-heat {
+  -webkit-mask-image: url('/images/portrait-800.webp');
+  mask-image: url('/images/portrait-800.webp');
+  -webkit-mask-size: 100% 100%;
+  mask-size: 100% 100%;
+  mix-blend-mode: screen;
+  opacity: 0;
+  transition: opacity 0.35s ease;
+}
+.face-heat.is-on {
+  opacity: 1;
+}
+.face-heat-blob {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 300px;
+  margin: -150px 0 0 -150px;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 224, 120, 0.7), rgba(255, 128, 48, 0.5) 38%, rgba(227, 38, 59, 0.32) 66%, transparent);
+  will-change: transform;
+}
+
+/* ===================== Light section ===================== */
+.theme-light .label {
+  color: rgba(9, 9, 9, 0.66);
+}
+.theme-light .outline-num {
+  -webkit-text-stroke-color: rgba(9, 9, 9, 0.1);
+}
+.theme-light ::selection {
+  background: var(--red);
+  color: #fff;
+}
+
+/* ===================== Toolkit pipeline ===================== */
+.pipe-rail {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.12);
+  container-type: size;
+  /* phones: a vertical rail down the left */
+  left: 15px;
+  top: 6px;
+  bottom: 6px;
+  width: 1px;
+}
+.pipe-dot {
+  position: absolute;
+  left: -3px;
+  top: -3px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+  box-shadow: 0 0 10px 2px rgba(227, 38, 59, 0.6);
+  animation: pipeFlowY 4.2s linear infinite;
+  will-change: transform, opacity;
+}
+@keyframes pipeFlowY {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  8%, 92% { opacity: 1; }
+  100% { transform: translate3d(0, 100cqh, 0); opacity: 0; }
+}
+@keyframes pipeFlowX {
+  0% { transform: translate3d(0, 0, 0); opacity: 0; }
+  8%, 92% { opacity: 1; }
+  100% { transform: translate3d(100cqw, 0, 0); opacity: 0; }
+}
+.pipe-node {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 31px;
+  height: 31px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 11px;
+  color: rgba(237, 237, 237, 0.75);
+  background: #0c0c0c;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  transition: border-color 0.3s, color 0.3s, box-shadow 0.3s, background-color 0.3s;
+}
+.pipe-stage:hover .pipe-node {
+  border-color: var(--red);
+  background: var(--red);
+  color: #fff;
+  box-shadow: 0 0 0 6px rgba(227, 38, 59, 0.15);
+}
+.pipe-chip {
+  transition: border-color 0.3s, color 0.3s;
+}
+.pipe-stage:hover .pipe-chip {
+  border-color: rgba(227, 38, 59, 0.6);
+  color: #ededed;
+}
+@media (min-width: 1024px) {
+  .pipe-rail {
+    left: 0;
+    right: 0;
+    top: 15px;
+    bottom: auto;
+    width: auto;
+    height: 1px;
+  }
+  .pipe-dot {
+    animation-name: pipeFlowX;
+  }
+}
+.is-offscreen .pipe-dot {
+  animation-play-state: paused;
+}
+html.motion-off .pipe-dot {
+  animation: none;
+  opacity: 0;
+}

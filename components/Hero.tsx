@@ -67,6 +67,10 @@ export default function Hero() {
                   height={1141}
                   className="portrait-tint relative block h-auto w-full"
                 />
+                {/* A saliency glow follows the mouse, visible only on the subject */}
+                <div data-face-heat className="face-heat pointer-events-none absolute inset-0" aria-hidden="true">
+                  <div className="face-heat-blob" />
+                </div>
                 {/* The portrait gets scanned by an AI image detector */}
                 <div className="scan-wrap pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                   <div className="scan-heat" style={{ left: '30%', top: '4%', width: '38%', height: '56%' }} />

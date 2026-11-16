@@ -19,12 +19,13 @@ const EDUCATION = [
   },
 ];
 
-const SKILLS = [
-  { category: 'Languages', items: ['Python', 'SQL', 'R', 'Java', 'C++', 'Bash'] },
-  { category: 'Machine learning', items: ['PyTorch', 'TensorFlow', 'scikit learn', 'XGBoost', 'LightGBM', 'CNNs'] },
-  { category: 'LLMs and RAG', items: ['LangChain', 'FAISS', 'BM25', 'Hugging Face', 'FinBERT'] },
-  { category: 'Evaluation', items: ['ROC AUC', 'Calibration', 'SHAP', 'Grad CAM', 'Fairlearn'] },
-  { category: 'ML systems', items: ['MLflow', 'FastAPI', 'Docker', 'GitHub Actions', 'PostgreSQL', 'Azure'] },
+// The toolkit, laid out as the path a model takes from data to production.
+const PIPELINE = [
+  { stage: 'Data', note: 'Collect, clean, query', items: ['Python', 'SQL', 'R', 'PostgreSQL', 'Bash'] },
+  { stage: 'Model', note: 'Train and tune', items: ['PyTorch', 'TensorFlow', 'scikit learn', 'XGBoost', 'LightGBM', 'CNNs'] },
+  { stage: 'Retrieve', note: 'LLMs and RAG', items: ['LangChain', 'FAISS', 'BM25', 'Hugging Face', 'FinBERT'] },
+  { stage: 'Evaluate', note: 'Measure and explain', items: ['ROC AUC', 'Calibration', 'SHAP', 'Grad CAM', 'Fairlearn'] },
+  { stage: 'Deploy', note: 'Ship and monitor', items: ['MLflow', 'FastAPI', 'Docker', 'GitHub Actions', 'Azure'] },
 ];
 
 export default function AboutSection() {
@@ -44,36 +45,47 @@ export default function AboutSection() {
           </p>
         </div>
 
-        <div className="mt-16 grid gap-12 lg:grid-cols-2">
-          <div>
-            <p data-build className="eyebrow border-b border-line pb-3 text-bone/55">Education</p>
-            {EDUCATION.map((e) => (
-              <div data-build key={e.school} className="border-b border-line py-6">
-                <div className="flex flex-wrap items-baseline justify-between gap-2">
-                  <h3 className="text-lg font-bold text-bone">{e.school}</h3>
-                  <span className="eyebrow text-bone/50">{e.detail}</span>
-                </div>
-                <p className="mt-1 text-sm font-semibold text-bone/80">{e.credential}</p>
-                <p className="mt-3 text-[14px] leading-6 text-bone/55">{e.notes}</p>
+        <p data-build className="eyebrow mt-16 border-b border-line pb-3 text-bone/55">Education</p>
+        <div className="grid gap-x-12 lg:grid-cols-2">
+          {EDUCATION.map((e) => (
+            <div data-build key={e.school} className="border-b border-line py-6">
+              <div className="flex flex-wrap items-baseline justify-between gap-2">
+                <h3 className="text-lg font-bold text-bone">{e.school}</h3>
+                <span className="eyebrow text-bone/50">{e.detail}</span>
               </div>
-            ))}
-          </div>
+              <p className="mt-1 text-sm font-semibold text-bone/80">{e.credential}</p>
+              <p className="mt-3 text-[14px] leading-6 text-bone/55">{e.notes}</p>
+            </div>
+          ))}
+        </div>
 
-          <div>
-            <p data-build className="eyebrow border-b border-line pb-3 text-bone/55">Toolkit</p>
-            {SKILLS.map((s) => (
-              <div data-build key={s.category} className="flex flex-col gap-3 border-b border-line py-5 sm:flex-row sm:items-center">
-                <span className="eyebrow w-40 shrink-0 text-bone/80">{s.category}</span>
-                <div className="flex flex-wrap gap-2">
-                  {s.items.map((i) => (
-                    <span key={i} className="border border-line px-2.5 py-1 text-[12px] text-bone/80 transition-colors hover:border-red hover:text-bone">
-                      {i}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            ))}
+        <div data-build className="mt-16 flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
+          <p className="eyebrow text-bone/55">Toolkit, from data to production</p>
+          <p className="eyebrow text-bone/40">Also: Java, C++</p>
+        </div>
+        <div data-anim className="pipeline relative mt-10 grid gap-y-10 lg:grid-cols-5">
+          {/* The rail the stages sit on, with pulses travelling along it */}
+          <div className="pipe-rail" aria-hidden="true">
+            <span className="pipe-dot" />
+            <span className="pipe-dot" style={{ animationDelay: '-1.4s' }} />
+            <span className="pipe-dot" style={{ animationDelay: '-2.8s' }} />
           </div>
+          {PIPELINE.map((st, i) => (
+            <div data-build key={st.stage} className="pipe-stage group relative pl-12 lg:pl-0 lg:pr-6 lg:pt-12">
+              <span className="pipe-node num">{String(i + 1).padStart(2, '0')}</span>
+              <h3 className="font-display text-3xl uppercase leading-none text-bone transition-colors group-hover:text-red">
+                {st.stage}
+              </h3>
+              <p className="eyebrow mt-2 text-bone/55">{st.note}</p>
+              <div className="mt-4 flex flex-wrap gap-2">
+                {st.items.map((t) => (
+                  <span key={t} className="pipe-chip border border-line px-2.5 py-1 text-[12px] text-bone/80">
+                    {t}
+                  </span>
+                ))}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

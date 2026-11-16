@@ -14,7 +14,7 @@ const FIGURES = [
 
 export default function NumbersWall() {
   return (
-    <section id="results" className="relative overflow-clip border-t border-line">
+    <section id="results" className="theme-light relative overflow-clip bg-paper text-ink">
       <SectionNumber n="02" />
       <div className="relative mx-auto max-w-[1400px] px-5 py-20 sm:px-10 sm:py-28">
         <div data-build className="flex flex-wrap items-end justify-between gap-6">
@@ -30,23 +30,23 @@ export default function NumbersWall() {
               />
             </h2>
           </div>
-          <p className="max-w-sm text-[15px] leading-7 text-bone/60">
+          <p className="max-w-sm text-[15px] leading-7 text-ink/70">
             Every figure below comes from a test set, a dashboard or a production system.
           </p>
         </div>
 
-        <div className="mt-12 grid grid-cols-2 gap-px border border-line bg-line lg:grid-cols-4">
+        <div className="mt-12 grid grid-cols-2 gap-px border border-ink/15 bg-ink/15 lg:grid-cols-4">
           {FIGURES.map((f) => (
-            <div data-build key={f.caption} className="figure group relative flex flex-col justify-between bg-ink p-5 sm:p-7">
-              <div className="num text-[clamp(2.1rem,5.2vw,4.4rem)] font-semibold leading-none text-bone">
+            <div data-build key={f.caption} className="figure group relative flex flex-col justify-between bg-paper p-5 sm:p-7">
+              <div className="num text-[clamp(2.1rem,5.2vw,4.4rem)] font-semibold leading-none text-ink">
                 <span data-count={f.value} data-sep={f.value.length > 4 && !f.value.includes('.') ? '' : undefined}>
                   {f.display}
                 </span>
                 {f.unit && <span className="text-red">{f.unit}</span>}
               </div>
               <div className="mt-8 sm:mt-12">
-                <p className="text-[14px] font-semibold leading-snug text-bone/90">{f.caption}</p>
-                <p className="figure-source eyebrow mt-2 leading-[1.5] text-bone/55">{f.source}</p>
+                <p className="text-[14px] font-semibold leading-snug text-ink/90">{f.caption}</p>
+                <p className="figure-source eyebrow mt-2 leading-[1.5] text-ink/65">{f.source}</p>
               </div>
               <span className="figure-bar absolute bottom-0 left-0 h-[2px] w-full origin-left bg-red" aria-hidden="true" />
             </div>
