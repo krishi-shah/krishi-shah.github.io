@@ -5,7 +5,7 @@ export type Role = { title: string; company: string; period: string; location: s
 
 export const experiences: Role[] = [
   {
-    title: 'AI Research Assistant, supervised by Prof. Mona Nasery',
+    title: 'AI Undergraduate Researcher, supervised by Prof. Mona Nasery',
     company: 'York University',
     period: 'May 2026 – Aug 2026',
     location: 'Toronto, ON',
