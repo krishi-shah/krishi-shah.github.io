@@ -1,50 +1,20 @@
-import { MetadataRoute } from 'next'
+import { MetadataRoute } from 'next';
+import { getProjectSlugs } from '@/lib/content';
 
-export const dynamic = 'force-static'
+export const dynamic = 'force-static';
+
+const BASE = 'https://krishi-shah.github.io';
 
 export default function sitemap(): MetadataRoute.Sitemap {
+  const now = new Date();
   return [
-    {
-      url: 'https://krishi-shah.github.io',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 1,
-    },
-    {
-      url: 'https://krishi-shah.github.io#about',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://krishi-shah.github.io#experience',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.8,
-    },
-    {
-      url: 'https://krishi-shah.github.io#projects',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
-      priority: 0.9,
-    },
-    {
-      url: 'https://krishi-shah.github.io#resume',
-      lastModified: new Date(),
-      changeFrequency: 'monthly',
+    { url: `${BASE}/`, lastModified: now, changeFrequency: 'monthly', priority: 1 },
+    { url: `${BASE}/resume/`, lastModified: now, changeFrequency: 'monthly', priority: 0.8 },
+    ...getProjectSlugs().map((slug) => ({
+      url: `${BASE}/projects/${slug}/`,
+      lastModified: now,
+      changeFrequency: 'monthly' as const,
       priority: 0.7,
-    },
-    {
-      url: 'https://krishi-shah.github.io#insights',
-      lastModified: new Date(),
-      changeFrequency: 'weekly',
-      priority: 0.6,
-    },
-    {
-      url: 'https://krishi-shah.github.io#contact',
-      lastModified: new Date(),
-      changeFrequency: 'yearly',
-      priority: 0.5,
-    },
-  ]
+    })),
+  ];
 }

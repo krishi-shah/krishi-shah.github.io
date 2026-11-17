@@ -2,7 +2,7 @@ import { ArrowLeft } from 'lucide-react';
 
 export default function NotFound() {
   return (
-    <main className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
+    <main id="main" className="relative flex min-h-[100svh] flex-col items-center justify-center overflow-hidden px-5 text-center">
       <div
         aria-hidden="true"
         className="absolute inset-0 opacity-40"

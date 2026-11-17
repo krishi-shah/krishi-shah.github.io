@@ -36,7 +36,29 @@
     ],
     "repo": "https://github.com/krishi-shah/ai-image-detection",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "flow": [
+      {
+        "step": "Data",
+        "detail": "120,000 real and generated images"
+      },
+      {
+        "step": "Train",
+        "detail": "Fine tune EfficientNet B3"
+      },
+      {
+        "step": "Calibrate",
+        "detail": "Temperature scaling, threshold sweep"
+      },
+      {
+        "step": "Control",
+        "detail": "Resolution matched test"
+      },
+      {
+        "step": "Explain",
+        "detail": "FFT, t-SNE and Grad-CAM"
+      }
+    ]
   },
   {
     "slug": "finrag-ai",
@@ -67,7 +89,29 @@
     ],
     "repo": "https://github.com/krishi-shah/FinRAG-AI",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "flow": [
+      {
+        "step": "Ingest",
+        "detail": "SEC filings and transcripts"
+      },
+      {
+        "step": "Embed",
+        "detail": "all-MiniLM-L6-v2 into FAISS"
+      },
+      {
+        "step": "Retrieve",
+        "detail": "Hybrid BM25 plus FAISS"
+      },
+      {
+        "step": "Rerank",
+        "detail": "Cross encoder reranker"
+      },
+      {
+        "step": "Answer",
+        "detail": "GPT-3.5-Turbo with FinBERT sentiment"
+      }
+    ]
   },
   {
     "slug": "medrisk-ml",
@@ -103,7 +147,29 @@
     ],
     "repo": "https://github.com/krishi-shah/Medrisk-ML",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "flow": [
+      {
+        "step": "Data",
+        "detail": "100K+ patient records"
+      },
+      {
+        "step": "Features",
+        "detail": "30+ engineered clinical features"
+      },
+      {
+        "step": "Train",
+        "detail": "XGBoost and LightGBM, tracked in MLflow"
+      },
+      {
+        "step": "Explain",
+        "detail": "SHAP on every prediction"
+      },
+      {
+        "step": "Serve",
+        "detail": "FastAPI and Streamlit in Docker"
+      }
+    ]
   },
   {
     "slug": "ml-engineer-skills",
@@ -130,7 +196,29 @@
     "demo": "",
     "featured": true,
     "headline": "4",
-    "headlineLabel": "ML mistakes it checks for"
+    "headlineLabel": "ML mistakes it checks for",
+    "flow": [
+      {
+        "step": "Input",
+        "detail": "An ML experiment"
+      },
+      {
+        "step": "Leakage",
+        "detail": "Is the data leaking?"
+      },
+      {
+        "step": "Splits",
+        "detail": "Is the train test split sound?"
+      },
+      {
+        "step": "Baseline",
+        "detail": "Was a baseline beaten?"
+      },
+      {
+        "step": "Metric",
+        "detail": "Does the metric fit the decision?"
+      }
+    ]
   },
   {
     "slug": "permit-wait",
@@ -155,7 +243,25 @@
     "demo": "",
     "featured": true,
     "headline": "Toronto",
-    "headlineLabel": "Building permit wait times"
+    "headlineLabel": "Building permit wait times",
+    "flow": [
+      {
+        "step": "Data",
+        "detail": "Toronto building permits"
+      },
+      {
+        "step": "Model",
+        "detail": "Python wait time estimator"
+      },
+      {
+        "step": "Calibrate",
+        "detail": "Check the stated ranges hold"
+      },
+      {
+        "step": "Output",
+        "detail": "A wait time you can trust"
+      }
+    ]
   },
   {
     "slug": "toronto-ai-ml-internship-radar",
@@ -184,7 +290,29 @@
     ],
     "repo": "https://github.com/krishi-shah/Toronto-AI-ML-internship-radar",
     "demo": "",
-    "featured": true
+    "featured": true,
+    "flow": [
+      {
+        "step": "Collect",
+        "detail": "170+ employer job boards"
+      },
+      {
+        "step": "Schedule",
+        "detail": "GitHub Actions, six times a day"
+      },
+      {
+        "step": "Filter",
+        "detail": "Region, recency, hiring cycle"
+      },
+      {
+        "step": "Classify",
+        "detail": "Read descriptions for AI roles"
+      },
+      {
+        "step": "Publish",
+        "detail": "Live feed, RSS and JSON"
+      }
+    ]
   },
   {
     "slug": "realtime-face-recognition",
@@ -211,6 +339,24 @@
     "demo": "https://realtime-face-recognition.streamlit.app/",
     "featured": true,
     "headline": "Live",
-    "headlineLabel": "Webcam face recognition"
+    "headlineLabel": "Webcam face recognition",
+    "flow": [
+      {
+        "step": "Capture",
+        "detail": "A handful of face photos"
+      },
+      {
+        "step": "Train",
+        "detail": "Local OpenCV LBPH recognizer"
+      },
+      {
+        "step": "Recognize",
+        "detail": "Live webcam stream"
+      },
+      {
+        "step": "Demo",
+        "detail": "Streamlit app in the browser"
+      }
+    ]
   }
 ]

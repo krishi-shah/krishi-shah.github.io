@@ -97,7 +97,7 @@ export default function Header() {
         aria-hidden="true"
       />
       <div className="mx-auto flex h-[66px] max-w-[1400px] items-center justify-between px-5 sm:px-10">
-        <a href="#home" data-build className="font-display text-[26px] leading-none tracking-tight text-bone">
+        <a href="#home" data-build data-logo className="font-display text-[26px] leading-none tracking-tight text-bone">
           KRISHI<sup className="ml-0.5 align-super text-[11px] text-red">®</sup>
         </a>
 
@@ -148,7 +148,7 @@ export default function Header() {
           </a>
           <button
             type="button"
-            className="text-bone/80 md:hidden"
+            className="-m-2.5 p-2.5 text-bone/80 md:hidden"
             onClick={() => window.dispatchEvent(new Event('opencommand'))}
             aria-label="Open command bar"
           >

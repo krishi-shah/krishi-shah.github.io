@@ -1,3 +1,4 @@
+import Skyline from '@/components/Skyline';
 import { ArrowDown, ArrowUpRight, Download, MapPin } from 'lucide-react';
 
 const STATS = [
@@ -41,6 +42,8 @@ export default function Hero() {
             </div>
           </div>
 
+          <Skyline />
+
           <div
             data-build
             className="absolute -left-[20vw] -right-[20vw] bottom-0 z-10 mx-auto sm:inset-x-0 sm:w-[78vw] sm:max-w-[680px] lg:w-[46vw]"
@@ -75,21 +78,6 @@ export default function Hero() {
                 <div className="scan-wrap pointer-events-none absolute inset-0 overflow-hidden" aria-hidden="true">
                   <div className="scan-heat" style={{ left: '30%', top: '4%', width: '38%', height: '56%' }} />
                   <div className="scan-sweep" />
-                </div>
-                <div
-                  className="scan-box pointer-events-none absolute"
-                  style={{ left: '35%', top: '10%', width: '28%', height: '44%' }}
-                  aria-hidden="true"
-                >
-                  <span className="c tl" />
-                  <span className="c tr" />
-                  <span className="c bl" />
-                  <span className="c br" />
-                  <span className="scan-tag">
-                    Real image <span className="opacity-60">·</span>{' '}
-                    <span data-count="0.997" data-count-delay="1550">0.997</span>
-                  </span>
-                  <span className="scan-sub">class: human · model: effnet b3</span>
                 </div>
               </div>
             </div>
@@ -157,12 +145,10 @@ export default function Hero() {
           ))}
           <a
             data-build
-            href="/resume.pdf"
-            target="_blank"
-            rel="noreferrer"
+            href="/resume/"
             className="eyebrow mt-5 inline-flex items-center gap-3 text-bone/85 transition-colors hover:text-red"
           >
-            <Download className="h-4 w-4" /> Download CV
+            <Download className="h-4 w-4" aria-hidden="true" /> Resume
           </a>
         </div>
       </div>

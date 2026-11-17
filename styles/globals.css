@@ -1220,3 +1220,103 @@ html.motion-off .pipe-dot {
   animation: none;
   opacity: 0;
 }
+
+/* ---------- Resume page: prints as a clean black on white document ---------- */
+@media print {
+  @page { size: Letter; margin: 0.45in 0.55in; }
+  html, body { background: #fff !important; background-image: none !important; color: #111 !important; }
+  body::before, body::after { display: none !important; }
+  .cv-noprint, .skip-link { display: none !important; }
+  .cv-page main { padding: 0 !important; max-width: none !important; }
+  .cv-page h1 { font-size: 28pt !important; color: #111 !important; }
+  .cv-page .cv-block { margin-top: 6pt !important; }
+  .cv-page .text-red, .cv-page .cv-h2 { color: #b3192b !important; }
+  .cv-page [class*='text-bone'] { color: #222 !important; }
+  .cv-page .border-line { border-color: #ccc !important; }
+  .cv-page .bg-bone\/40 { background: #999 !important; }
+  .cv-page .cv-h2 { margin-top: 11pt !important; break-after: avoid; }
+  .cv-page .cv-block { break-inside: avoid; margin-top: 5pt !important; }
+  .cv-page .cv-li, .cv-page p, .cv-page dd, .cv-page dt, .cv-page li { font-size: 8.8pt !important; line-height: 1.3 !important; }
+  .cv-page ul.mt-2 { margin-top: 2pt !important; }
+  .cv-page .cv-li { gap: 6px !important; }
+  .cv-page dl, .cv-page ul { break-inside: avoid; }
+  .cv-page .cv-h2 { font-size: 8pt !important; padding-bottom: 3pt !important; }
+  .cv-page h3 { font-size: 10pt !important; }
+  .cv-page .cv-block .num, .cv-page .cv-block span { font-size: 8.5pt !important; }
+  .cv-page a { text-decoration: none; }
+}
+
+/* ---------- Ask box ---------- */
+.ask-answer { animation: askIn 0.45s cubic-bezier(0.16, 1, 0.3, 1) both; }
+@keyframes askIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+html.motion-off .ask-answer { animation: none; }
+
+/* ---------- Case study: how it works ---------- */
+.flow { border: 1px solid rgba(255,255,255,0.08); }
+.flow-step { transition: background-color 0.3s; }
+.flow-step:hover { background-color: #111; }
+.flow-arrow {
+  position: absolute; z-index: 1; width: 13px; height: 13px;
+  background: #090909; border: 1px solid rgba(255,255,255,0.18);
+  border-left: 0; border-bottom: 0;
+  left: 50%; bottom: -7px; transform: translateX(-50%) rotate(135deg);
+}
+@media (min-width: 768px) {
+  .flow-arrow { left: auto; bottom: auto; right: -7px; top: 50%; transform: translateY(-50%) rotate(45deg); }
+}
+.flow-step:hover .flow-arrow { border-color: var(--red); }
+
+/* ---------- Keyboard and screen reader polish ---------- */
+.skip-link {
+  position: fixed; left: 16px; top: 12px; z-index: 200;
+  background: var(--red); color: #fff; padding: 10px 16px;
+  font: 600 14px/1 var(--font-manrope, sans-serif);
+  transform: translateY(-160%); transition: transform 0.2s;
+}
+.skip-link:focus { transform: none; }
+.bg-red:focus-visible, .skip-link:focus-visible { outline-color: #fff; }
+/* Bigger touch targets for small text links, without moving the layout */
+@media (pointer: coarse) {
+  :is(a.eyebrow, button.eyebrow, footer a, .cv-contact a, .cv-block h3 a) {
+    padding-block: 10px;
+    margin-block: -10px;
+  }
+}
+
+/* ---------- Toronto skyline behind the hero portrait ---------- */
+.skyline {
+  opacity: 0.6;
+  /* fade at the edges and soften where it passes behind the portrait */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 30%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.18) 60%, #000 70%, #000 90%, transparent 100%);
+  mask-image: linear-gradient(90deg, transparent 0%, #000 10%, #000 30%, rgba(0,0,0,0.18) 40%, rgba(0,0,0,0.18) 60%, #000 70%, #000 90%, transparent 100%);
+}
+.skyline-path {
+  fill: none;
+  stroke: var(--red);
+  stroke-width: 1.8;
+  stroke-linejoin: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: skylineDraw 1.4s cubic-bezier(0.65, 0, 0.35, 1) forwards;
+}
+@keyframes skylineDraw { to { stroke-dashoffset: 0; } }
+html.motion-off .skyline-path { animation: none; stroke-dashoffset: 0; }
+
+/* ---------- Konami easter egg ---------- */
+.konami-layer { position: fixed; inset: 0; z-index: 120; pointer-events: none; overflow: hidden; contain: strict; }
+.konami-veil { position: absolute; inset: 0; background: rgba(9, 9, 9, 0.9); opacity: 0; }
+.konami-cursor { position: absolute; top: 0; left: 0; color: var(--red); line-height: 0; will-change: transform; }
+.konami-cursor.is-white { color: #ffffff; }
+.konami-cursor.is-pink { color: #ff8a96; }
+.konami-caption {
+  position: absolute; left: 50%; bottom: 14vh; transform: translateX(-50%); opacity: 0;
+  white-space: nowrap; font: 500 12px/1 var(--font-mono), monospace; letter-spacing: 0.14em;
+  text-transform: uppercase; color: rgba(237, 237, 237, 0.8);
+}
+.konami-caption span { color: var(--red); margin-right: 10px; }
+.konami-word {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  font: 400 clamp(56px, 13vw, 180px)/1 Anton, Impact, sans-serif; text-transform: uppercase; color: var(--red);
+}
+@media (max-width: 600px) { .konami-caption { white-space: normal; text-align: center; width: 86vw; line-height: 1.6; } }
+.konami-group { position: absolute; inset: 0; }

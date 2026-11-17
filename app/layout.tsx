@@ -116,6 +116,9 @@ export default function RootLayout({
         />
       </head>
       <body className="font-sans bg-ink text-bone overflow-x-hidden">
+        <a href="#main" className="skip-link">
+          Skip to content
+        </a>
         {children}
       </body>
     </html>

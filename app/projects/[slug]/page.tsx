@@ -24,8 +24,9 @@ export async function generateMetadata({ params }: ProjectPageProps): Promise<Me
     openGraph: {
       title: `${project.title} | ${siteConfig.name}`,
       description: project.shortDescription,
-      images: ['/og-image.png'],
+      images: [{ url: `/og/${project.slug}.png`, width: 1200, height: 630, alt: project.title }],
     },
+    twitter: { card: 'summary_large_image', title: project.title, description: project.shortDescription, images: [`/og/${project.slug}.png`] },
   };
 }
 
@@ -57,7 +58,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </div>
       </header>
 
-      <main className="pt-[66px]">
+      <main id="main" className="pt-[66px]">
         <section className="mx-auto max-w-[1400px] px-5 pt-12 sm:px-10 sm:pt-16">
           <p className="label">
             Case study {String(index + 1).padStart(2, '0')} / {String(all.length).padStart(2, '0')}
@@ -97,6 +98,27 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                 </div>
               ))}
             </div>
+          </section>
+        )}
+
+        {project.flow && project.flow.length > 0 && (
+          <section aria-labelledby="how" className="mx-auto mt-16 max-w-[1400px] px-5 sm:px-10">
+            <div className="flex flex-wrap items-end justify-between gap-3 border-b border-line pb-3">
+              <h2 id="how" className="eyebrow text-bone/70">How it works</h2>
+              <p className="eyebrow text-bone/45">{project.flow.length} stages</p>
+            </div>
+            <ol className="flow mt-8 grid gap-px bg-line md:grid-flow-col md:auto-cols-fr">
+              {project.flow.map((f, i) => (
+                <li key={f.step} className="flow-step group relative bg-ink p-5 sm:p-6">
+                  <span className="num text-[12px] text-red-text">{String(i + 1).padStart(2, '0')}</span>
+                  <h3 className="mt-3 font-display text-2xl uppercase leading-none text-bone transition-colors group-hover:text-red">
+                    {f.step}
+                  </h3>
+                  <p className="mt-3 text-[14px] leading-6 text-bone/65">{f.detail}</p>
+                  {i < project.flow!.length - 1 && <span className="flow-arrow" aria-hidden="true" />}
+                </li>
+              ))}
+            </ol>
           </section>
         )}
 

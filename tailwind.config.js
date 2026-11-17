@@ -17,6 +17,7 @@ module.exports = {
         red: {
           DEFAULT: '#e3263b',
           bright: '#ff3b50',
+          text: '#ef3a4e',
           deep: '#8f0f1d',
         },
       },

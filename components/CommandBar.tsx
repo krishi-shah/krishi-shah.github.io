@@ -41,6 +41,7 @@ export default function CommandBar() {
         ['about', 'About'],
         ['journey', 'Journey'],
         ['writing', 'Writing'],
+        ['ask', 'Ask about Krishi'],
         ['contact', 'Contact'],
       ].map(([id, label]) => ({
         id: `go-${id}`,
@@ -71,7 +72,7 @@ export default function CommandBar() {
         icon: 'swarm',
         run: () => window.dispatchEvent(new Event('swarmreplay')),
       },
-      { id: 'cv', label: 'Download CV', hint: 'PDF', group: 'Actions', icon: 'cv', run: () => window.open('/resume.pdf', '_blank') },
+      { id: 'cv', label: 'Open resume', hint: 'Print or save as PDF', group: 'Actions', icon: 'cv', run: () => { window.location.href = '/resume/'; } },
       { id: 'gh', label: 'Open GitHub', hint: '@krishi-shah', group: 'Links', icon: 'link', run: () => window.open(site.social.github, '_blank') },
       { id: 'li', label: 'Open LinkedIn', hint: 'in/krishi-shah3', group: 'Links', icon: 'link', run: () => window.open(site.social.linkedin, '_blank') },
       { id: 'md', label: 'Open Medium', hint: 'Articles', group: 'Links', icon: 'link', run: () => window.open(site.social.medium, '_blank') },
@@ -87,7 +88,21 @@ export default function CommandBar() {
     [],
   );
 
-  const shown = commands.filter((c) => (c.label + ' ' + c.hint).toLowerCase().includes(q.trim().toLowerCase()));
+  const query = q.trim();
+  const matched = commands.filter((c) => (c.label + ' ' + c.hint).toLowerCase().includes(query.toLowerCase()));
+  // Anything longer than a couple of words can be asked as a question
+  const askCmd: Cmd | null =
+    query.split(/\s+/).length >= 2 || (query && matched.length === 0)
+      ? {
+          id: 'ask-q',
+          label: `Ask: ${query}`,
+          hint: 'Answer from this site',
+          group: 'Ask',
+          icon: 'go',
+          run: () => window.dispatchEvent(new CustomEvent('askquestion', { detail: query })),
+        }
+      : null;
+  const shown = askCmd ? [...matched, askCmd] : matched;
 
   const close = useCallback(() => {
     setOpen(false);
@@ -158,7 +173,7 @@ export default function CommandBar() {
                   }
                   if (e.key === 'Enter') run(shown[sel]);
                 }}
-                placeholder="Type a command or section"
+                placeholder="Type a command, or ask a question"
                 className="h-14 flex-1 bg-transparent text-[15px] text-bone placeholder:text-bone/55 focus:outline-none"
                 aria-label="Search commands"
               />

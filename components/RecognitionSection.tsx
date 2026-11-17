@@ -1,15 +1,7 @@
 import { ArrowUpRight } from 'lucide-react';
 import Lines from '@/components/Lines';
 import SectionNumber from '@/components/SectionNumber';
-
-const ITEMS = [
-  { title: 'Co-op of the Year Nominee', org: 'Ontario Government', year: '2025' },
-  { title: 'Lead Developer and Executive', org: 'York University Data Science Club', year: '2024' },
-  { title: '8 Technical Articles', org: 'Level Up Coding and CodeX', year: '2024' },
-  { title: '5x University Gold Medalist', org: 'Parul University, highest GPA overall', year: '2023' },
-  { title: "Dean's List", org: 'Parul University', year: '2023' },
-  { title: 'Published Author', org: 'The Awakening Code', year: 'Book' },
-];
+import { RECOGNITION as ITEMS } from '@/lib/resume';
 
 export default function RecognitionSection() {
   return (
@@ -43,9 +35,7 @@ export default function RecognitionSection() {
           <a
             data-build
             data-magnetic
-            href="/resume.pdf"
-            target="_blank"
-            rel="noreferrer"
+            href="/resume/"
             className="eyebrow mt-8 inline-flex items-center gap-3 text-bone transition-colors hover:text-red"
           >
             View resume <ArrowUpRight className="h-4 w-4 text-red" />

@@ -54,6 +54,7 @@ export interface Project {
   featured: boolean;
   headline?: string;
   headlineLabel?: string;
+  flow?: Array<{ step: string; detail: string }>;
 }
 
 export interface Post {

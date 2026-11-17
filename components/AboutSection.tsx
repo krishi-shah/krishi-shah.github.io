@@ -1,32 +1,9 @@
 import { getSiteConfig } from '@/lib/content';
 import Lines from '@/components/Lines';
 import SectionNumber from '@/components/SectionNumber';
+import { EDUCATION, PIPELINE } from '@/lib/resume';
 
 const site = getSiteConfig();
-
-const EDUCATION = [
-  {
-    school: 'York University, Lassonde School of Engineering',
-    credential: 'BSc Honours, Computer Science',
-    detail: 'Expected Aug 2027 · Toronto',
-    notes: 'Applied Machine Learning, Statistics for Data Science, Data Mining, Big Data Analytics, Database Systems. Research project EECS 4080 supervised by Prof. Mona Nasery.',
-  },
-  {
-    school: 'Parul University',
-    credential: 'Diploma, Computer Engineering · GPA 3.9',
-    detail: '2020 to 2023 · Gujarat, India',
-    notes: '5x University Gold Medalist for highest GPA overall. Dean’s List.',
-  },
-];
-
-// The toolkit, laid out as the path a model takes from data to production.
-const PIPELINE = [
-  { stage: 'Data', note: 'Collect, clean, query', items: ['Python', 'SQL', 'R', 'PostgreSQL', 'Bash'] },
-  { stage: 'Model', note: 'Train and tune', items: ['PyTorch', 'TensorFlow', 'scikit learn', 'XGBoost', 'LightGBM', 'CNNs'] },
-  { stage: 'Retrieve', note: 'LLMs and RAG', items: ['LangChain', 'FAISS', 'BM25', 'Hugging Face', 'FinBERT'] },
-  { stage: 'Evaluate', note: 'Measure and explain', items: ['ROC AUC', 'Calibration', 'SHAP', 'Grad CAM', 'Fairlearn'] },
-  { stage: 'Deploy', note: 'Ship and monitor', items: ['MLflow', 'FastAPI', 'Docker', 'GitHub Actions', 'Azure'] },
-];
 
 export default function AboutSection() {
   return (
